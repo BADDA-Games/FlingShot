@@ -123,6 +123,7 @@ GameObject:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
+  - component: {fileID: 519420030}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -138,6 +139,19 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
+--- !u!114 &519420030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cc94a3e6f3934609bd1f9745b5af3fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1784899569}
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -164,7 +178,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 9.166667
+  orthographic size: 4.8
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1016,7 +1030,27 @@ CompositeCollider2D:
         Y: -40000000
       - X: -390000000
         Y: -40000000
-    - - X: -470000000
+    - - X: -420000000
+        Y: 20000000
+      - X: -420000000
+        Y: 10000000
+      - X: -410000000
+        Y: 10000000
+      - X: -410000000
+        Y: 0
+      - X: -400000000
+        Y: 0
+      - X: -400000000
+        Y: -30000000
+      - X: -430000000
+        Y: -30000000
+      - X: -430000000
+        Y: -20000000
+      - X: -440000000
+        Y: -20000000
+      - X: -440000000
+        Y: -30000000
+      - X: -470000000
         Y: -30000000
       - X: -470000000
         Y: -20000000
@@ -1036,26 +1070,6 @@ CompositeCollider2D:
         Y: 10000000
       - X: -410000000
         Y: 20000000
-      - X: -420000000
-        Y: 20000000
-      - X: -420000000
-        Y: 10000000
-      - X: -410000000
-        Y: 10000000
-      - X: -410000000
-        Y: 0
-      - X: -400000000
-        Y: 0
-      - X: -400000000
-        Y: -30000000
-      - X: -430000000
-        Y: -30000000
-      - X: -430000000
-        Y: -20000000
-      - X: -440000000
-        Y: -20000000
-      - X: -440000000
-        Y: -30000000
     - - X: -450000000
         Y: 40000000
       - X: -470000000
@@ -1231,6 +1245,7 @@ GameObject:
   - component: {fileID: 1784899572}
   - component: {fileID: 1784899570}
   - component: {fileID: 1784899574}
+  - component: {fileID: 1784899571}
   m_Layer: 0
   m_Name: player
   m_TagString: Player
@@ -1259,6 +1274,25 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!95 &1784899571
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1784899569}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0a8c257d7b294482dbb65aea57a97d4d, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!212 &1784899572
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1296,7 +1330,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 80893d8c49e214ca89bc57acaf45955b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d74d893e9a72546a38c9e051d493ec98, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

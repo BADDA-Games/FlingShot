@@ -1,4 +1,4 @@
-[Ll]ibrary/
+Ll]ibrary/
 [Tt]emp/
 [Oo]bj/
 [Bb]uild/
@@ -34,3 +34,9 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+
+*.a
+
+*.DS_Store
+
+/Flingshot
