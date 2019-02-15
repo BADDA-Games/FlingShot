@@ -1,0 +1,6 @@
+#!/bin/bash
+
+git clone https://github.com/BADDA-Games/FlingShot.git
+cd FlingShot
+git branch gitignore
+git checkout gitignore
