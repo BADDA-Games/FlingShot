@@ -11,11 +11,16 @@ public class PlayerMovement : MonoBehaviour {
 
     private Vector2 touchOrigin = -Vector2.one;
 
+    public GameObject PlayerBody;
+
+    private Animator animate;
 
     void Start() {
         pos = transform.position;
         step = 1.0f;
         dir = Direction.None;
+
+        animate = gameObject.GetComponent<Animator>();
     }
 
     void Update() {
@@ -43,36 +48,44 @@ public class PlayerMovement : MonoBehaviour {
               hit = Physics2D.Raycast(transform.position, Vector2.left, 1);
               if(hit.collider == null){
                 pos = transform.position + Vector3.left;
+                animate.Play("Moving");
               }
               else{
                 dir = Direction.None;
+                animate.Play("Body_Compress_Left");
               }
               break;
           case Direction.Right:
               hit = Physics2D.Raycast(transform.position, Vector2.right, 1);
               if(hit.collider == null){
                 pos = transform.position + Vector3.right;
+                animate.Play("Moving");
               }
               else{
                 dir = Direction.None;
+                animate.Play("Body_Compress_Right");
               }
               break;
           case Direction.Up:
               hit = Physics2D.Raycast(transform.position, Vector2.up, 1);
               if(hit.collider == null){
                 pos = transform.position + Vector3.up;
+                animate.Play("Moving");
               }
               else{
                 dir = Direction.None;
+                animate.Play("Body_Compress_Up");
               }
               break;
           case Direction.Down:
               hit = Physics2D.Raycast(transform.position, Vector2.down, 1);
               if(hit.collider == null){
                 pos = transform.position + Vector3.down;
+                animate.Play("Moving");
               }
               else{
                 dir = Direction.None;
+                animate.Play("Body_Compress_Down");
               }
               break;
           default:
