@@ -1,25 +1,115 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour {
     private Vector3 pos;
     private float step;
     enum Direction {None, Up, Down, Left, Right}
     private Direction dir;
+    public int health;
+    public string collisionString;
 
+    public Text currentLevelText;
+    public int currentLevel;
+
+    public Text timeRemainingText;
+    public float timeRemaining;
+    private int timeRemainingInt;
+
+    // Image m_Image;
+    // public Sprite m_Sprite;
 
     private Vector2 touchOrigin = -Vector2.one;
 
+    void updateLevelText(){
+      if (currentLevel < 10){
+        currentLevelText.text = "0" + currentLevel.ToString();
+      }else{
+        currentLevelText.text = currentLevel.ToString();
+      }
+
+    }
+    void updateTimeText(){
+      timeRemainingInt = (int) timeRemaining;
+      if(timeRemaining < 0){
+
+      }
+      else if (timeRemainingInt < 10 && timeRemainingInt >= 0 ){
+        timeRemainingText.text = "0" + timeRemainingInt.ToString();
+      }
+      else{
+        timeRemainingText.text = timeRemainingInt.ToString();
+      }
+
+    }
+
+    void gameOver(){
+      Debug.Log("Game Over");
+    }
 
     void Start() {
         pos = transform.position;
         step = 1.0f;
         dir = Direction.None;
+        health = 3;
+        timeRemaining = 15;
+        currentLevel = 00;
+
+        updateTimeText();
+        updateLevelText();
+
+        // Screen.orientation = ScreenOrientation.autorotateToPortrait;
+
+
+        // m_Image = GetComponent<Image>();
     }
+
+    void gameObjectCollision(string collisionObject){
+      int startHealth = health;
+      // RectTransform rt = healthIndicator.GetComponent<RectTransform>();
+
+      switch(collisionObject){
+        case "bat":
+          health--;
+          // healthBar.text = "Count: " + health.ToString();
+          break;
+        default:
+          Debug.Log("Obstical Not Known");
+          break;
+      }
+
+      if(health != startHealth){
+        if(health == 3){
+
+        }else if(health == 2){
+          // m_Image.sprite = m_Sprite;
+          Debug.Log("You now have two health");
+        }else if(health == 1){
+          Debug.Log("You now have one health");
+        }else if(health == 0){
+          Debug.Log("You are dead");
+        }
+      }
+      if(health == 0){
+        //TRIGGER GAME OVER
+        gameOver();
+      }
+
+    }
+
 
     void Update() {
       RaycastHit2D hit;
+
+      timeRemaining -= Time.deltaTime;
+      updateTimeText();
+      if ( timeRemaining < 0 )
+      {
+        updateTimeText();
+        gameOver();
+      }
 
       //Check if we are running either in the Unity editor or in a standalone build.
       #if UNITY_STANDALONE || UNITY_WEBPLAYER
@@ -41,11 +131,17 @@ public class PlayerMovement : MonoBehaviour {
               break;
           case Direction.Left:
               hit = Physics2D.Raycast(transform.position, Vector2.left, 1);
+
               if(hit.collider == null){
                 pos = transform.position + Vector3.left;
               }
-              else{
+              else if(hit.collider.name == "Tilemap"){
                 dir = Direction.None;
+              }
+              else{
+                pos = transform.position + Vector3.left;
+                hit.collider.gameObject.SetActive(false);
+                gameObjectCollision(hit.collider.name);
               }
               break;
           case Direction.Right:
@@ -53,17 +149,28 @@ public class PlayerMovement : MonoBehaviour {
               if(hit.collider == null){
                 pos = transform.position + Vector3.right;
               }
-              else{
+              else if(hit.collider.name == "Tilemap"){
                 dir = Direction.None;
+              }
+              else{
+                pos = transform.position + Vector3.right;
+                hit.collider.gameObject.SetActive(false);
+                gameObjectCollision(hit.collider.name);
               }
               break;
           case Direction.Up:
               hit = Physics2D.Raycast(transform.position, Vector2.up, 1);
+
               if(hit.collider == null){
                 pos = transform.position + Vector3.up;
               }
-              else{
+              else if(hit.collider.name == "Tilemap"){
                 dir = Direction.None;
+              }
+              else{
+                pos = transform.position + Vector3.up;
+                hit.collider.gameObject.SetActive(false);
+                gameObjectCollision(hit.collider.name);
               }
               break;
           case Direction.Down:
@@ -71,8 +178,13 @@ public class PlayerMovement : MonoBehaviour {
               if(hit.collider == null){
                 pos = transform.position + Vector3.down;
               }
-              else{
+              else if(hit.collider.name == "Tilemap"){
                 dir = Direction.None;
+              }
+              else{
+                pos = transform.position + Vector3.down;
+                hit.collider.gameObject.SetActive(false);
+                gameObjectCollision(hit.collider.name);
               }
               break;
           default:
@@ -126,8 +238,13 @@ public class PlayerMovement : MonoBehaviour {
               if(hit.collider == null){
                 pos = transform.position + Vector3.left;
               }
-              else{
+              else if(hit.collider.name == "Tilemap"){
                 dir = Direction.None;
+              }
+              else{
+                pos = transform.position + Vector3.left;
+                hit.collider.gameObject.SetActive(false);
+                gameObjectCollision(hit.collider.name);
               }
               break;
           case Direction.Right:
@@ -135,8 +252,13 @@ public class PlayerMovement : MonoBehaviour {
               if(hit.collider == null){
                 pos = transform.position + Vector3.right;
               }
-              else{
+              else if(hit.collider.name == "Tilemap"){
                 dir = Direction.None;
+              }
+              else{
+                pos = transform.position + Vector3.right;
+                hit.collider.gameObject.SetActive(false);
+                gameObjectCollision(hit.collider.name);
               }
               break;
           case Direction.Up:
@@ -144,8 +266,13 @@ public class PlayerMovement : MonoBehaviour {
               if(hit.collider == null){
                 pos = transform.position + Vector3.up;
               }
-              else{
+              else if(hit.collider.name == "Tilemap"){
                 dir = Direction.None;
+              }
+              else{
+                pos = transform.position + Vector3.up;
+                hit.collider.gameObject.SetActive(false);
+                gameObjectCollision(hit.collider.name);
               }
               break;
           case Direction.Down:
@@ -153,8 +280,13 @@ public class PlayerMovement : MonoBehaviour {
               if(hit.collider == null){
                 pos = transform.position + Vector3.down;
               }
-              else{
+              else if(hit.collider.name == "Tilemap"){
                 dir = Direction.None;
+              }
+              else{
+                pos = transform.position + Vector3.down;
+                hit.collider.gameObject.SetActive(false);
+                gameObjectCollision(hit.collider.name);
               }
               break;
           default:
@@ -167,3 +299,5 @@ public class PlayerMovement : MonoBehaviour {
       transform.position = Vector3.MoveTowards(transform.position, pos, step);
     }
 }
+
+
