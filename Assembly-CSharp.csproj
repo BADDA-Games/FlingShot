@@ -55,6 +55,7 @@
   <ItemGroup>
      <Compile Include="Assets\Scripts\CameraMovement.cs" />
      <Compile Include="Assets\Scripts\PlayerMovement.cs" />
+     <Compile Include="Assets\Scripts\ThunkMovement.cs" />
  <Reference Include="Unity.TextMeshPro.Editor">
  <HintPath>/Users/jamesglass/Documents/GitHub/Flingshot/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
  </Reference>
