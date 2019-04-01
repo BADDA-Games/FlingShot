@@ -75,7 +75,11 @@ public class PlayerMovement : MonoBehaviour {
       // RectTransform rt = healthIndicator.GetComponent<RectTransform>();
 
       switch(collisionObject){
-        case "enemy1HP":
+        case "one_health_remove":
+          health--;
+          // healthBar.text = "Count: " + health.ToString();
+          break;
+        case "one_health_no_remove":
           health--;
           // healthBar.text = "Count: " + health.ToString();
           break;
@@ -158,7 +162,12 @@ public class PlayerMovement : MonoBehaviour {
               }
               else{
                 pos = transform.position + Vector3.left;
-                hit.collider.gameObject.SetActive(false);
+                if(hit.collider.tag == "one_health_no_remove"){
+                }
+                else{
+                  hit.collider.gameObject.SetActive(false);
+                }
+
                 gameObjectCollision(hit.collider.tag);
 
               }
@@ -182,7 +191,11 @@ public class PlayerMovement : MonoBehaviour {
               }
               else{
                 pos = transform.position + Vector3.right;
-                hit.collider.gameObject.SetActive(false);
+                if(hit.collider.tag == "one_health_no_remove"){
+                }
+                else{
+                  hit.collider.gameObject.SetActive(false);
+                }
                 gameObjectCollision(hit.collider.tag);
               }
               break;
@@ -206,7 +219,11 @@ public class PlayerMovement : MonoBehaviour {
               }
               else{
                 pos = transform.position + Vector3.up;
-                hit.collider.gameObject.SetActive(false);
+                if(hit.collider.tag == "one_health_no_remove"){
+                }
+                else{
+                  hit.collider.gameObject.SetActive(false);
+                }
                 gameObjectCollision(hit.collider.tag);
               }
               break;
@@ -229,7 +246,11 @@ public class PlayerMovement : MonoBehaviour {
               }
               else{
                 pos = transform.position + Vector3.down;
-                hit.collider.gameObject.SetActive(false);
+                if(hit.collider.tag == "one_health_no_remove"){
+                }
+                else{
+                  hit.collider.gameObject.SetActive(false);
+                }
                 gameObjectCollision(hit.collider.tag);
               }
               break;
@@ -298,7 +319,11 @@ public class PlayerMovement : MonoBehaviour {
               }
               else{
                 pos = transform.position + Vector3.left;
-                hit.collider.gameObject.SetActive(false);
+                if(hit.collider.tag == "one_health_no_remove"){
+                }
+                else{
+                  hit.collider.gameObject.SetActive(false);
+                }
                 gameObjectCollision(hit.collider.tag);
               }
               break;
@@ -321,7 +346,11 @@ public class PlayerMovement : MonoBehaviour {
               }
               else{
                 pos = transform.position + Vector3.right;
-                hit.collider.gameObject.SetActive(false);
+                if(hit.collider.tag == "one_health_no_remove"){
+                }
+                else{
+                  hit.collider.gameObject.SetActive(false);
+                }
                 gameObjectCollision(hit.collider.tag);
               }
               break;
@@ -344,7 +373,11 @@ public class PlayerMovement : MonoBehaviour {
               }
               else{
                 pos = transform.position + Vector3.up;
-                hit.collider.gameObject.SetActive(false);
+                if(hit.collider.tag == "one_health_no_remove"){
+                }
+                else{
+                  hit.collider.gameObject.SetActive(false);
+                }
                 gameObjectCollision(hit.collider.tag);
               }
               break;
@@ -367,7 +400,11 @@ public class PlayerMovement : MonoBehaviour {
               }
               else{
                 pos = transform.position + Vector3.down;
-                hit.collider.gameObject.SetActive(false);
+                if(hit.collider.tag == "one_health_no_remove"){
+                }
+                else{
+                  hit.collider.gameObject.SetActive(false);
+                }
                 gameObjectCollision(hit.collider.tag);
               }
           default:

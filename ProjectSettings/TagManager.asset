@@ -6,6 +6,8 @@ TagManager:
   tags:
   - player
   - enemy1HP
+  - one_health_no_remove
+  - one_health_remove
   layers:
   - Default
   - TransparentFX
