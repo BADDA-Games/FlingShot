@@ -2258,7 +2258,7 @@ GameObject:
   - component: {fileID: 508099710}
   m_Layer: 0
   m_Name: ghost
-  m_TagString: enemy1HP
+  m_TagString: one_health_remove
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3873,17 +3873,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 260d1b2a4386845e698a4504ecff2fc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tmapSize: {x: 0, y: 0, z: 0}
-  puzzle: {fileID: 0}
-  wall: {fileID: 0}
 --- !u!1 &1352868901
 GameObject:
   m_ObjectHideFlags: 0
@@ -4302,17 +4291,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 260d1b2a4386845e698a4504ecff2fc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tmapSize: {x: 0, y: 0, z: 0}
-  puzzle: {fileID: 0}
-  wall: {fileID: 0}
 --- !u!1 &1820809158
 GameObject:
   m_ObjectHideFlags: 0
