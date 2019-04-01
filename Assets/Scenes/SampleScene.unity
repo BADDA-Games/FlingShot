@@ -3877,6 +3877,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
   tmapSize: {x: 0, y: 0, z: 0}
   puzzle: {fileID: 0}
   wall: {fileID: 0}
@@ -4302,6 +4306,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Name: 
+  m_EditorClassIdentifier: 
   tmapSize: {x: 0, y: 0, z: 0}
   puzzle: {fileID: 0}
   wall: {fileID: 0}
@@ -4456,7 +4464,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: New Text
+  m_Text: levelNum
 --- !u!222 &1977250077
 CanvasRenderer:
   m_ObjectHideFlags: 0
