@@ -26,40 +26,50 @@ public class BoardCreator : MonoBehaviour{
       Vector3Int coordinate = puzzle.WorldToCell(transform.position);
       //manually put in map.
       //TODO Replace with call to algo eventually
-      puzzleMap = new int[,] {{0,0,0,0,1,1,1,0,0,0,0},
-      {1,1,1,1,1,0,1,1,1,1,1},
-      {1,0,0,0,0,0,0,0,0,0,1},
-      {1,0,0,0,0,0,0,0,0,0,1},
-      {1,0,0,0,0,0,0,0,0,0,1},
-      {1,0,0,0,0,0,0,0,0,0,1},
-      {1,0,0,0,0,0,0,0,0,0,1},
-      {1,0,0,0,0,0,0,0,0,0,1},
-      {1,0,0,0,0,0,0,0,0,0,1},
-      {1,0,0,0,0,0,0,0,0,0,1},
-      {1,0,0,0,0,0,0,0,0,0,1},
-      {1,0,0,0,0,0,0,0,0,0,1},
-      {1,0,0,0,0,0,0,0,0,0,1},
-      {1,0,0,0,0,0,0,0,0,0,1},
-      {1,0,0,0,0,0,0,0,0,0,1},
-      {1,0,0,0,0,0,0,0,0,0,1},
-      {1,0,0,0,0,0,0,0,0,0,1},
-      {1,0,0,0,0,0,0,0,0,0,1},
-      {1,1,1,1,1,0,1,1,1,1,1},
-      {0,0,0,0,1,1,1,0,0,0,0}};
+      Algorithm.Algorithm a = new Algorithm.Algorithm();
+      puzzleMap = a.Generate();
+      //puzzleMap[0,0] = 1;
+      // puzzleMap = new int[,] {{0,0,0,0,1,1,1,0,0,0,0},
+      // {1,1,1,1,1,0,1,1,1,1,1},
+      // {1,0,0,0,0,0,0,0,0,0,1},
+      // {1,0,0,0,0,0,0,0,0,0,1},
+      // {1,0,0,0,0,0,0,0,0,0,1},
+      // {1,0,0,0,0,0,0,0,0,0,1},
+      // {1,0,0,0,0,0,0,0,0,0,1},
+      // {1,0,0,0,0,0,0,0,0,0,1},
+      // {1,0,0,0,0,0,0,0,0,0,1},
+      // {1,0,0,0,0,0,0,0,0,0,1},
+      // {1,0,0,0,0,0,0,0,0,0,1},
+      // {1,0,0,0,0,0,0,0,0,0,1},
+      // {1,0,0,0,0,0,0,0,0,0,1},
+      // {1,0,0,0,0,0,0,0,0,0,1},
+      // {1,0,0,0,0,0,0,0,0,0,1},
+      // {1,0,0,0,0,0,0,0,0,0,1},
+      // {1,0,0,0,0,0,0,0,0,0,1},
+      // {1,0,0,0,0,0,0,0,0,0,1},
+      // {1,1,1,1,1,1,1,1,1,1,1}};
       //TODO make algo that decides which wall texture to use
       //for loops check where the walls are and adds them to tilemap
       for(int i = 0; i < width; i++)
       {
-        for(int j = 0; j <= height+1; j++)
+        coordinate = puzzle.WorldToCell(transform.position); //resets possition with respect to the world
+        coordinate.x = coordinate.x+i-5;
+        coordinate.y += 9;
+        for(int j = 0; j < height; j++)
         {
           coordinate.y --;
+          Debug.Log(j+" "+i);
+          // if(j == 0)
+          // {
+          //   puzzle.SetTile(coordinate, wall);
+          // }
           if(puzzleMap[j,i] == 1)
           {
             puzzle.SetTile(coordinate, wall);
           }
         }
-        coordinate = puzzle.WorldToCell(transform.position); //resets possition with respect to the world
-        coordinate.x = coordinate.x+i+1;
+        //coordinate = puzzle.WorldToCell(transform.position); //resets possition with respect to the world
+        //coordinate.x = coordinate.x+i+1;
       }
     }
 

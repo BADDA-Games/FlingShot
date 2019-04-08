@@ -51,26 +51,26 @@ namespace Algorithm
             int[,] fullMap = new int[height + 2, width + 2];
             int[,] cellArray = gg.GetCellArray();
 
-            for(int i = 0; i < width; i++)
+            for(int i = 0; i < height; i++)
             {
-                for(int j = 0; j < height; j++)
+                for(int j = 0; j < width; j++)
                 {
-                    fullMap[i + 1, j + 1] = cellArray[i, j];
+                    fullMap[i + 1, j + 1] = cellArray[j, i];
                 }
             }
             for(int i = 0; i < width + 2; i++)
             {
-                fullMap[i, 0] = 1;
-                fullMap[i, height + 1] = 1;
+                fullMap[0, i] = 1;
+                fullMap[height+1, i] = 1;
             }
             for (int j = 1; j < height + 1; j++)
             {
-                fullMap[0, j] = 1;
-                fullMap[width + 1, j] = 1;
+                fullMap[j, 0] = 1;
+                fullMap[j, width + 1] = 1;
             }
-            fullMap[width / 2 + 1, 0] = 0;
+            fullMap[0, width / 2 + 1] = 0;
 
-            return fullMap;
+             return fullMap;
         }
 
         // **RESOURCES**
@@ -285,7 +285,7 @@ namespace Algorithm
                 valid = true;
                 copy = true;
             }
-           
+
         }
     }
 }
