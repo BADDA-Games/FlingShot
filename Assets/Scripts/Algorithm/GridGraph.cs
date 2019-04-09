@@ -579,16 +579,36 @@ namespace Algorithm
             return dirs;
         }
 
+        // Not gonna change this one it's hilarious
+
+        /// <summary> 
+        /// Ises the in grid.
+        /// </summary>
+        /// <returns><c>true</c>, if in grid was ised, <c>false</c> otherwise.</returns>
+        /// <param name="p">P.</param>
         private bool IsInGrid(Pair p)
         {
             return IsInGrid(p.Item1, p.Item2);
         }
 
+        /// <summary>
+        /// Ises the in grid.
+        /// </summary>
+        /// <returns><c>true</c>, if in grid was ised, <c>false</c> otherwise.</returns>
+        /// <param name="x">The x coordinate.</param>
+        /// <param name="y">The y coordinate.</param>
         private bool IsInGrid(int x, int y)
         {
             return 0 <= x && x < Width && 0 <= y && y < Height;
         }
 
+        /// <summary>
+        /// A step in the build process. Don't worry about the whole pipeline
+        /// too much beyond that it works. It probably won't be refactored ever.
+        /// </summary>
+        /// <returns>The end point of the new path.</returns>
+        /// <param name="f">The from cell.</param>
+        /// <param name="t">The to cell.</param>
         private Pair Build(Pair f, Pair t)
         {
             AddEdge(f, t);
@@ -648,6 +668,11 @@ namespace Algorithm
             return t;
         }
 
+        /// <summary>
+        /// Adds the edge from f to t to the grid.
+        /// </summary>
+        /// <param name="f">Start point.</param>
+        /// <param name="t">End point.</param>
         private void AddEdge(Pair f, Pair t)
         {
             char type = PathOrientation(f, t);
@@ -674,6 +699,17 @@ namespace Algorithm
             }
         }
 
+        /// <summary>
+        /// Returns a character representing the relationship between
+        /// points f and t.
+        /// H - Horizontal, same y value
+        /// V - Vertical, same x value
+        /// P - f and t are the same, same x AND y
+        /// N - none of the above
+        /// </summary>
+        /// <returns>The orientation.</returns>
+        /// <param name="f">F.</param>
+        /// <param name="t">T.</param>
         private char PathOrientation(Pair f, Pair t)
         {
             if(f.Item1 == t.Item1) // Same x values
@@ -683,6 +719,9 @@ namespace Algorithm
             return f.Item2 == t.Item2 ? 'H' : 'N';
         }
 
+        /// <summary>
+        /// Part of the build pipeline. Handles traversal and auxillary info.
+        /// </summary>
         private void Traverse()
         {
             ResetLists();
@@ -691,6 +730,10 @@ namespace Algorithm
             UpdateMovableDirections();
         }
 
+        /// <summary>
+        /// Resets variables which will be updated and refreshed during the
+        /// build pipeline. Don't use otherwise pls.
+        /// </summary>
         private void ResetLists()
         {
             adj = new PairList[Width, Height];
@@ -711,6 +754,11 @@ namespace Algorithm
             }
         }
 
+        /// <summary>
+        /// Performs a breadth-first-search of the graph and updates
+        /// any associated variables which may have changed with new edge
+        /// </summary>
+        /// <param name="s">The starting point</param>
         private void BFS(Pair s)
         {
             Distance.Add(Tuple.Create(Start, 0));
@@ -720,6 +768,12 @@ namespace Algorithm
             BFSRecursive(queue, seen, visited);
         }
 
+        /// <summary>
+        /// BFSRs the ecursive. Lol it's the recursive part
+        /// </summary>
+        /// <param name="queue">Queue.</param>
+        /// <param name="seen">Seen.</param>
+        /// <param name="visited">Visited.</param>
         private void BFSRecursive(PairList queue, PairList seen, PairList visited)
         {
             PairList q = new PairList();
@@ -802,6 +856,12 @@ namespace Algorithm
             }
         }
 
+        /// <summary>
+        /// Simulates movement from a point f in direction.
+        /// </summary>
+        /// <returns>The end point, when it hits a wall.</returns>
+        /// <param name="f">Starting position.</param>
+        /// <param name="direction">Direction to move in.</param>
         private Pair Move(Pair f, char direction)
         {
             if (IsInGrid(f))
@@ -849,6 +909,14 @@ namespace Algorithm
             return null;
         }
 
+        /// <summary>
+        /// Moves in a direction, but can pass through n number of walls.
+        /// Not the border walls though.
+        /// </summary>
+        /// <returns>The final end point.</returns>
+        /// <param name="f">Starting point.</param>
+        /// <param name="direction">Direction to move in.</param>
+        /// <param name="n">Number of walls we can pass through.</param>
         private Pair MoveThroughWalls(Pair f, char direction, int n)
         {
             if (IsInGrid(f))
@@ -953,6 +1021,12 @@ namespace Algorithm
             return null;
         }
 
+        /// <summary>
+        /// f can move to t. Update adjacency and reverse lists to
+        /// keep track of this.
+        /// </summary>
+        /// <param name="f">From point.</param>
+        /// <param name="t">To point.</param>
         private void AddToLists(Pair f, Pair t)
         {
             int f0 = f.Item1;
@@ -963,6 +1037,9 @@ namespace Algorithm
             rev[t0, t1] = Util.AddIfMissing(f, rev[t0, t1]);
         }
 
+        /// <summary>
+        /// For every vertex, mark its walls
+        /// </summary>
         private void MarkWalls()
         {
             foreach(Pair p in vertices)
@@ -971,6 +1048,12 @@ namespace Algorithm
             }
         }
 
+        /// <summary>
+        /// Marks the walls of a single vertex. These must be walls because
+        /// we can get to the vertex, so we can collide with all walls touching
+        /// that vertex directly.
+        /// </summary>
+        /// <param name="p">P.</param>
         private void MarkWalls(Pair p)
         {
             int x = p.Item1;
@@ -997,6 +1080,9 @@ namespace Algorithm
             }
         }
 
+        /// <summary>
+        /// This is for algorithm movement options. Don't worry about it. 
+        /// </summary>
         private void UpdateMovableDirections()
         {
             foreach(Pair v in vertices)
@@ -1026,6 +1112,11 @@ namespace Algorithm
             }
         }
 
+        /// <summary>
+        /// Finds all vertices with specified x coordinate
+        /// </summary>
+        /// <returns>A list of all vertices of kind (x, _).</returns>
+        /// <param name="x">The x coordinate.</param>
         private PairList VerticesX(int x)
         {
             PairList list = new PairList();
@@ -1039,6 +1130,11 @@ namespace Algorithm
             return list;
         }
 
+        /// <summary>
+        /// Finds all vertices with specificed y coordinate
+        /// </summary>
+        /// <returns>A list of all vertices of kind (_, y).</returns>
+        /// <param name="y">The y coordinate.</param>
         private PairList VerticesY(int y)
         {
             PairList list = new PairList();
@@ -1052,6 +1148,12 @@ namespace Algorithm
             return list;
         }
 
+        /// <summary>
+        /// Finds the length of the shortest path from start to any element in ends
+        /// </summary>
+        /// <returns>That length.</returns>
+        /// <param name="start">Starting point.</param>
+        /// <param name="ends">List of allowed ending points.</param>
         private int ShortestPaths(Pair start, PairList ends)
         {
             if (vertices.Contains(start))
@@ -1095,6 +1197,11 @@ namespace Algorithm
             return -1;
         }
 
+        /// <summary>
+        /// Determines if the exit can be reached from p following our movement rules
+        /// </summary>
+        /// <returns><c>true</c>, if exit can be reached, <c>false</c> otherwise.</returns>
+        /// <param name="p">A vertex.</param>
         private bool PossibleFromLocation(Pair p)
         {
             if (!IsInGrid(p))
@@ -1103,6 +1210,10 @@ namespace Algorithm
             }
             return FastestPathFrom(p) != -1;
         }
+
+        //Everything below this is for additional wall/path placement.
+        //It is called from DetermineExtraPaths.
+        //It is a solved problem. Don't mess with it, okay?
 
         private PairList TightRange()
         {

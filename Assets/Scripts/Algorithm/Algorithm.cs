@@ -50,7 +50,14 @@ namespace Algorithm
               gg = new GridGraph(width, height);
               Build();
             }
-            Printer.PrintGridGraph(gg);
+            for(int i = 0; i < Level; i++)
+            {
+                // This offsets the random number a different, fixed
+                // amount of times. We do this so that if two seed paths
+                // stumble upon the same seed and start producing the same maze
+                // then the offset will prevent future concurrency
+                rand.Generate(0, 1);
+            }
             Level++;
             int[,] fullMap = new int[height + 2, width + 2];
             int[,] cellArray = gg.GetCellArray();

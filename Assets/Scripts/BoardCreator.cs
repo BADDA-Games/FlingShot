@@ -12,7 +12,7 @@ public class BoardCreator : MonoBehaviour{
   public Tilemap puzzle;
   public Tile wall;
 
-  Algorithm.Algorithm a = new Algorithm.Algorithm(1345);
+  Algorithm.Algorithm a = new Algorithm.Algorithm();
 
   int width;
   int height;
