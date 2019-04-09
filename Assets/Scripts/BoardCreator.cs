@@ -36,7 +36,6 @@ public class BoardCreator : MonoBehaviour{
         for(int j = 0; j < height; j++)
         {
           coordinate.y --;
-          Debug.Log(j+" "+i);
           if(puzzleMap[j,i] == 1)
           {
             puzzle.SetTile(coordinate, wall);

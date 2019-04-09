@@ -46,6 +46,10 @@ namespace Algorithm
         {
             gg = new GridGraph(width, height);
             Build();
+            while(!gg.Possible()){
+              gg = new GridGraph(width, height);
+              Build();
+            }
             Printer.PrintGridGraph(gg);
             Level++;
             int[,] fullMap = new int[height + 2, width + 2];
