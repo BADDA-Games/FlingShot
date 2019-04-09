@@ -42,6 +42,10 @@ public class BoardCreator : MonoBehaviour{
           }
         }
       }
+      // coordinate = puzzle.WorldToCell(transform.position);
+      // coordinate.x +=4-5;
+      // coordinate.y += 6;
+      // puzzle.SetTile(coordinate, wall);
     }
   }
 
