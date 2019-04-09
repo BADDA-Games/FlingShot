@@ -24,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
 
     public GameObject PlayerBody;
     private Animator animate;
+    private BoardCreator board;
 
     void updateLevelText()
     {
@@ -78,6 +79,7 @@ public class PlayerMovement : MonoBehaviour
         updateLevelText();
 
         animate = gameObject.GetComponent<Animator>();
+        board = (BoardCreator)GameObject.Find("BoardCreator").GetComponent(typeof(BoardCreator));
     }
 
     void gameObjectCollision(Collider2D collisionObject)
@@ -91,10 +93,12 @@ public class PlayerMovement : MonoBehaviour
             currentLevel++;
             updateLevelText();
             pos = transform.position;
+            board.clearMap(true);
+            board.doSim();
 
-            //RYANS GENERATE
-            // collisionObject.gameObject.SetActive(false);
-        }
+    //RYANS GENERATE
+    // collisionObject.gameObject.SetActive(false);
+}
         else
         {
             // Debug.Log(collisionObject);

@@ -12,16 +12,15 @@ public class BoardCreator : MonoBehaviour{
   public Tilemap puzzle;
   public Tile wall;
 
-  Algorithm.Algorithm a = new Algorithm.Algorithm();
+  private Algorithm.Algorithm a;
 
   int width;
   int height;
+  int seed;
 
   public void doSim()
   {
     //clearMap(false);
-    width = 11;
-    height = 18;
     if(puzzleMap == null)
     {
       Vector3Int coordinate = puzzle.WorldToCell(transform.position);
@@ -30,7 +29,7 @@ public class BoardCreator : MonoBehaviour{
       //for loops check where the walls are and adds them to tilemap
       for(int i = 0; i < width; i++)
       {
-        coordinate = puzzle.WorldToCell(transform.position); //resets possition with respect to the world
+        coordinate = puzzle.WorldToCell(transform.position); //resets position with respect to the world
         coordinate.x = coordinate.x+i-5;
         coordinate.y += 9;
         for(int j = 0; j < height; j++)
@@ -49,6 +48,14 @@ public class BoardCreator : MonoBehaviour{
     }
   }
 
+  void Start()
+  {
+      a = new Algorithm.Algorithm();
+      seed = a.Seed;
+      Debug.Log(seed);
+      width = 11;
+      height = 18;
+  }
 
   void Update()
   {
