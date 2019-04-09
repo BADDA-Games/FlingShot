@@ -50,7 +50,8 @@ namespace Algorithm
               gg = new GridGraph(width, height);
               Build();
             }
-            for(int i = 0; i < Level; i++)
+            int times = Level % 199;
+            for(int i = 0; i < times ; i++)
             {
                 // This offsets the random number a different, fixed
                 // amount of times. We do this so that if two seed paths
