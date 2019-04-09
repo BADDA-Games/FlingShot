@@ -42,11 +42,21 @@ namespace Algorithm
             rand = new Random(Seed);
         }
 
+        private bool GoodMap(GridGraph gg)
+        {
+            if(!gg.Possible() || gg.Difficulty() <= 5)
+            {
+                return false;
+            }
+            return true;
+            //TODO make sure there's no trap verties super close to start
+        }
+
         public int[,] Generate()
         {
             gg = new GridGraph(width, height);
             Build();
-            while(!gg.Possible()){
+            while(!GoodMap(gg)){
               gg = new GridGraph(width, height);
               Build();
             }
@@ -82,7 +92,7 @@ namespace Algorithm
             }
             fullMap[0, width / 2 + 1] = 0;
 
-             return fullMap;
+            return fullMap;
         }
 
         // **RESOURCES**

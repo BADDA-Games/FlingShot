@@ -23,28 +23,33 @@ public class BoardCreator : MonoBehaviour{
     //clearMap(false);
     if(puzzleMap == null)
     {
-      Vector3Int coordinate = puzzle.WorldToCell(transform.position);
       puzzleMap = a.Generate();
-      //TODO make algo that decides which wall texture to use
-      //for loops check where the walls are and adds them to tilemap
-      for(int i = 0; i < width; i++)
-      {
-        coordinate = puzzle.WorldToCell(transform.position); //resets position with respect to the world
-        coordinate.x = coordinate.x+i-5;
-        coordinate.y += 9;
-        for(int j = 0; j < height; j++)
-        {
-          coordinate.y --;
-          if(puzzleMap[j,i] == 1)
-          {
-            puzzle.SetTile(coordinate, wall);
-          }
-        }
-      }
+      PlacePuzzle(puzzleMap);
       // coordinate = puzzle.WorldToCell(transform.position);
       // coordinate.x +=4-5;
       // coordinate.y += 6;
       // puzzle.SetTile(coordinate, wall);
+    }
+  }
+
+  void PlacePuzzle(int[,] map)
+  {
+    //TODO make algo that decides which wall texture to use
+    //for loops check where the walls are and adds them to tilemap
+    Vector3Int coordinate = puzzle.WorldToCell(transform.position);
+    for(int i = 0; i < width; i++)
+    {
+      coordinate = puzzle.WorldToCell(transform.position); //resets position with respect to the world
+      coordinate.x += i-5;
+      coordinate.y += 9;
+      for(int j = 0; j < height; j++)
+      {
+        coordinate.y --;
+        if(puzzleMap[j,i] == 1)
+        {
+          puzzle.SetTile(coordinate, wall);
+        }
+      }
     }
   }
 

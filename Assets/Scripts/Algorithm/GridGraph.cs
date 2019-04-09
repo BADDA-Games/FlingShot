@@ -504,7 +504,7 @@ namespace Algorithm
         public float Difficulty()
         {
             //TODO write difficulty
-            return (float) -1.0;
+            return FastestPath();
         }
 
         /// <summary>
