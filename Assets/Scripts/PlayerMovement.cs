@@ -82,23 +82,28 @@ public class PlayerMovement : MonoBehaviour
         board = (BoardCreator)GameObject.Find("BoardCreator").GetComponent(typeof(BoardCreator));
     }
 
+    void NextLevel()
+    {
+        dir = Direction.None;
+        gameObject.transform.position = originalPos;
+        currentLevel++;
+        updateLevelText();
+        pos = transform.position;
+        board.clearMap(true);
+        board.doSim();
+    }
+
     void gameObjectCollision(Collider2D collisionObject)
     {
         int startHealth = health;
 
         if (collisionObject.name == "end")
         {
-            dir = Direction.None;
-            gameObject.transform.position = originalPos;
-            currentLevel++;
-            updateLevelText();
-            pos = transform.position;
-            board.clearMap(true);
-            board.doSim();
+            NextLevel();
 
-    //RYANS GENERATE
-    // collisionObject.gameObject.SetActive(false);
-}
+            //RYANS GENERATE
+            // collisionObject.gameObject.SetActive(false);
+        }
         else
         {
             // Debug.Log(collisionObject);
@@ -117,7 +122,7 @@ public class PlayerMovement : MonoBehaviour
                     // healthBar.text = "Count: " + health.ToString();
                     break;
                 default:
-                    Debug.Log("Obstical Not Known");
+                    Debug.Log("Obsticle Not Known");
                     break;
             }
         }
@@ -157,8 +162,14 @@ public class PlayerMovement : MonoBehaviour
         updateTimeText();
         if (timeRemaining < 0)
         {
-            updateTimeText();
-            gameOver();
+            health--;
+            if(health <= 0){
+              updateTimeText();
+              gameOver();
+            }
+            else{
+              NextLevel();
+            }
         }
 
 #if UNITY_STANDALONE || UNITY_WEBPLAYER
