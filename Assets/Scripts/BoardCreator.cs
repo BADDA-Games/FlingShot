@@ -17,6 +17,7 @@ public class BoardCreator : MonoBehaviour{
   int width;
   int height;
   int seed;
+  int[,,] maps;
 
   public void doSim()
   {
@@ -45,7 +46,7 @@ public class BoardCreator : MonoBehaviour{
       for(int j = 0; j < height; j++)
       {
         coordinate.y --;
-        if(puzzleMap[j,i] == 1)
+        if(map[j,i] == 1)
         {
           puzzle.SetTile(coordinate, wall);
         }

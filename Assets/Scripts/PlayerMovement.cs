@@ -309,7 +309,7 @@ public class PlayerMovement : MonoBehaviour
                 }
                 break;
             default:
-                Debug.Log("Error no Direction assigned...");
+                //Debug.Log("Error no Direction assigned...");
                 break;
         }
 

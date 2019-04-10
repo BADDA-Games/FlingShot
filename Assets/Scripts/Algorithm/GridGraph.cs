@@ -762,8 +762,8 @@ namespace Algorithm
         private void BFS(Pair s)
         {
             Distance.Add(Tuple.Create(Start, 0));
-            PairList queue = new PairList { Start };
-            PairList seen = new PairList { Start };
+            PairList queue = new PairList { s };
+            PairList seen = new PairList { s };
             PairList visited = new PairList();
             BFSRecursive(queue, seen, visited);
         }

@@ -42,9 +42,9 @@ namespace Algorithm
             rand = new Random(Seed);
         }
 
-        private bool GoodMap(GridGraph gg)
+        private bool GoodMap(GridGraph g)
         {
-            if(!gg.Possible() || gg.Difficulty() <= 5)
+            if(!g.Possible() || g.Difficulty() <= 5)
             {
                 return false;
             }
