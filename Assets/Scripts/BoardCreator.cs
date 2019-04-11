@@ -28,6 +28,7 @@ public class BoardCreator : MonoBehaviour{
 
     public void NextLevel()
     {
+        Debug.Log(maps.Count);
         if(puzzleMap == null)
         {
             while(maps.Count <= 0)
@@ -47,8 +48,9 @@ public class BoardCreator : MonoBehaviour{
         {
             if (maps.Count < MAX_QUEUE_SIZE)
             {
+                int[,] nextMap = a.Generate();
                 mutex.WaitOne();
-                maps.Enqueue(a.Generate());
+                maps.Enqueue(nextMap);
                 mutex.ReleaseMutex();
             }
             else
