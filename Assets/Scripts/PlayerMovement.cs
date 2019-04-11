@@ -232,87 +232,93 @@ public class PlayerMovement : MonoBehaviour
       }
 #endif
 
-        switch (dir)
+        if (board.MapLoaded())
         {
-            case Direction.Left:
-                hit = Physics2D.Raycast(transform.position, Vector2.left, 1);
+            switch (dir)
+            {
+                case Direction.Left:
+                    hit = Physics2D.Raycast(transform.position, Vector2.left, 1);
 
-                if (hit.collider == null)
-                {
-                    pos = transform.position + Vector3.left;
-                    animate.Play("Moving");
-                }
-                else if (hit.collider.name == "walls")
-                {
-                    dir = Direction.None;
-                    animate.Play("Body_Compress_Left");
-                }
-                else
-                {
-                    pos = transform.position + Vector3.left;
-                    gameObjectCollision(hit.collider);
-                }
-                break;
-            case Direction.Right:
-                hit = Physics2D.Raycast(transform.position, Vector2.right, 1);
-                if (hit.collider == null)
-                {
-                    pos = transform.position + Vector3.right;
-                    animate.Play("Moving");
-                }
-                else if (hit.collider.name == "walls")
-                {
-                    dir = Direction.None;
-                    animate.Play("Body_Compress_Right");
-                }
-                else
-                {
-                    pos = transform.position + Vector3.right;
-                    gameObjectCollision(hit.collider);
-                }
-                break;
-            case Direction.Up:
-                hit = Physics2D.Raycast(transform.position, Vector2.up, 1);
+                    if (hit.collider == null)
+                    {
+                        pos = transform.position + Vector3.left;
+                        animate.Play("Moving");
+                    }
+                    else if (hit.collider.name == "walls")
+                    {
+                        dir = Direction.None;
+                        animate.Play("Body_Compress_Left");
+                    }
+                    else
+                    {
+                        pos = transform.position + Vector3.left;
+                        gameObjectCollision(hit.collider);
+                    }
+                    break;
+                case Direction.Right:
+                    hit = Physics2D.Raycast(transform.position, Vector2.right, 1);
+                    if (hit.collider == null)
+                    {
+                        pos = transform.position + Vector3.right;
+                        animate.Play("Moving");
+                    }
+                    else if (hit.collider.name == "walls")
+                    {
+                        dir = Direction.None;
+                        animate.Play("Body_Compress_Right");
+                    }
+                    else
+                    {
+                        pos = transform.position + Vector3.right;
+                        gameObjectCollision(hit.collider);
+                    }
+                    break;
+                case Direction.Up:
+                    hit = Physics2D.Raycast(transform.position, Vector2.up, 1);
 
-                if (hit.collider == null)
-                {
-                    pos = transform.position + Vector3.up;
-                    animate.Play("Moving");
-                }
-                else if (hit.collider.name == "walls")
-                {
-                    dir = Direction.None;
-                    animate.Play("Body_Compress_Up");
-                }
-                else
-                {
-                    pos = transform.position + Vector3.up;
-                    gameObjectCollision(hit.collider);
-                }
-                break;
-            case Direction.Down:
-                hit = Physics2D.Raycast(transform.position, Vector2.down, 1);
-                if (hit.collider == null)
-                {
-                    pos = transform.position + Vector3.down;
-                    animate.Play("Moving");
-                }
-                else if (hit.collider.name == "walls")
-                {
-                    dir = Direction.None;
-                    animate.Play("Body_Compress_Down");
-                }
-                else
-                {
-                    pos = transform.position + Vector3.down;
-                    gameObjectCollision(hit.collider);
-                }
-                break;
-            default:
-                //Debug.Log("Error no Direction assigned...");
-                break;
+                    if (hit.collider == null)
+                    {
+                        pos = transform.position + Vector3.up;
+                        animate.Play("Moving");
+                    }
+                    else if (hit.collider.name == "walls")
+                    {
+                        dir = Direction.None;
+                        animate.Play("Body_Compress_Up");
+                    }
+                    else
+                    {
+                        pos = transform.position + Vector3.up;
+                        gameObjectCollision(hit.collider);
+                    }
+                    break;
+                case Direction.Down:
+                    hit = Physics2D.Raycast(transform.position, Vector2.down, 1);
+                    if (hit.collider == null)
+                    {
+                        pos = transform.position + Vector3.down;
+                        animate.Play("Moving");
+                    }
+                    else if (hit.collider.name == "walls")
+                    {
+                        dir = Direction.None;
+                        animate.Play("Body_Compress_Down");
+                    }
+                    else
+                    {
+                        pos = transform.position + Vector3.down;
+                        gameObjectCollision(hit.collider);
+                    }
+                    break;
+                default:
+                    //Debug.Log("Error no Direction assigned...");
+                    break;
+            }
         }
-
+        else
+        {
+            dir = Direction.None;
+        }
 
         transform.position = Vector3.MoveTowards(transform.position, pos, step);
     }

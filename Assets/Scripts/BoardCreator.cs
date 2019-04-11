@@ -18,6 +18,7 @@ public class BoardCreator : MonoBehaviour{
     private int width;
     private int height;
     private int seed;
+    private bool loaded;
 
     private Queue<int[,]> maps;
     private Mutex mutex;
@@ -28,7 +29,7 @@ public class BoardCreator : MonoBehaviour{
 
     public void NextLevel()
     {
-        Debug.Log(maps.Count);
+        //Debug.Log(maps.Count);
         if(puzzleMap == null)
         {
             while(maps.Count <= 0)
@@ -39,6 +40,7 @@ public class BoardCreator : MonoBehaviour{
             puzzleMap = maps.Dequeue();
             mutex.ReleaseMutex();
             PlacePuzzle(puzzleMap);
+            loaded = true;
         }
     }
 
@@ -94,6 +96,7 @@ public class BoardCreator : MonoBehaviour{
         Debug.Log(seed);
         width = 11;
         height = 18;
+        loaded = true;
     }
 
     void Update()
@@ -115,5 +118,11 @@ public class BoardCreator : MonoBehaviour{
         {
             puzzleMap = null;
         }
+        loaded = false;
+    }
+
+    public bool MapLoaded()
+    {
+        return loaded;
     }
 }
