@@ -89,8 +89,8 @@ public class PlayerMovement : MonoBehaviour
         currentLevel++;
         updateLevelText();
         pos = transform.position;
-        board.clearMap(true);
-        board.doSim();
+        board.ClearMap(true);
+        board.NextLevel();
     }
 
     void gameObjectCollision(Collider2D collisionObject)

@@ -48,6 +48,14 @@ namespace Algorithm
             {
                 return false;
             }
+            PairList traps = g.TrapVertices();
+            foreach(Pair p in traps)
+            {
+                if(g.Depth(p) <= 3)
+                {
+                    return false;
+                }
+            }
             return true;
             //TODO make sure there's no trap verties super close to start
         }
