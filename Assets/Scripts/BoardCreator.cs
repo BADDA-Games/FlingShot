@@ -24,17 +24,20 @@ public class BoardCreator : MonoBehaviour{
     private Mutex mutex;
     private Thread creator;
 
-    private const int MAX_QUEUE_SIZE = 10;
+    private const int MAX_QUEUE_SIZE = 20;
+    private const int THREAD_SLEEP_TIME = 25;
 
 
     public void NextLevel()
     {
         //Debug.Log(maps.Count);
-        if(puzzleMap == null)
+        if(!loaded)
         {
+            Debug.Log(maps.Count);
             while(maps.Count <= 0)
             {
-                //Wait for other thread to produce a map
+                Thread.Sleep(THREAD_SLEEP_TIME);
+                //Wait for other thread produces a map
             }
             mutex.WaitOne();
             puzzleMap = maps.Dequeue();
@@ -57,7 +60,8 @@ public class BoardCreator : MonoBehaviour{
             }
             else
             {
-                //Wait until other thread to consume a map
+                Thread.Sleep(THREAD_SLEEP_TIME);
+                //Wait until other thread consumes a map
             }
         }
 
@@ -103,21 +107,18 @@ public class BoardCreator : MonoBehaviour{
     {
         if(Input.GetMouseButtonDown(0)) //L click places map
         {
+            ClearMap(true);
             NextLevel();
         }
-        if(Input.GetMouseButtonDown(1)) //R click clears map
-        {
-            ClearMap(true);
-        }
+        //if(Input.GetMouseButtonDown(1)) //R click clears map
+        //{
+        //    ClearMap(true);
+        //}
     }
 
     public void ClearMap(bool complete)
     {
         puzzle.ClearAllTiles();
-        if(complete)
-        {
-            puzzleMap = null;
-        }
         loaded = false;
     }
 

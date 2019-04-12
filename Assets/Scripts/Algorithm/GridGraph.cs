@@ -501,7 +501,7 @@ namespace Algorithm
         /// The difficulty of the GridGraph's adjacency list, based somehow...
         /// </summary>
         /// <returns>A floating point approximation of the difficulty.</returns>
-        public float Difficulty()
+        public int Difficulty()
         {
             //TODO write difficulty
             return FastestPath();

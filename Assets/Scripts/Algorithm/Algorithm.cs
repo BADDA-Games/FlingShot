@@ -44,20 +44,17 @@ namespace Algorithm
 
         private bool GoodMap(GridGraph g)
         {
-            if(!g.Possible() || g.Difficulty() <= 5)
+            // Make static if this takes too long
+            int min = Math.Min(Level / 10 + 5, 8);
+            if(!g.Possible() || g.Difficulty() <= min)
             {
                 return false;
             }
-            PairList traps = g.TrapVertices();
-            foreach(Pair p in traps)
+            if(g.CanGetStuck())
             {
-                if(g.Depth(p) <= 3)
-                {
-                    return false;
-                }
+                return false;
             }
             return true;
-            //TODO make sure there's no trap verties super close to start
         }
 
         public int[,] Generate()
