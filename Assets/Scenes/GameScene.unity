@@ -2416,6 +2416,33 @@ MonoBehaviour:
   tmapSize: {x: 0, y: 0, z: 0}
   puzzle: {fileID: 1061393455}
   wall: {fileID: 11400000, guid: 3ee1c4f266cd2451caf884526effdee4, type: 2}
+  tBar: {fileID: 11400000, guid: 7992a9b1c879a41a5b7333cfd99ba782, type: 2}
+  rBar: {fileID: 11400000, guid: 4506dd2a10c3d4b9dbdaf019f35174b2, type: 2}
+  bBar: {fileID: 11400000, guid: f65c0c90940024079b022282df8d0a77, type: 2}
+  lBar: {fileID: 11400000, guid: 77cb1585b06444f098b47ce6cf6c13aa, type: 2}
+  trBar: {fileID: 11400000, guid: 3960be32e8fd64e1b9d44558e6fc0291, type: 2}
+  brBar: {fileID: 11400000, guid: 48bd63024f7564dbba90efd073964ad9, type: 2}
+  blBar: {fileID: 11400000, guid: a95f40c3d043343aaa083c0f75b1ebc5, type: 2}
+  tlBar: {fileID: 11400000, guid: 4e433b74e759c4994b062cb4d619dfdd, type: 2}
+  tlrBar: {fileID: 11400000, guid: 0e07237bdb0c94fe68b1facd264ae997, type: 2}
+  tblBar: {fileID: 11400000, guid: 789906c4567824575b16de62b9189846, type: 2}
+  tbrBar: {fileID: 11400000, guid: c5f3e558eb2e04a1293692899b428b4b, type: 2}
+  blrBar: {fileID: 11400000, guid: 67d6e25478b544dfdbcb46f46e2ea80b, type: 2}
+  tblrBar: {fileID: 11400000, guid: 3ee1c4f266cd2451caf884526effdee4, type: 2}
+  trRound: {fileID: 11400000, guid: 32ce4b0672cd3415a8d2ddd48b6d7f6c, type: 2}
+  brRound: {fileID: 11400000, guid: 703844b72a5d846fab2aef7fcbbbbe00, type: 2}
+  tlRound: {fileID: 11400000, guid: 8a359bc32b1784f1db9da81a6f1309e3, type: 2}
+  blRound: {fileID: 11400000, guid: 82a5d59e390684ac0ac3248fc323636e, type: 2}
+  tRound: {fileID: 11400000, guid: dc1a72ba446714aba889f5f682a02385, type: 2}
+  rRound: {fileID: 11400000, guid: 56f23d2e7f3e2430bb8ffa53c277b102, type: 2}
+  bRound: {fileID: 11400000, guid: 8296e6c773b144dc6911c6ecc67d012e, type: 2}
+  lRound: {fileID: 11400000, guid: ba974a39925f842218588886a5f8bb26, type: 2}
+  rtRound: {fileID: 11400000, guid: 92481d4c79c474cdea72c32bcd154092, type: 2}
+  lbRound: {fileID: 11400000, guid: 4cbdcf74468104a55bb3efb09baec992, type: 2}
+  rbRound: {fileID: 11400000, guid: 903f367d502c24051b1dc8f409cc99a7, type: 2}
+  ltRound: {fileID: 11400000, guid: 803c3eb17a52b467e83e0ed018fa0d55, type: 2}
+  tbRound: {fileID: 11400000, guid: ff2d4b3ce0ec944b19eada64af845892, type: 2}
+  none: {fileID: 11400000, guid: 682d1458753a54e9aab4e5a8928c25e3, type: 2}
 --- !u!156049354 &435501543
 Grid:
   m_ObjectHideFlags: 0
