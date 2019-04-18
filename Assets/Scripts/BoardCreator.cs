@@ -38,6 +38,24 @@ public class BoardCreator : MonoBehaviour{
     public Tile rbRound;
     public Tile ltRound;
     public Tile tbRound;
+    public Tile tbBar;
+    public Tile lrBar;
+    public Tile tBarblRound;
+    public Tile tBarbrRound;
+    public Tile tBarbRound;
+    public Tile rBartlRound;
+    public Tile rBarblRound;
+    public Tile rBarlRound;
+    public Tile lBartrRound;
+    public Tile lBarbrRound;
+    public Tile lBarrRound;
+    public Tile bBartrRound;
+    public Tile bBartlRound;
+    public Tile bBartRound;
+    public Tile tlBarbrRound;
+    public Tile trBarblRound;
+    public Tile brBartlRound;
+    public Tile blBartrRound;
 
     public Tile none;
 
@@ -55,11 +73,19 @@ public class BoardCreator : MonoBehaviour{
     enum Texture {tBar,rBar,bBar,lBar,trBar,brBar,
       blBar,tlBar,tlrBar,tblBar,tbrBar,blrBar,tblrBar,trRound,
       brRound,blRound,tlRound,tRound,rRound,bRound,lRound,rtRound,
-      lbRound,rbRound,ltRound,tbRound,none,empty}
+      lbRound,rbRound,ltRound,tbRound,tbBar,lrBar,tBarblRound,
+      tBarbrRound,tBarbRound,rBartlRound,rBarblRound,rBarlRound,
+      lBartrRound,lBarbrRound,lBarrRound,bBartrRound,bBartlRound,
+      bBartRound,tlBarbrRound,trBarblRound,brBartlRound,blBartrRound,none,empty}
       //finished: tBar,rBar,bBar,lBar,trBar,brBar,
       //blBar,tlBar,tlrBar,tblBar,tbrBar,blrBar,tblrBar,trRound,
       //brRound,blRound,tlRound,tRound,rRound,bRound,lRound,rtRound,
       //lbRound,rbRound,ltRound,tbRound,none
+
+      //need: tbBar,lrBar,tBarblRound,tBarbrRound,tBarbRound,
+      //rBartlRound,rBarblRound,rBarlRound,lBartrRound,lBarbrRound,
+      //lBarrRound,bBartrRound,bBartlRound,bBartRound,tlBarbrRound,
+      //trBarblRound,brBartlRound,blBartrRound
     private Texture[,] puzzleMap;
 
     private const int MAX_QUEUE_SIZE = 20;
@@ -202,6 +228,61 @@ public class BoardCreator : MonoBehaviour{
                     case Texture.tbRound:
                       puzzle.SetTile(coordinate, tbRound);
                       break;
+
+                    // case Texture.tbBar:
+                    //   puzzle.SetTile(coordinate, tbBar);
+                    //   break;
+                    // case Texture.lrBar:
+                    //   puzzle.SetTile(coordinate, lrBar);
+                    //   break;
+                    // case Texture.tBarblRound:
+                    //   puzzle.SetTile(coordinate, tBarblRound);
+                    //   break;
+                    // case Texture.tBarbrRound:
+                    //   puzzle.SetTile(coordinate, tBarbrRound);
+                    //   break;
+                    // case Texture.tBarbRound:
+                    //   puzzle.SetTile(coordinate, tBarbRound);
+                    //   break;
+                    // case Texture.rBartlRound:
+                    //   puzzle.SetTile(coordinate, rBartrRound);
+                    //   break;
+                    // case Texture.rBarblRound:
+                    //   puzzle.SetTile(coordinate, rBarblRound);
+                    //   break;
+                    // case Texture.rBarlRound:
+                    //   puzzle.SetTile(coordinate, rBarlRound);
+                    //   break;
+                    // case Texture.lBartrRound:
+                    //   puzzle.SetTile(coordinate, lBartrRound);
+                    //   break;
+                    // case Texture.lBarbrRound:
+                    //   puzzle.SetTile(coordinate, lBarbrRound);
+                    //   break;
+                    // case Texture.lBarrRound:
+                    //   puzzle.SetTile(coordinate, lBarrRound);
+                    //   break;
+                    // case Texture.bBartrRound:
+                    //   puzzle.SetTile(coordinate, bBartrRound);
+                    //   break;
+                    // case Texture.bBartlRound:
+                    //   puzzle.SetTile(coordinate, bBartlRound);
+                    //   break;
+                    // case Texture.bBartRound:
+                    //   puzzle.SetTile(coordinate, bBartRound);
+                    //   break;
+                    // case Texture.tlBarbrRound:
+                    //   puzzle.SetTile(coordinate, tlBarbrRound);
+                    //   break;
+                    // case Texture.trBarblRound:
+                    //   puzzle.SetTile(coordinate, trBarblRound);
+                    //   break;
+                    // case Texture.brBartlRound:
+                    //   puzzle.SetTile(coordinate, brBartlRound);
+                    //   break;
+                    // case Texture.blBartrRound:
+                    //   puzzle.SetTile(coordinate, blBartrRound);
+                    //   break;
 
                     case Texture.none:
                       puzzle.SetTile(coordinate, none);
@@ -409,6 +490,99 @@ public class BoardCreator : MonoBehaviour{
                 && surrounding[1,2] && !surrounding[2,0] && surrounding[2,1] && !surrounding[2,2])
                 {
                   textured[j,i] = Texture.tbRound;
+                }
+                else if( !surrounding[0,1] && surrounding[1,0] && surrounding[1,2] && !surrounding[2,1])
+                {
+                  textured[j,i] = Texture.tbBar;
+                }
+                else if( surrounding[0,1] && !surrounding[1,0] && !surrounding[1,2] && surrounding[2,1])
+                {
+                  textured[j,i] = Texture.lrBar;
+                }
+                else if( !surrounding[0,1] && surrounding[1,0] && surrounding[1,2] && !surrounding[2,0]
+                && surrounding[2,1] && surrounding[2,2])
+                {
+                  textured[j,i] = Texture.tBarblRound;
+                }
+                else if(!surrounding[0,1] && surrounding[1,0] && surrounding[1,2] && surrounding[2,0]
+                && surrounding[2,1] && !surrounding[2,2])
+                {
+                  textured[j,i] = Texture.tBarbrRound;
+                }
+                else if(!surrounding[0,1] && surrounding[1,0] && surrounding[1,2] && !surrounding[2,0]
+                && surrounding[2,1] && !surrounding[2,2])
+                {
+                  textured[j,i] = Texture.tBarbRound;
+                }
+                else if( !surrounding[0,0] && surrounding[0,1] && surrounding[1,0]
+                && !surrounding[1,2] && surrounding[2,0] && surrounding[2,1])
+                {
+                  textured[j,i] = Texture.rBartlRound;
+                }
+                else if( surrounding[0,0] && surrounding[0,1] && surrounding[1,0]
+                && !surrounding[1,2] && !surrounding[2,0] && surrounding[2,1])
+                {
+                  textured[j,i] = Texture.rBarblRound;
+                }
+                else if( !surrounding[0,0] && surrounding[0,1] && surrounding[1,0]
+                && !surrounding[1,2] && !surrounding[2,0] && surrounding[2,1])
+                {
+                  textured[j,i] = Texture.rBarlRound;
+                }
+                else if( surrounding[0,1] && !surrounding[0,2] && !surrounding[1,0]
+                && surrounding[1,2] && surrounding[2,1] && surrounding[2,2])
+                {
+                  textured[j,i] = Texture.lBartrRound;
+                }
+                else if( surrounding[0,1] && surrounding[0,2] && !surrounding[1,0]
+                && surrounding[1,2] && surrounding[2,1] && !surrounding[2,2])
+                {
+                  textured[j,i] = Texture.lBarbrRound;
+                }
+                else if( surrounding[0,1] && !surrounding[0,2] && !surrounding[1,0]
+                && surrounding[1,2] && surrounding[2,1] && !surrounding[2,2])
+                {
+                  textured[j,i] = Texture.lBarrRound;
+                }
+                else if( surrounding[0,0] && surrounding[0,1] && !surrounding[0,2]
+                && surrounding[1,0] && surrounding[1,2] && !surrounding[2,1])
+                {
+                  textured[j,i] = Texture.bBartrRound;
+                }
+                else if( !surrounding[0,0] && surrounding[0,1] && surrounding[0,2]
+                && surrounding[1,0] && surrounding[1,2] && !surrounding[2,1])
+                {
+                  textured[j,i] = Texture.bBartlRound;
+                }
+                else if( !surrounding[0,0] && surrounding[0,1] && !surrounding[0,2]
+                && surrounding[1,0] && surrounding[1,2] && !surrounding[2,1])
+                {
+                  textured[j,i] = Texture.bBartRound;
+                }
+                else if( surrounding[0,0] && surrounding[0,1] && surrounding[0,2]
+                && surrounding[1,0] && surrounding[1,2] && !surrounding[2,1])
+                {
+                  textured[j,i] = Texture.tlBarbrRound;
+                }
+                else if( !surrounding[0,1] && !surrounding[1,0] && surrounding[1,2]
+                && surrounding[2,1] && !surrounding[2,2])
+                {
+                  textured[j,i] = Texture.tlBarbrRound;
+                }
+                else if( !surrounding[0,1] && surrounding[1,0] && !surrounding[1,2]
+                && !surrounding[2,1] && surrounding[2,1])
+                {
+                  textured[j,i] = Texture.trBarblRound;
+                }
+                else if( !surrounding[0,0] && surrounding[0,1] && surrounding[1,0]
+                && !surrounding[1,2] && !surrounding[2,1])
+                {
+                  textured[j,i] = Texture.brBartlRound;
+                }
+                else if( surrounding[0,1] && !surrounding[0,2] && !surrounding[1,0]
+                && surrounding[1,2] && !surrounding[2,1])
+                {
+                  textured[j,i] = Texture.blBartrRound;
                 }
 
                 else if(surrounding[2,2] && surrounding[0,0] && surrounding[0,1] && surrounding[1,0]
