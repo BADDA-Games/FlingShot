@@ -2,13 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
+    // static PlayerMovement OnlyPlayer;
+
     private Vector3 pos;
     private float step;
     enum Direction { None, Up, Down, Left, Right }
     private Direction dir;
+
     public int health;
     public string collisionString;
 
@@ -25,6 +29,15 @@ public class PlayerMovement : MonoBehaviour
     public GameObject PlayerBody;
     private Animator animate;
     private BoardCreator board;
+
+    public int score;
+    public int totalTimeTaken;
+
+    private string levelType;
+
+    // void Awake(){
+    //
+    // }
 
     void updateLevelText()
     {
@@ -60,14 +73,28 @@ public class PlayerMovement : MonoBehaviour
     void gameOver()
     {
         //TRIGGER END GAME MENU
+        score = totalTimeTaken * currentLevel;
         Debug.Log("Game Over");
+        Debug.Log("Your score is:");
+        Debug.Log(score);
     }
 
     void Start()
     {
+        // if(OnlyPlayer != null){
+        //   Destroy(this.gameObject);
+        //   return;
+        // }
+        // OnlyPlayer = this;
+        // DontDestroyOnLoad(this.gameObject);
+        // SceneManager.UnloadSceneAsync("BossSceneThunk");
+
+
+
         pos = transform.position;
         step = 1.0f;
         dir = Direction.None;
+        levelType = "normal";
 
         originalPos = gameObject.transform.position;
 
@@ -87,10 +114,31 @@ public class PlayerMovement : MonoBehaviour
         dir = Direction.None;
         gameObject.transform.position = originalPos;
         currentLevel++;
+
+        if(totalTimeTaken >= 0){
+          totalTimeTaken = totalTimeTaken + timeRemainingInt;
+        }
+        // Debug.Log(totalTimeTaken);
         updateLevelText();
         pos = transform.position;
         board.ClearMap(true);
-        board.NextLevel();
+
+        if(currentLevel % 5 == 0){
+          SceneManager.LoadSceneAsync("BossSceneThunk", LoadSceneMode.Additive);
+          // SceneManager.MoveGameObjectToScene(gameObject, SceneManager.GetSceneByName("BossSceneThunk"));
+          levelType = "boss";
+        }
+        else if((currentLevel % 5 == 1) && (currentLevel != 1)){
+          SceneManager.UnloadSceneAsync("BossSceneThunk");
+          // SceneManager.MoveGameObjectToScene(gameObject, SceneManager.GetSceneByName("GameScene"));
+          board.NextLevel();
+          levelType = "normal";
+        }
+        else{
+          board.NextLevel();
+        }
+
+
     }
 
     void gameObjectCollision(Collider2D collisionObject)
@@ -172,73 +220,80 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-#if UNITY_STANDALONE || UNITY_WEBPLAYER
+        #if UNITY_STANDALONE || UNITY_WEBPLAYER
 
-        if (dir == Direction.None)
-        {
-            if (Input.GetKeyDown(KeyCode.LeftArrow))
-            {
-                dir = Direction.Left;
-            }
-            else if (Input.GetKeyDown(KeyCode.RightArrow))
-            {
-                dir = Direction.Right;
-            }
-            else if (Input.GetKeyDown(KeyCode.UpArrow))
-            {
-                dir = Direction.Up;
-            }
-            else if (Input.GetKeyDown(KeyCode.DownArrow))
-            {
-                dir = Direction.Down;
-            }
-        }
-#elif UNITY_IOS || UNITY_ANDROID || UNITY_WP8 || UNITY_IPHONE
+                if (dir == Direction.None)
+                {
+                    if (Input.GetKeyDown(KeyCode.LeftArrow))
+                    {
+                        dir = Direction.Left;
+                        Debug.Log("Left");
+                    }
+                    else if (Input.GetKeyDown(KeyCode.RightArrow))
+                    {
+                        dir = Direction.Right;
+                        Debug.Log("Right");
+                    }
+                    else if (Input.GetKeyDown(KeyCode.UpArrow))
+                    {
+                        dir = Direction.Up;
+                        Debug.Log("Up");
+                    }
+                    else if (Input.GetKeyDown(KeyCode.DownArrow))
+                    {
+                        dir = Direction.Down;
+                        Debug.Log("Down");
+                    }
+                }
+        #elif UNITY_IOS || UNITY_ANDROID || UNITY_WP8 || UNITY_IPHONE
 
-      if(dir == Direction.None){
-        Debug.Log("Waiting for touch");
-        if (Input.touchCount > 0)
-              {
-                  Debug.Log("Test1");
-                  Touch myTouch = Input.touches[0];
+              if(dir == Direction.None){
+                Debug.Log("Waiting for touch");
+                if (Input.touchCount > 0)
+                      {
+                          // Debug.Log("Test1");
+                          Touch myTouch = Input.touches[0];
 
-                  //Check if the phase of that touch equals Began
-                  if (myTouch.phase == TouchPhase.Began)
-                  {
-                    Debug.Log("Touch phase begin");
-                    touchOrigin = myTouch.position;
-                  }
-                  else if (myTouch.phase == TouchPhase.Ended && touchOrigin.x >= 0)
-                  {
-                    Debug.Log("touch release");
-                      //Set touchEnd to equal the position of this touch
-                      Vector2 touchEnd = myTouch.position;
-                      //Calculate the difference between the beginning and end of the touch on the x and y axis.
-                      float x = touchEnd.x - touchOrigin.x;
-                      float y = touchEnd.y - touchOrigin.y;
-                      //Set touchOrigin.x to -1 so that our else if statement will evaluate false and not repeat immediately.
-                      touchOrigin.x = -1;
-                      //Check if the difference along the x axis is greater than the difference along the y axis.
-                      if (Mathf.Abs(x) > Mathf.Abs(y)){
-                        Debug.Log("Horizontal Movement");
-                          dir = x > 0 ? Direction.Right : Direction.Left;
+                          //Check if the phase of that touch equals Began
+                          if (myTouch.phase == TouchPhase.Began)
+                          {
+                            // Debug.Log("Touch phase begin");
+                            touchOrigin = myTouch.position;
+                          }
+                          else if (myTouch.phase == TouchPhase.Ended && touchOrigin.x >= 0)
+                          {
+                            // Debug.Log("touch release");
+                              //Set touchEnd to equal the position of this touch
+                              Vector2 touchEnd = myTouch.position;
+                              //Calculate the difference between the beginning and end of the touch on the x and y axis.
+                              float x = touchEnd.x - touchOrigin.x;
+                              float y = touchEnd.y - touchOrigin.y;
+                              //Set touchOrigin.x to -1 so that our else if statement will evaluate false and not repeat immediately.
+                              touchOrigin.x = -1;
+                              //Check if the difference along the x axis is greater than the difference along the y axis.
+                              if (Mathf.Abs(x) > Mathf.Abs(y)){
+                                // Debug.Log("Horizontal Movement");
+                                  dir = x > 0 ? Direction.Right : Direction.Left;
+                              }
+                              else{
+                                // Debug.Log("Vertical Movement");
+                                  dir = y > 0 ? Direction.Up : Direction.Down;
+                              }
+                          }
                       }
-                      else{
-                        Debug.Log("Vertical Movement");
-                          dir = y > 0 ? Direction.Up : Direction.Down;
-                      }
-                  }
               }
-      }
-#endif
+        #endif
 
-        if (board.MapLoaded())
+        if ((board.MapLoaded()) || (levelType == "boss") )
         {
             switch (dir)
             {
                 case Direction.Left:
                     hit = Physics2D.Raycast(transform.position, Vector2.left, 1);
-
+                    if (hit.collider != null)
+                    {
+                      Debug.Log(hit.collider.name);
+                    }
                     if (hit.collider == null)
                     {
                         pos = transform.position + Vector3.left;
@@ -257,6 +312,10 @@ public class PlayerMovement : MonoBehaviour
                     break;
                 case Direction.Right:
                     hit = Physics2D.Raycast(transform.position, Vector2.right, 1);
+                    if (hit.collider != null)
+                    {
+                      Debug.Log(hit.collider.name);
+                    }
                     if (hit.collider == null)
                     {
                         pos = transform.position + Vector3.right;
@@ -275,6 +334,11 @@ public class PlayerMovement : MonoBehaviour
                     break;
                 case Direction.Up:
                     hit = Physics2D.Raycast(transform.position, Vector2.up, 1);
+                    if (hit.collider != null)
+                    {
+                      Debug.Log(hit.collider.name);
+                    }
+
 
                     if (hit.collider == null)
                     {
@@ -294,6 +358,10 @@ public class PlayerMovement : MonoBehaviour
                     break;
                 case Direction.Down:
                     hit = Physics2D.Raycast(transform.position, Vector2.down, 1);
+                    if (hit.collider != null)
+                    {
+                      Debug.Log(hit.collider.name);
+                    }
                     if (hit.collider == null)
                     {
                         pos = transform.position + Vector3.down;

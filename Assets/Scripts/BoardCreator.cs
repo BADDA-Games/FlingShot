@@ -7,6 +7,7 @@ using UnityEditor;
 
 public class BoardCreator : MonoBehaviour{
 
+    // static BoardCreator OnlyMap;
 
     public Vector3Int tmapSize;
 
@@ -97,7 +98,7 @@ public class BoardCreator : MonoBehaviour{
         //Debug.Log(maps.Count);
         if(!loaded)
         {
-            Debug.Log(maps.Count);
+            // Debug.Log(maps.Count);
             while(maps.Count <= 0)
             {
                 Thread.Sleep(THREAD_SLEEP_TIME);
@@ -298,6 +299,13 @@ public class BoardCreator : MonoBehaviour{
 
     void Start()
     {
+        // if(OnlyMap != null){
+        //   Destroy(this.gameObject);
+        //   return;
+        // }
+        // OnlyMap = this;
+        // DontDestroyOnLoad(this.gameObject);
+
         a = new Algorithm.Algorithm();
         maps = new Queue<Texture[,]>(MAX_QUEUE_SIZE);
         mutex = new Mutex();
