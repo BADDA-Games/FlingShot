@@ -227,22 +227,22 @@ public class PlayerMovement : MonoBehaviour
                     if (Input.GetKeyDown(KeyCode.LeftArrow))
                     {
                         dir = Direction.Left;
-                        Debug.Log("Left");
+                        // Debug.Log("Left");
                     }
                     else if (Input.GetKeyDown(KeyCode.RightArrow))
                     {
                         dir = Direction.Right;
-                        Debug.Log("Right");
+                        // Debug.Log("Right");
                     }
                     else if (Input.GetKeyDown(KeyCode.UpArrow))
                     {
                         dir = Direction.Up;
-                        Debug.Log("Up");
+                        // Debug.Log("Up");
                     }
                     else if (Input.GetKeyDown(KeyCode.DownArrow))
                     {
                         dir = Direction.Down;
-                        Debug.Log("Down");
+                        // Debug.Log("Down");
                     }
                 }
         #elif UNITY_IOS || UNITY_ANDROID || UNITY_WP8 || UNITY_IPHONE
@@ -290,10 +290,10 @@ public class PlayerMovement : MonoBehaviour
             {
                 case Direction.Left:
                     hit = Physics2D.Raycast(transform.position, Vector2.left, 1);
-                    if (hit.collider != null)
-                    {
-                      Debug.Log(hit.collider.name);
-                    }
+                    // if (hit.collider != null)
+                    // {
+                    //   Debug.Log(hit.collider.name);
+                    // }
                     if (hit.collider == null)
                     {
                         pos = transform.position + Vector3.left;
@@ -312,10 +312,10 @@ public class PlayerMovement : MonoBehaviour
                     break;
                 case Direction.Right:
                     hit = Physics2D.Raycast(transform.position, Vector2.right, 1);
-                    if (hit.collider != null)
-                    {
-                      Debug.Log(hit.collider.name);
-                    }
+                    // if (hit.collider != null)
+                    // {
+                    //   Debug.Log(hit.collider.name);
+                    // }
                     if (hit.collider == null)
                     {
                         pos = transform.position + Vector3.right;
@@ -334,10 +334,10 @@ public class PlayerMovement : MonoBehaviour
                     break;
                 case Direction.Up:
                     hit = Physics2D.Raycast(transform.position, Vector2.up, 1);
-                    if (hit.collider != null)
-                    {
-                      Debug.Log(hit.collider.name);
-                    }
+                    // if (hit.collider != null)
+                    // {
+                    //   Debug.Log(hit.collider.name);
+                    // }
 
 
                     if (hit.collider == null)
@@ -358,10 +358,10 @@ public class PlayerMovement : MonoBehaviour
                     break;
                 case Direction.Down:
                     hit = Physics2D.Raycast(transform.position, Vector2.down, 1);
-                    if (hit.collider != null)
-                    {
-                      Debug.Log(hit.collider.name);
-                    }
+                    // if (hit.collider != null)
+                    // {
+                    //   Debug.Log(hit.collider.name);
+                    // }
                     if (hit.collider == null)
                     {
                         pos = transform.position + Vector3.down;
