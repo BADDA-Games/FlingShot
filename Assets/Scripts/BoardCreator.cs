@@ -320,11 +320,11 @@ public class BoardCreator : MonoBehaviour{
 
     void Update()
     {
-        if(Input.GetMouseButtonDown(0)) //L click places map
-        {
-            ClearMap(true);
-            NextLevel();
-        }
+        // if(Input.GetMouseButtonDown(0)) //L click places map
+        // {
+        //     ClearMap(true);
+        //     NextLevel();
+        // }
         //if(Input.GetMouseButtonDown(1)) //R click clears map
         //{
         //    ClearMap(true);

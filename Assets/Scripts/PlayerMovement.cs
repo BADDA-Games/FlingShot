@@ -16,6 +16,8 @@ public class PlayerMovement : MonoBehaviour
     public int health;
     public string collisionString;
 
+    public bool gameOverBool;
+
     public Text currentLevelText;
     public int currentLevel;
 
@@ -23,21 +25,21 @@ public class PlayerMovement : MonoBehaviour
     public float timeRemaining;
     private int timeRemainingInt;
 
+    public Text scoreText;
+
     private Vector2 touchOrigin = -Vector2.one;
     private Vector3 originalPos;
 
     public GameObject PlayerBody;
     private Animator animate;
     private BoardCreator board;
+    public GameObject GameOverUI;
 
     public int score;
     public int totalTimeTaken;
 
     private string levelType;
 
-    // void Awake(){
-    //
-    // }
 
     void updateLevelText()
     {
@@ -55,6 +57,7 @@ public class PlayerMovement : MonoBehaviour
     }
     void updateTimeText()
     {
+
         timeRemainingInt = (int)timeRemaining;
         if (timeRemaining < 0)
         {
@@ -74,9 +77,13 @@ public class PlayerMovement : MonoBehaviour
     {
         //TRIGGER END GAME MENU
         score = totalTimeTaken * currentLevel;
-        Debug.Log("Game Over");
-        Debug.Log("Your score is:");
-        Debug.Log(score);
+        scoreText.text = "Score: " + score.ToString();
+        // GameOverUI.endGame();
+        GameOverUI.SetActive(true);
+        gameOverBool = true;
+        // Debug.Log("Game Over");
+        // Debug.Log("Your score is:");
+        // Debug.Log(score);
     }
 
     void Start()
@@ -89,12 +96,11 @@ public class PlayerMovement : MonoBehaviour
         // DontDestroyOnLoad(this.gameObject);
         // SceneManager.UnloadSceneAsync("BossSceneThunk");
 
-
-
         pos = transform.position;
         step = 1.0f;
         dir = Direction.None;
         levelType = "normal";
+        gameOverBool = false;
 
         originalPos = gameObject.transform.position;
 
@@ -107,6 +113,7 @@ public class PlayerMovement : MonoBehaviour
 
         animate = gameObject.GetComponent<Animator>();
         board = (BoardCreator)GameObject.Find("BoardCreator").GetComponent(typeof(BoardCreator));
+
     }
 
     void NextLevel()
@@ -123,12 +130,12 @@ public class PlayerMovement : MonoBehaviour
         pos = transform.position;
         board.ClearMap(true);
 
-        if(currentLevel % 5 == 0){
+        if(currentLevel % 10 == 0){
           SceneManager.LoadSceneAsync("BossSceneThunk", LoadSceneMode.Additive);
           // SceneManager.MoveGameObjectToScene(gameObject, SceneManager.GetSceneByName("BossSceneThunk"));
           levelType = "boss";
         }
-        else if((currentLevel % 5 == 1) && (currentLevel != 1)){
+        else if((currentLevel % 10 == 1) && (currentLevel != 1)){
           SceneManager.UnloadSceneAsync("BossSceneThunk");
           // SceneManager.MoveGameObjectToScene(gameObject, SceneManager.GetSceneByName("GameScene"));
           board.NextLevel();
@@ -148,8 +155,6 @@ public class PlayerMovement : MonoBehaviour
         if (collisionObject.name == "end")
         {
             NextLevel();
-
-            //RYANS GENERATE
             // collisionObject.gameObject.SetActive(false);
         }
         else
@@ -208,9 +213,11 @@ public class PlayerMovement : MonoBehaviour
 
         timeRemaining -= Time.deltaTime;
         updateTimeText();
-        if (timeRemaining < 0)
+        if ((timeRemaining < 0))
         {
-            health--;
+            if(levelType != "boss"){
+              health--;
+            }
             if(health <= 0){
               updateTimeText();
               gameOver();
@@ -284,7 +291,7 @@ public class PlayerMovement : MonoBehaviour
               }
         #endif
 
-        if ((board.MapLoaded()) || (levelType == "boss") )
+        if (((board.MapLoaded()) || (levelType == "boss")) && gameOverBool == false)
         {
             switch (dir)
             {
