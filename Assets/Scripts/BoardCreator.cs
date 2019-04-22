@@ -248,62 +248,60 @@ public class BoardCreator : MonoBehaviour{
                     case Texture.tbRound:
                       puzzle.SetTile(coordinate, tbRound);
                       break;
-
-                    // case Texture.tbBar:
-                    //   puzzle.SetTile(coordinate, tbBar);
-                    //   break;
-                    // case Texture.lrBar:
-                    //   puzzle.SetTile(coordinate, lrBar);
-                    //   break;
-                    // case Texture.tBarblRound:
-                    //   puzzle.SetTile(coordinate, tBarblRound);
-                    //   break;
-                    // case Texture.tBarbrRound:
-                    //   puzzle.SetTile(coordinate, tBarbrRound);
-                    //   break;
-                    // case Texture.tBarbRound:
-                    //   puzzle.SetTile(coordinate, tBarbRound);
-                    //   break;
-                    // case Texture.rBartlRound:
-                    //   puzzle.SetTile(coordinate, rBartrRound);
-                    //   break;
-                    // case Texture.rBarblRound:
-                    //   puzzle.SetTile(coordinate, rBarblRound);
-                    //   break;
-                    // case Texture.rBarlRound:
-                    //   puzzle.SetTile(coordinate, rBarlRound);
-                    //   break;
-                    // case Texture.lBartrRound:
-                    //   puzzle.SetTile(coordinate, lBartrRound);
-                    //   break;
-                    // case Texture.lBarbrRound:
-                    //   puzzle.SetTile(coordinate, lBarbrRound);
-                    //   break;
-                    // case Texture.lBarrRound:
-                    //   puzzle.SetTile(coordinate, lBarrRound);
-                    //   break;
-                    // case Texture.bBartrRound:
-                    //   puzzle.SetTile(coordinate, bBartrRound);
-                    //   break;
-                    // case Texture.bBartlRound:
-                    //   puzzle.SetTile(coordinate, bBartlRound);
-                    //   break;
-                    // case Texture.bBartRound:
-                    //   puzzle.SetTile(coordinate, bBartRound);
-                    //   break;
-                    // case Texture.tlBarbrRound:
-                    //   puzzle.SetTile(coordinate, tlBarbrRound);
-                    //   break;
-                    // case Texture.trBarblRound:
-                    //   puzzle.SetTile(coordinate, trBarblRound);
-                    //   break;
-                    // case Texture.brBartlRound:
-                    //   puzzle.SetTile(coordinate, brBartlRound);
-                    //   break;
-                    // case Texture.blBartrRound:
-                    //   puzzle.SetTile(coordinate, blBartrRound);
-                    //   break;
-
+                    case Texture.tbBar:
+                      puzzle.SetTile(coordinate, tbBar);
+                      break;
+                    case Texture.lrBar:
+                      puzzle.SetTile(coordinate, lrBar);
+                      break;
+                    case Texture.tBarblRound:
+                      puzzle.SetTile(coordinate, tBarblRound);
+                      break;
+                    case Texture.tBarbrRound:
+                      puzzle.SetTile(coordinate, tBarbrRound);
+                      break;
+                    case Texture.tBarbRound:
+                      puzzle.SetTile(coordinate, tBarbRound);
+                      break;
+                    case Texture.rBartlRound:
+                      puzzle.SetTile(coordinate, rBartlRound);
+                      break;
+                    case Texture.rBarblRound:
+                      puzzle.SetTile(coordinate, rBarblRound);
+                      break;
+                    case Texture.rBarlRound:
+                      puzzle.SetTile(coordinate, rBarlRound);
+                      break;
+                    case Texture.lBartrRound:
+                      puzzle.SetTile(coordinate, lBartrRound);
+                      break;
+                    case Texture.lBarbrRound:
+                      puzzle.SetTile(coordinate, lBarbrRound);
+                      break;
+                    case Texture.lBarrRound:
+                      puzzle.SetTile(coordinate, lBarrRound);
+                      break;
+                    case Texture.bBartrRound:
+                      puzzle.SetTile(coordinate, bBartrRound);
+                      break;
+                    case Texture.bBartlRound:
+                      puzzle.SetTile(coordinate, bBartlRound);
+                      break;
+                    case Texture.bBartRound:
+                      puzzle.SetTile(coordinate, bBartRound);
+                      break;
+                    case Texture.tlBarbrRound:
+                      puzzle.SetTile(coordinate, tlBarbrRound);
+                      break;
+                    case Texture.trBarblRound:
+                      puzzle.SetTile(coordinate, trBarblRound);
+                      break;
+                    case Texture.brBartlRound:
+                      puzzle.SetTile(coordinate, brBartlRound);
+                      break;
+                    case Texture.blBartrRound:
+                      puzzle.SetTile(coordinate, blBartrRound);
+                      break;
                     case Texture.none:
                       puzzle.SetTile(coordinate, none);
                       break;
@@ -597,7 +595,7 @@ public class BoardCreator : MonoBehaviour{
                   textured[j,i] = Texture.tlBarbrRound;
                 }
                 else if( !surrounding[0,1] && surrounding[1,0] && !surrounding[1,2]
-                && !surrounding[2,1] && surrounding[2,1])
+                && !surrounding[2,0] && surrounding[2,1])
                 {
                   textured[j,i] = Texture.trBarblRound;
                 }
