@@ -7,7 +7,8 @@ public class GameOverMenu : MonoBehaviour
 {
 
     public void loadMenu(){
-      Debug.Log("Returning to main menu");
+      PlayerGameManager.IncrementTimesPlayed();
+      // Debug.Log("Returning to main menu");
       SceneManager.LoadScene("MainMenu");
       SceneManager.UnloadSceneAsync("GameScene");
 
@@ -23,6 +24,7 @@ public class GameOverMenu : MonoBehaviour
 
     public void restartGame(){
       // Debug.Log("Restarting Game");
+      PlayerGameManager.IncrementTimesPlayed();
       SceneManager.LoadScene("GameScene");
     }
 

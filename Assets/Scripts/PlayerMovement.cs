@@ -79,6 +79,16 @@ public class PlayerMovement : MonoBehaviour
         score = totalTimeTaken * currentLevel;
         scoreText.text = "Score: " + score.ToString();
         // GameOverUI.endGame();
+
+        PlayerGameManager.UpdateLastScore(score);
+
+        if(PlayerGameManager.GetHighScore() < score){
+          PlayerGameManager.UpdateHighScore(score);
+        }
+
+        
+
+
         GameOverUI.SetActive(true);
         gameOverBool = true;
         // Debug.Log("Game Over");
