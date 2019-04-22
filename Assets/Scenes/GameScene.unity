@@ -4474,7 +4474,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: e448679e59b3444e2b68cc275b6c446d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7875cccefb12abc40bf195dcf74240dc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -4568,7 +4568,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: e448679e59b3444e2b68cc275b6c446d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 7875cccefb12abc40bf195dcf74240dc, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -4622,7 +4622,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 827a65ecc2dcc45bfbd47aafc32b68f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerBody: {fileID: 0}
 --- !u!1 &1352868901
 GameObject:
   m_ObjectHideFlags: 0
@@ -4964,6 +4963,7 @@ GameObject:
   - component: {fileID: 1720633831}
   - component: {fileID: 1720633835}
   - component: {fileID: 1720633836}
+  - component: {fileID: 1720633837}
   m_Layer: 0
   m_Name: player
   m_TagString: player
@@ -5112,6 +5112,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 260d1b2a4386845e698a4504ecff2fc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1720633837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1720633830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed70eab5f10316e40ba8239a171edcf0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerBody: {fileID: 1275128082}
+  PlayerLid: {fileID: 1216512180}
+  Hearts: {fileID: 1352868903}
 --- !u!1 &1820809158
 GameObject:
   m_ObjectHideFlags: 0
