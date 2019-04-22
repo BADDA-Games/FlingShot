@@ -57,6 +57,8 @@ public class BoardCreator : MonoBehaviour{
     public Tile trBarblRound;
     public Tile brBartlRound;
     public Tile blBartrRound;
+    public Tile trblRound;
+    public Tile tlbrRound;
 
     public Tile none;
 
@@ -77,7 +79,7 @@ public class BoardCreator : MonoBehaviour{
       lbRound,rbRound,ltRound,tbRound,tbBar,lrBar,tBarblRound,
       tBarbrRound,tBarbRound,rBartlRound,rBarblRound,rBarlRound,
       lBartrRound,lBarbrRound,lBarrRound,bBartrRound,bBartlRound,
-      bBartRound,tlBarbrRound,trBarblRound,brBartlRound,blBartrRound,none,empty}
+      bBartRound,tlBarbrRound,trBarblRound,brBartlRound,blBartrRound,trblRound,tlbrRound,none,empty}
       //finished: tBar,rBar,bBar,lBar,trBar,brBar,
       //blBar,tlBar,tlrBar,tblBar,tbrBar,blrBar,tblrBar,trRound,
       //brRound,blRound,tlRound,tRound,rRound,bRound,lRound,rtRound,
@@ -302,6 +304,12 @@ public class BoardCreator : MonoBehaviour{
                       break;
                     case Texture.blBartrRound:
                       puzzle.SetTile(coordinate, blBartrRound);
+                      break;
+                    case Texture.trblRound:
+                      puzzle.SetTile(coordinate, trblRound);
+                      break;
+                    case Texture.tlbrRound:
+                      puzzle.SetTile(coordinate, tlbrRound);
                       break;
                     case Texture.none:
                       puzzle.SetTile(coordinate, none);
@@ -609,6 +617,16 @@ public class BoardCreator : MonoBehaviour{
                 && surrounding[1,2] && !surrounding[2,1])
                 {
                   textured[j,i] = Texture.blBartrRound;
+                }
+                else if( surrounding[0,0] && surrounding[0,1] && !surrounding[0,2] && surrounding[1,0]
+                && surrounding[1,2] && !surrounding[2,0] && surrounding[2,1] && surrounding[2,2] )
+                {
+                  textured[j,i] = Texture.trblRound;
+                }
+                else if( !surrounding[0,0] && surrounding[0,1] && surrounding[0,2] && surrounding[1,0]
+                && surrounding[1,2] && surrounding[2,0] && surrounding[2,1] && !surrounding[2,2] )
+                {
+                  textured[j,i] = Texture.tlbrRound;
                 }
 
                 else if(surrounding[2,2] && surrounding[0,0] && surrounding[0,1] && surrounding[1,0]
