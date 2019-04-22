@@ -82,11 +82,12 @@ public class BoardCreator : MonoBehaviour{
       //blBar,tlBar,tlrBar,tblBar,tbrBar,blrBar,tblrBar,trRound,
       //brRound,blRound,tlRound,tRound,rRound,bRound,lRound,rtRound,
       //lbRound,rbRound,ltRound,tbRound,none
-
-      //need: tbBar,lrBar,tBarblRound,tBarbrRound,tBarbRound,
+      //tbBar,lrBar,tBarblRound,tBarbrRound,tBarbRound,
       //rBartlRound,rBarblRound,rBarlRound,lBartrRound,lBarbrRound,
       //lBarrRound,bBartrRound,bBartlRound,bBartRound,tlBarbrRound,
       //trBarblRound,brBartlRound,blBartrRound
+
+      //need: trblRound,tlbrRound
     private Texture[,] puzzleMap;
 
     private const int MAX_QUEUE_SIZE = 20;
@@ -502,7 +503,7 @@ public class BoardCreator : MonoBehaviour{
                   textured[j,i] = Texture.lbRound;
                 }
                 else if( surrounding[0,0] && surrounding[0,1] && !surrounding[0,2] && surrounding[1,0]
-                && surrounding[1,2] && surrounding[2,0] && surrounding[2,1] && !surrounding[2,2])
+                && surrounding[1,2] && !surrounding[2,0] && surrounding[2,1] && !surrounding[2,2])
                 {
                   textured[j,i] = Texture.rbRound;
                 }
