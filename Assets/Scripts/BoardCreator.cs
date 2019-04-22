@@ -143,13 +143,32 @@ public class BoardCreator : MonoBehaviour{
             //resets position with respect to the world
             coordinate = puzzle.WorldToCell(transform.position);
             coordinate.x += i-5;
-            coordinate.y += 9;
-            for(int j = 0; j < height; j++)
+            coordinate.y += 10;
+            for(int j = 0; j <= height; j++)
             {
                 coordinate.y --;
-                if(map[j,i] != Texture.empty)
+                if(j == 0)
                 {
-                  switch(map[j,i])
+                  if(i == 4)
+                  {
+                    puzzle.SetTile(coordinate, brRound);
+                  }
+                  else if(i == 5)
+                  {
+                    puzzle.SetTile(coordinate, bBar);
+                  }
+                  else if(i == 6)
+                  {
+                    puzzle.SetTile(coordinate, blRound);
+                  }
+                  else
+                  {
+                    puzzle.SetTile(coordinate, none);
+                  }
+                }
+                else if(map[j-1,i] != Texture.empty)
+                {
+                  switch(map[j-1,i])
                   {
                     case Texture.tBar:
                       puzzle.SetTile(coordinate, tBar);
