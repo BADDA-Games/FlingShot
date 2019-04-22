@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.ComponentModel;
 using UnityEngine.SceneManagement;
+using System.Threading;
+using System.Threading.Tasks;
 
 public class SettingsUI : MonoBehaviour, INotifyPropertyChanged
 {
@@ -11,9 +13,16 @@ public class SettingsUI : MonoBehaviour, INotifyPropertyChanged
     public event PropertyChangedEventHandler PropertyChanged;
     public Dropdown myDropdown;
     public Button myButton;
-    private bool _needToLoad = true;
+    public Button resetButton;
+    public Text myHighScore;
+    public Text myLastScore;
+    public Text myTimesPlayed;
+    public Text myTitle;
+    // private bool _needToLoad = true;
     private Color _UIColor = new Color(0.9294f, 0.5921f, 0.3176f, 1.0f);
     private Color _myColor = new Color(0.4117f, 0.8784f, 0.3882f, 1.0f);
+    private string colorName = "Green";
+
     //Scene mainmenuScene = SceneManager.GetSceneByBuildIndex(0);
     public Color myColor {
         get { return _myColor; }
@@ -39,26 +48,29 @@ public class SettingsUI : MonoBehaviour, INotifyPropertyChanged
     // Start is called before the first frame update
     void Start()
     {
-        //Data = new DataClass();
-        //Data = ScriptableObject.CreateInstance
         Debug.Log("Starting Settings");
         Color c = PlayerGameManager.GetColor();
         if(c != null) {
-            Debug.Log("PGM gC returned null");
             UIColor = c;
+            colorName = PlayerGameManager.GetColorName();
+            myDropdown.value = colorIndex(colorName);
         }
         else {
-            Debug.Log("PGM gC returned value");
+            Debug.Log("PGM gC returned null");
             UIColor = myColor;
         }
-        //UIColor = myColor;
         ColorBlock colors = myButton.colors;
         colors.normalColor = UIColor;
         myButton.colors = colors;
-        /*if(!mainmenuScene.isLoaded) {
-            SceneManager.LoadSceneAsync("MainMenu", LoadSceneMode.Additive);
-        }*/
-        
+        resetButton.colors = colors;
+        myHighScore.text = "" + PlayerGameManager.GetHighScore();
+        myLastScore.text = "" + PlayerGameManager.GetLastScore();
+        myTimesPlayed.text = "" + PlayerGameManager.GetTimesPlayed();
+        //myTitle.color = UIColor;
+        //myHighScore.color = UIColor;
+
+        OnPropertyChanged("myDropdown");
+
     }
 
     // Update is called once per frame
@@ -72,34 +84,58 @@ public class SettingsUI : MonoBehaviour, INotifyPropertyChanged
             //SceneManager.LoadSceneAsync(PlayerGameManager.LastScene.buildIndex, LoadSceneMode.Additive);
         }
         if(myButton.colors.normalColor != PlayerGameManager.GetColor()) {
+            myColor = PlayerGameManager.GetColor();
+            colorName = PlayerGameManager.GetColorName();
+            myDropdown.value = colorIndex(colorName);
             ColorBlock colors = myButton.colors;
             //colors.normalColor = Color.green;
             colors.normalColor = myColor;
             myButton.colors = colors;
+            resetButton.colors = colors;
+            //myDDLabel.text = PlayerGameManager.GetColorName();
+            //myDropdown.value = colorIndex(PlayerGameManager.GetColorName());
             OnPropertyChanged("myButton");
+            //OnPropertyChanged("myDDLabel");
+            //OnPropertyChanged("myDropdown");
             //Debug.Log("FORCE UPDATE");
+        }
+        if(myTimesPlayed.text != ""+PlayerGameManager.GetTimesPlayed()) {
+            myHighScore.text = "" + PlayerGameManager.GetHighScore();
+            myLastScore.text = "" + PlayerGameManager.GetLastScore();
+            myTimesPlayed.text = "" + PlayerGameManager.GetTimesPlayed();
+            colorName = PlayerGameManager.GetColorName();
+            myColor = PlayerGameManager.GetColor();
+            myDropdown.value = colorIndex(colorName);
+            ColorBlock colors = myButton.colors;
+            colors.normalColor = myColor;
+            myButton.colors = colors;
+            resetButton.colors = colors;
+            OnPropertyChanged("myButton");
         }
     }
 
     public void DD_Select() {
-        //Debug.Log("Selection");
+        Debug.Log("SELECTION");
         Text txt = myDropdown.captionText;
         string str = txt.text;
+        //PlayerGameManager.UpdateColor(str);
         myColor = PlayerGameManager.UpdateGetColor(str);
+        Debug.Log(PlayerGameManager.GetColorName());
         //myColor = MyGetColor(str);
         //UIColor = myColor;
         //Data.TheColor = myColor;
     }
 
-    public void BackButton() {
-        SceneManager.LoadSceneAsync(0, LoadSceneMode.Additive);
+    public async void BackButton() {
+        //SceneManager.LoadSceneAsync(0, LoadSceneMode.Additive);
+        await loadMainMenu();
         Scene nextScene = PlayerGameManager.LastScene;
         Scene thisScene = SceneManager.GetActiveScene();
-        int i = 0;
+        //int i = 0;
         /*while(!nextScene.IsValid()) {
             i++;
         }*/
-        Debug.Log(i);
+        //Debug.Log(i);
         if (nextScene.IsValid()) {
             Debug.Log("CURRENT: S: " + thisScene.name);
             Debug.Log("NEXT:    S: " + nextScene.name);
@@ -108,6 +144,11 @@ public class SettingsUI : MonoBehaviour, INotifyPropertyChanged
             SceneManager.SetActiveScene(nextScene);
             SceneManager.UnloadSceneAsync(thisScene.buildIndex);
         }
+    }
+
+    public async Task loadMainMenu() {
+        SceneManager.LoadSceneAsync(0, LoadSceneMode.Additive);
+        return;
     }
 
     private void OnPropertyChanged(string propertyName)
@@ -165,5 +206,29 @@ public class SettingsUI : MonoBehaviour, INotifyPropertyChanged
             c = new Color(0.4117f, 0.8784f, 0.3882f, 1.0f);
         }
         return c;
+    }
+
+    private int colorIndex(string clrstr) {
+        if(clrstr == "Red") {
+            return 0;
+        }
+        else if(clrstr == "Orange") {
+            return 1;
+        }
+        else if(clrstr == "Yellow") {
+            return 2;
+        }
+        else if(clrstr == "Teal") {
+            return 4;
+        }
+        else if(clrstr == "Purple") {
+            return 5;
+        }
+        else if(clrstr == "Pink") {
+            return 6;
+        }
+        else {
+            return 3;
+        }
     }
 }

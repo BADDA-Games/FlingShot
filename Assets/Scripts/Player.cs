@@ -32,4 +32,5 @@ public class Player
     public int PlayerHighScore;
     public int PlayerLastScore;
     public int PlayerNumberTimesPlayed;
+    //public bool PlayerSound;
 }

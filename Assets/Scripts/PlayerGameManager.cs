@@ -14,7 +14,8 @@ public class StorageHandler {
     public void SaveData(object objectToSave, string fileName) {
         string FullFilePath = Application.persistentDataPath + "/" + fileName + ".bin";
         BinaryFormatter Formatter = new BinaryFormatter();
-        FileStream fileStream = new FileStream(FullFilePath, FileMode.Create);
+        FileStream fileStream = new FileStream(FullFilePath, FileMode.Create); // error
+        //FileStream fileStream = File.Open(FullFilePath, FileMode.OpenOrCreate);
         Formatter.Serialize(fileStream, objectToSave);
         fileStream.Close();
     }
@@ -25,8 +26,15 @@ public class StorageHandler {
         {
             BinaryFormatter Formatter = new BinaryFormatter();
             FileStream fileStream = new FileStream(FullFilePath, FileMode.Open);
-            object obj = Formatter.Deserialize(fileStream);
-            return obj;
+            if(fileStream.Length == 0) {
+                fileStream.Close();
+                return null;
+            }
+            else {
+                object obj = Formatter.Deserialize(fileStream); //Here
+                fileStream.Close();
+                return obj;
+            }
         }
         else { return null; }
     }
@@ -34,6 +42,20 @@ public class StorageHandler {
 
 public static class PlayerGameManager
 {
+    private static int _seedValue = -1;
+    public static int SeedValue {
+        get{
+            return _seedValue;
+        }
+        set {
+            if (value < 0) {
+                value = value * -1;
+            }
+            value = value % 99999989;
+            _seedValue = value;
+        }
+    }
+
     private static Player _player;
     public static Player player
     {
@@ -43,10 +65,15 @@ public static class PlayerGameManager
             if (_player == null)
             {
                 Debug.Log("PGM: player == null");
-                StorageHandler storageHandler = new StorageHandler();
-                _player = (Player)storageHandler.LoadData("player");
+                StorageHandler storageHandler = new StorageHandler(); 
+                _player = (Player)storageHandler.LoadData("player"); //Here
                 if(_player == null) {
+                    Debug.Log("CREATING NEW PLAYER;");
                     _player = new Player();
+                    _player.PlayerColor = "Green";
+                    _player.PlayerHighScore = 0;
+                    _player.PlayerLastScore = 0;
+                    _player.PlayerNumberTimesPlayed = 0;
                 }
                 /*try
                 {
@@ -74,7 +101,7 @@ public static class PlayerGameManager
 
     private static void Save() {
         StorageHandler storage = new StorageHandler();
-        storage.SaveData(player, "player");
+        storage.SaveData(player, "player"); //error 
     }
 
     private static Scene _lastScene = SceneManager.GetSceneByName("MainMenu");
@@ -97,8 +124,9 @@ public static class PlayerGameManager
     }
     public static Color UpdateGetColor(string c) {
         player.PlayerColor = c;
-        Save();
-        return GetColor();
+        Save(); // error
+        Color temp = GetColor();
+        return temp;
     }
 
     public static void UpdateHighScore(int hs) {
@@ -122,6 +150,22 @@ public static class PlayerGameManager
         return player.PlayerLastScore;
     }
 
+    public static void UpdateTimesPlayed(int tp) {
+        player.PlayerNumberTimesPlayed = tp;
+        Save();
+    }
+    /*
+    public static void UpdateSound(bool s) {
+        player.PlayerSound = s;
+        Save();
+    }
+
+    public static bool UpdateGetSound(bool s) {
+        player.PlayerSound = s;
+        Save();
+        return player.PlayerSound;
+    }
+    */
     public static void IncrementTimesPlayed() {
         int tp = player.PlayerNumberTimesPlayed;
         tp = tp + 1;
@@ -196,4 +240,13 @@ public static class PlayerGameManager
     public static int GetTimesPlayed() {
         return player.PlayerNumberTimesPlayed;
     }
+
+    public static string GetColorName() {
+        return player.PlayerColor;
+    }
+    /*
+    public static bool GetSound() {
+        return player.PlayerSound;
+    }
+    */
 }
