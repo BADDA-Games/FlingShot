@@ -50,7 +50,7 @@ public class MainMenuUI : MonoBehaviour
         exitRules.colors = colors;
         slideMenu.color = myColor;
         shotBody.color = myColor;
-        
+
         //loadScenes();
         /*if(!settingScene.isLoaded) {
             SceneManager.LoadSceneAsync("Settings", LoadSceneMode.Additive);
@@ -108,28 +108,29 @@ public class MainMenuUI : MonoBehaviour
     }
 
   public async void OpenGame() {
-        //Debug.Log("OpenGame");
+        Debug.Log("OpenGame");
         //SceneManager.LoadSceneAsync("GameScene", LoadSceneMode.Additive);
         //TODO: add in loading circle
         await loadGamePlay();
         Scene nextScene = SceneManager.GetSceneByName("GameScene");
         if(nextScene.IsValid() && nextScene.isLoaded) {
             Scene activeScene = SceneManager.GetActiveScene();
-            //Debug.Log("CURRENT: MM: " + activeScene.name);
-            //Debug.Log("NEXT:    MM: " + nextScene.name);
+            Debug.Log("CURRENT: MM: " + activeScene.name);
+            Debug.Log("NEXT:    MM: " + nextScene.name);
             PlayerGameManager.LastScene = activeScene;
             PlayerGameManager.LoadScene = true;
             SceneManager.SetActiveScene(nextScene);
             SceneManager.UnloadSceneAsync(SceneManager.GetSceneByBuildIndex(0));
         }
         else {
-            //Debug.Log("Game not valid. Hmmm");
+            Debug.Log("Game not valid. Hmmm");
             SceneManager.UnloadSceneAsync(SceneManager.GetSceneByBuildIndex(0));
         }
     }
 
     public async Task loadGamePlay() {
         SceneManager.LoadSceneAsync("GameScene", LoadSceneMode.Additive);
+        Debug.Log("load Game");
         return;
     }
 

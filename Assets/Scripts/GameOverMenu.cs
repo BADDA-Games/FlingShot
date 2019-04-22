@@ -8,6 +8,16 @@ public class GameOverMenu : MonoBehaviour
 
     public void loadMenu(){
       Debug.Log("Returning to main menu");
+      SceneManager.LoadScene("MainMenu");
+      SceneManager.UnloadSceneAsync("GameScene");
+
+      // Scene nextScene = SceneManager.GetSceneByName("MainMenu");
+      // if(nextScene.IsValid()) {
+      //   Scene activeScene = SceneManager.GetActiveScene();
+      //   SceneManager.SetActiveScene(nextScene);
+      //   int bInd = activeScene.buildIndex;
+      //   SceneManager.UnloadSceneAsync(SceneManager.GetSceneByBuildIndex(bInd));
+      // }
 
     }
 
