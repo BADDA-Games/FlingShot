@@ -65,12 +65,12 @@ public class MainMenuUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(PlayerGameManager.LoadScene && SceneManager.GetActiveScene().name=="MainMenu") {
+        /*if(PlayerGameManager.LoadScene && SceneManager.GetActiveScene().name=="MainMenu") {
             //Debug.Log("loading settings");
             PlayerGameManager.LoadScene = false;
             SceneManager.LoadSceneAsync("Settings", LoadSceneMode.Additive);
             //SceneManager.LoadSceneAsync("GameScene", LoadSceneMode.Additive);
-        }
+        }*/
         if(myColor != PlayerGameManager.GetColor()) {
             myColor = PlayerGameManager.GetColor();
             ColorBlock colors = playButton.colors;
@@ -157,7 +157,9 @@ public class MainMenuUI : MonoBehaviour
                 return;
             }
         }
-        await loadGamePlay();
+        SceneManager.LoadScene("GameScene");
+        SceneManager.UnloadSceneAsync("MainMenu");
+        /*await loadGamePlay();
         Scene nextScene = SceneManager.GetSceneByName("GameScene");
         if (nextScene.IsValid() && nextScene.isLoaded)
         {
@@ -171,19 +173,21 @@ public class MainMenuUI : MonoBehaviour
         {
             //Debug.Log("Game not valid. Hmmm");
             SceneManager.UnloadSceneAsync(SceneManager.GetSceneByBuildIndex(0));
-        }
+        }*/
     }
 
 
     public void OpenSettings()
     {
+        SceneManager.LoadScene("Settings");
+        SceneManager.UnloadSceneAsync("MainMenu");
         //UnityEngine.AsyncOperation async;
         //Debug.Log("Open Settings");
         //openingSettings();
         //loadScenes();
         //asyncSettings.allowSceneActivation = true;
         //SceneManager.LoadSceneAsync("Settings", LoadSceneMode.Additive);
-        Scene nextScene = SceneManager.GetSceneByName("Settings");
+        /*Scene nextScene = SceneManager.GetSceneByName("Settings");
         if(nextScene.IsValid()) {
             Scene activeScene = SceneManager.GetActiveScene();
             //Debug.Log("CURRENT: MM: " + activeScene.name);
@@ -196,7 +200,7 @@ public class MainMenuUI : MonoBehaviour
         }
         else {
             //Debug.Log("Settings not valid. Hmmm");
-        }
+        }*/
         //SceneManager.SetActiveScene(SceneManager.GetSceneByName("Settings"));
     }
 
