@@ -87,9 +87,7 @@ public class BoardCreator : MonoBehaviour{
       //tbBar,lrBar,tBarblRound,tBarbrRound,tBarbRound,
       //rBartlRound,rBarblRound,rBarlRound,lBartrRound,lBarbrRound,
       //lBarrRound,bBartrRound,bBartlRound,bBartRound,tlBarbrRound,
-      //trBarblRound,brBartlRound,blBartrRound
-
-      //need: trblRound,tlbrRound
+      //trBarblRound,brBartlRound,blBartrRound,trblRound,tlbrRound
     private Texture[,] puzzleMap;
 
     private const int MAX_QUEUE_SIZE = 20;
@@ -113,6 +111,11 @@ public class BoardCreator : MonoBehaviour{
             PlacePuzzle(puzzleMap);
             loaded = true;
         }
+    }
+
+    public int getSeed()
+    {
+      return(a.GetInitSeed());
     }
 
     private void AddMazeToQueue()
