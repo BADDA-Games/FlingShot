@@ -33,6 +33,7 @@ namespace Algorithm
         public Algorithm(int seed)
         {
             Seed = seed;
+            initSeed = Seed;
             Initialize();
         }
 
