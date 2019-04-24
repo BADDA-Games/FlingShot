@@ -619,10 +619,6 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 84dfbf8e4207945e79b0216cc285c0c6, type: 3}
-<<<<<<< HEAD
-  m_Name: 
-  m_EditorClassIdentifier: 
-=======
   m_Name:
   m_EditorClassIdentifier:
   Pop_StartPOS: {fileID: 1227483}
@@ -631,7 +627,6 @@ MonoBehaviour:
   Screen_ActivePOS: {fileID: 446721194}
   Screen: {fileID: 2016004202}
   ResetPop: {fileID: 413139133}
->>>>>>> ac5d3fc6d5a7483b5a4294cf146b5f5096cc81de
 --- !u!114 &241876129
 MonoBehaviour:
   m_ObjectHideFlags: 0
