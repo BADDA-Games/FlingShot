@@ -6,6 +6,8 @@
 /[Bb]uild/
 /[Bb]uilds/
 /[Ll]ogs/
+/[Pp]ackages/StyleCop.6.1.0
+/[Pp]ackages/StyleCop.MSBuild.6.1.0
 
 # Never ignore Asset meta data
 !/[Aa]ssets/**/*.meta

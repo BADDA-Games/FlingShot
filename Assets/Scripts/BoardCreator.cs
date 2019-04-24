@@ -87,9 +87,7 @@ public class BoardCreator : MonoBehaviour{
       //tbBar,lrBar,tBarblRound,tBarbrRound,tBarbRound,
       //rBartlRound,rBarblRound,rBarlRound,lBartrRound,lBarbrRound,
       //lBarrRound,bBartrRound,bBartlRound,bBartRound,tlBarbrRound,
-      //trBarblRound,brBartlRound,blBartrRound
-
-      //need: trblRound,tlbrRound
+      //trBarblRound,brBartlRound,blBartrRound,trblRound,tlbrRound
     private Texture[,] puzzleMap;
 
     private const int MAX_QUEUE_SIZE = 20;
@@ -113,6 +111,11 @@ public class BoardCreator : MonoBehaviour{
             PlacePuzzle(puzzleMap);
             loaded = true;
         }
+    }
+
+    public int getSeed()
+    {
+      return(a.GetInitSeed());
     }
 
     private void AddMazeToQueue()
@@ -332,12 +335,12 @@ public class BoardCreator : MonoBehaviour{
         // OnlyMap = this;
         // DontDestroyOnLoad(this.gameObject);
 
-        a = new Algorithm.Algorithm();
+        seed = PlayerGameManager.SeedValue;
+        a = new Algorithm.Algorithm(seed);
         maps = new Queue<Texture[,]>(MAX_QUEUE_SIZE);
         mutex = new Mutex();
         creator = new Thread(AddMazeToQueue);
         creator.Start();
-        seed = a.Seed;
         Debug.Log(seed);
         width = 11;
         height = 18;
@@ -367,6 +370,7 @@ public class BoardCreator : MonoBehaviour{
     {
         return loaded;
     }
+
     private Texture[,] ConnectedTexture(int[,] nextMap)
     {
       Texture[,] textured = new Texture[height,width];

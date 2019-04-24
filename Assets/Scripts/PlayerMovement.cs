@@ -26,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
     private int timeRemainingInt;
 
     public Text scoreText;
+    public Text seedText;
 
     private Vector2 touchOrigin = -Vector2.one;
     private Vector3 originalPos;
@@ -78,6 +79,7 @@ public class PlayerMovement : MonoBehaviour
         //TRIGGER END GAME MENU
         score = totalTimeTaken * currentLevel;
         scoreText.text = "Score: " + score.ToString();
+        seedText.text ="Seed: "+ board.getSeed().ToString();
         // GameOverUI.endGame();
 
         PlayerGameManager.UpdateLastScore(score);
@@ -86,7 +88,7 @@ public class PlayerMovement : MonoBehaviour
           PlayerGameManager.UpdateHighScore(score);
         }
 
-        
+
 
 
         GameOverUI.SetActive(true);
@@ -262,6 +264,8 @@ public class PlayerMovement : MonoBehaviour
                         // Debug.Log("Down");
                     }
                 }
+                // if (Input.GetMouseButtonDown(0))
+                //   gameOver();
         #elif UNITY_IOS || UNITY_ANDROID || UNITY_WP8 || UNITY_IPHONE
 
               if(dir == Direction.None){
