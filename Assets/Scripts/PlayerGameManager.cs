@@ -64,35 +64,17 @@ public static class PlayerGameManager
             //Debug.Log("getting player");
             if (_player == null)
             {
-                Debug.Log("PGM: player == null");
+                //Debug.Log("PGM: player == null");
                 StorageHandler storageHandler = new StorageHandler(); 
                 _player = (Player)storageHandler.LoadData("player"); //Here
                 if(_player == null) {
-                    Debug.Log("CREATING NEW PLAYER;");
+                    //Debug.Log("CREATING NEW PLAYER;");
                     _player = new Player();
                     _player.PlayerColor = "Green";
                     _player.PlayerHighScore = 0;
                     _player.PlayerLastScore = 0;
                     _player.PlayerNumberTimesPlayed = 0;
                 }
-                /*try
-                {
-                    _player.PlayerColor = PlayerPrefs.GetString("Color");
-                }
-                catch
-                {
-                    Debug.Log("PGM: creating player");
-                    _player = new Player();
-                    _player.PlayerColor = "Green";
-                    _player.PlayerHighScore = 0;
-                    _player.PlayerLastScore = 0;
-                    _player.PlayerNumberTimesPlayed = 0;
-                }
-                //_player.PlayerColor = PlayerPrefs.GetString("Color");
-                //_player.PlayerHighScore = PlayerPrefs.GetInt("High Score");
-                //_player.PlayerLastScore = PlayerPrefs.GetInt("Last Score");
-                //_player.PlayerNumberTimesPlayed = PlayerPrefs.GetInt("Times Played");
-                */
             }
             return _player;
         }
@@ -104,7 +86,7 @@ public static class PlayerGameManager
         storage.SaveData(player, "player"); //error 
     }
 
-    private static Scene _lastScene = SceneManager.GetSceneByName("MainMenu");
+    /*private static Scene _lastScene = SceneManager.GetSceneByName("MainMenu");
     public static Scene LastScene
     {
         get { return _lastScene; }
@@ -116,7 +98,7 @@ public static class PlayerGameManager
         get { return _loadScene; }
         set { _loadScene = value; }
 
-    }
+    }*/
 
     public static void UpdateColor(string c) {
         player.PlayerColor = c;

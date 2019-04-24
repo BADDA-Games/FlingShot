@@ -9,7 +9,7 @@ public class PopUpScript : MonoBehaviour
     public GameObject Screen_StartPOS;
     public GameObject Screen_ActivePOS;
     public GameObject Screen;
-    public GameObject Pop_Instr_Panel;
+    //public GameObject Pop_Instr_Panel;
     public GameObject Pop_Rules_Panel;
     public GameObject Pop_About_Panel;
 
@@ -18,7 +18,7 @@ public class PopUpScript : MonoBehaviour
     void Start()
     {
         Screen.transform.position = Screen_StartPOS.transform.position;
-        Pop_Instr_Panel.transform.position = Pop_StartPOS.transform.position;
+        //Pop_Instr_Panel.transform.position = Pop_StartPOS.transform.position;
         Pop_Rules_Panel.transform.position = Pop_StartPOS.transform.position;
         Pop_About_Panel.transform.position = Pop_StartPOS.transform.position;
     }
@@ -29,15 +29,15 @@ public class PopUpScript : MonoBehaviour
         
     }
 
-    public void InstPanelActive() {
+    /*public void InstPanelActive() {
         Screen.transform.position = Screen_ActivePOS.transform.position;
         Pop_Instr_Panel.transform.position = Pop_ActivePOS.transform.position;
-    }
+    }*/
 
-    public void InstPanelBack() {
+    /*public void InstPanelBack() {
         Screen.transform.position = Screen_StartPOS.transform.position;
         Pop_Instr_Panel.transform.position = Pop_StartPOS.transform.position;
-    }
+    }*/
 
     public void RulesPanelActive() {
         Screen.transform.position = Screen_ActivePOS.transform.position;
