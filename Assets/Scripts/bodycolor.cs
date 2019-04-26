@@ -10,14 +10,18 @@ public class bodycolor : MonoBehaviour
     public SpriteRenderer PlayerBody;
     public SpriteRenderer PlayerLid;
     public Image Hearts;
+    public TrailRenderer tr;
 
 
     void Start()
     {
         Color color = PlayerGameManager.GetColor();
+        tr = GetComponent<TrailRenderer>();
+
         PlayerBody.color = color;
         PlayerLid.color = color;
         Hearts.color = color;
+        tr.startColor = color;
 
         // PlayerBody.color = PlayerGameManager.GetColor();
         // Debug.Log(PlayerGameManager.GetColor());

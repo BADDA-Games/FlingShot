@@ -32,15 +32,24 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 originalPos;
 
     public GameObject PlayerBody;
+    public GameObject goalObject;
+    private Animator goalAnimate;
     private Animator animate;
     private BoardCreator board;
     public GameObject GameOverUI;
+
+    public Transform Goal;
+    public Transform Pupil;
+
+    public float eyeRadius;
+    Vector3 eyeCenter;
 
     public int score;
     public int totalTimeTaken;
 
     private string levelType;
 
+    public TrailRenderer tr;
 
     void updateLevelText()
     {
@@ -56,7 +65,8 @@ public class PlayerMovement : MonoBehaviour
         updateTimeText();
 
     }
-    void updateTimeText()
+
+    public void updateTimeText()
     {
 
         timeRemainingInt = (int)timeRemaining;
@@ -74,7 +84,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    void gameOver()
+    public void gameOver()
     {
         //TRIGGER END GAME MENU
         score = totalTimeTaken * currentLevel;
@@ -123,7 +133,13 @@ public class PlayerMovement : MonoBehaviour
         updateTimeText();
         updateLevelText();
 
+        eyeCenter = Pupil.localPosition;
+        eyeRadius = (float)0.25;
+
+        tr = GetComponent<TrailRenderer>();
+
         animate = gameObject.GetComponent<Animator>();
+        goalAnimate = goalObject.GetComponent<Animator>();
         board = (BoardCreator)GameObject.Find("BoardCreator").GetComponent(typeof(BoardCreator));
 
     }
@@ -132,6 +148,9 @@ public class PlayerMovement : MonoBehaviour
     {
         dir = Direction.None;
         gameObject.transform.position = originalPos;
+
+        Debug.Log(currentLevel);
+
         currentLevel++;
 
         if(totalTimeTaken >= 0){
@@ -151,6 +170,7 @@ public class PlayerMovement : MonoBehaviour
           SceneManager.UnloadSceneAsync("BossSceneThunk");
           // SceneManager.MoveGameObjectToScene(gameObject, SceneManager.GetSceneByName("GameScene"));
           board.NextLevel();
+          goalObject.transform.position = goalObject.transform.position + Vector3.up;
           levelType = "normal";
         }
         else{
@@ -160,13 +180,36 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
+    IEnumerator playGoalAnimation() {
+      dir = Direction.None;
+
+      animate.SetBool("atGoal", true);
+      // goalAnimate.SetBool("atGoal", true);
+
+      animate.Play("Goal");
+      yield return new WaitForSecondsRealtime((animate.GetCurrentAnimatorStateInfo(0).length + animate.GetCurrentAnimatorStateInfo(0).normalizedTime));
+      // goalAnimate.Play("Shrink");
+      // yield return new WaitForSecondsRealtime(goalAnimate.GetCurrentAnimatorStateInfo(0).length+goalAnimate.GetCurrentAnimatorStateInfo(0).normalizedTime);
+
+      NextLevel();
+
+      animate.SetBool("atGoal", false);
+      // goalAnimate.SetBool("atGoal", false);
+
+      animate.Play("Start");
+      // goalAnimate.Play("Spin");
+    }
+
     void gameObjectCollision(Collider2D collisionObject)
     {
         int startHealth = health;
 
-        if (collisionObject.name == "end")
+        // Debug.Log(collisionObject.name);
+
+        if (collisionObject.name == "goal")
         {
-            NextLevel();
+            // NextLevel();
+            StartCoroutine(playGoalAnimation());
             // collisionObject.gameObject.SetActive(false);
         }
         else
@@ -187,7 +230,7 @@ public class PlayerMovement : MonoBehaviour
                     // healthBar.text = "Count: " + health.ToString();
                     break;
                 default:
-                    Debug.Log("Obsticle Not Known");
+                    Debug.Log("Obstacle Not Known");
                     break;
             }
         }
@@ -221,21 +264,28 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+
+        Vector3 lookDir = (Goal.position - (Pupil.parent.position + Pupil.localPosition)).normalized;
+        Pupil.localPosition = eyeCenter + (lookDir * eyeRadius);
+
         RaycastHit2D hit;
 
         timeRemaining -= Time.deltaTime;
         updateTimeText();
         if ((timeRemaining < 0))
         {
-            if(levelType != "boss"){
+            if(levelType != "boss" && !animate.GetBool("atGoal")){
               health--;
             }
+
             if(health <= 0){
               updateTimeText();
               gameOver();
             }
-            else{
-              NextLevel();
+            else {
+              if (!animate.GetBool("atGoal") && levelType != "boss") {
+                NextLevel();
+              }
             }
         }
 
@@ -305,12 +355,12 @@ public class PlayerMovement : MonoBehaviour
               }
         #endif
 
-        if (((board.MapLoaded()) || (levelType == "boss")) && gameOverBool == false)
+        if (((board.MapLoaded()) || (levelType == "boss")) && gameOverBool == false && !animate.GetBool("atGoal"))
         {
             switch (dir)
             {
                 case Direction.Left:
-                    hit = Physics2D.Raycast(transform.position, Vector2.left, 1);
+                    hit = Physics2D.Raycast(transform.position + Vector3.left, Vector2.left, (float)0.1);
                     // if (hit.collider != null)
                     // {
                     //   Debug.Log(hit.collider.name);
@@ -319,11 +369,15 @@ public class PlayerMovement : MonoBehaviour
                     {
                         pos = transform.position + Vector3.left;
                         animate.Play("Moving");
+                        animate.ResetTrigger("left");
+                        // animate.SetTrigger("move");
                     }
                     else if (hit.collider.name == "walls")
                     {
                         dir = Direction.None;
                         animate.Play("Body_Compress_Left");
+                        // animate.ResetTrigger("move");
+                        animate.SetTrigger("left");
                     }
                     else
                     {
@@ -332,7 +386,7 @@ public class PlayerMovement : MonoBehaviour
                     }
                     break;
                 case Direction.Right:
-                    hit = Physics2D.Raycast(transform.position, Vector2.right, 1);
+                    hit = Physics2D.Raycast(transform.position + Vector3.right, Vector2.right, (float)0.1);
                     // if (hit.collider != null)
                     // {
                     //   Debug.Log(hit.collider.name);
@@ -341,11 +395,15 @@ public class PlayerMovement : MonoBehaviour
                     {
                         pos = transform.position + Vector3.right;
                         animate.Play("Moving");
+                        animate.ResetTrigger("right");
+                        // animate.SetTrigger("move");
                     }
                     else if (hit.collider.name == "walls")
                     {
                         dir = Direction.None;
                         animate.Play("Body_Compress_Right");
+                        // animate.ResetTrigger("move");
+                        animate.SetTrigger("right");
                     }
                     else
                     {
@@ -354,7 +412,7 @@ public class PlayerMovement : MonoBehaviour
                     }
                     break;
                 case Direction.Up:
-                    hit = Physics2D.Raycast(transform.position, Vector2.up, 1);
+                    hit = Physics2D.Raycast(transform.position + Vector3.up, Vector2.up, (float)0.1);
                     // if (hit.collider != null)
                     // {
                     //   Debug.Log(hit.collider.name);
@@ -365,11 +423,15 @@ public class PlayerMovement : MonoBehaviour
                     {
                         pos = transform.position + Vector3.up;
                         animate.Play("Moving");
+                        animate.ResetTrigger("up");
+                        // animate.SetTrigger("move");
                     }
                     else if (hit.collider.name == "walls")
                     {
                         dir = Direction.None;
                         animate.Play("Body_Compress_Up");
+                        // animate.ResetTrigger("move");
+                        animate.SetTrigger("up");
                     }
                     else
                     {
@@ -378,7 +440,7 @@ public class PlayerMovement : MonoBehaviour
                     }
                     break;
                 case Direction.Down:
-                    hit = Physics2D.Raycast(transform.position, Vector2.down, 1);
+                    hit = Physics2D.Raycast(transform.position + Vector3.down, Vector2.down, (float)0.1);
                     // if (hit.collider != null)
                     // {
                     //   Debug.Log(hit.collider.name);
@@ -387,11 +449,15 @@ public class PlayerMovement : MonoBehaviour
                     {
                         pos = transform.position + Vector3.down;
                         animate.Play("Moving");
+                        animate.ResetTrigger("down");
+                        // animate.SetTrigger("move");
                     }
                     else if (hit.collider.name == "walls")
                     {
                         dir = Direction.None;
                         animate.Play("Body_Compress_Down");
+                        // animate.ResetTrigger("move");
+                        animate.SetTrigger("down");
                     }
                     else
                     {
@@ -410,5 +476,10 @@ public class PlayerMovement : MonoBehaviour
         }
 
         transform.position = Vector3.MoveTowards(transform.position, pos, step);
+    }
+
+    private void OnDestroy() {
+      updateTimeText();
+      gameOver();
     }
 }

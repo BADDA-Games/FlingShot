@@ -8,6 +8,7 @@ TagManager:
   - enemy1HP
   - one_health_no_remove
   - one_health_remove
+  - goal
   layers:
   - Default
   - TransparentFX
