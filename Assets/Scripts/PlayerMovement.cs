@@ -473,7 +473,7 @@ public class PlayerMovement : MonoBehaviour
             dir = Direction.None;
         }
 
-        transform.position = Vector3.MoveTowards(transform.position, pos, step);
+        transform.position = Vector3.MoveTowards(transform.position, pos, 100f * Time.deltaTime);
     }
 
     private void OnDestroy() {
