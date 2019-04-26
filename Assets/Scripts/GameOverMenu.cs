@@ -25,6 +25,8 @@ public class GameOverMenu : MonoBehaviour
     public void restartGame(){
       // Debug.Log("Restarting Game");
       PlayerGameManager.IncrementTimesPlayed();
+      System.Random rnd = new System.Random();
+      PlayerGameManager.SeedValue = rnd.Next(1, 99999989);
       SceneManager.LoadScene("GameScene");
     }
 

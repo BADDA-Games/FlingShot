@@ -61,7 +61,7 @@ public class PlayerMovement : MonoBehaviour
         {
             currentLevelText.text = currentLevel.ToString();
         }
-        timeRemaining = 15;
+        timeRemaining = currentLevel == 00 ? 30 : 15;
         updateTimeText();
 
     }
@@ -127,10 +127,8 @@ public class PlayerMovement : MonoBehaviour
         originalPos = gameObject.transform.position;
 
         health = 3;
-        timeRemaining = 15;
         currentLevel = 00;
 
-        updateTimeText();
         updateLevelText();
 
         eyeCenter = Pupil.localPosition;
