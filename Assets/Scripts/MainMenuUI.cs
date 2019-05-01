@@ -27,7 +27,6 @@ public class MainMenuUI : MonoBehaviour
     void Start()
     {
         myColor = PlayerGameManager.GetColor();
-        //Debug.Log(PlayerGameManager.GetColorName());
         ColorBlock colors = playButton.colors;
         colors.normalColor = myColor;
         playButton.colors = colors;
@@ -57,7 +56,6 @@ public class MainMenuUI : MonoBehaviour
 
     public async Task loadGamePlay() {
         SceneManager.LoadSceneAsync("GameScene", LoadSceneMode.Additive);
-        //Debug.Log("load Game");
         return;
     }
 
@@ -66,23 +64,18 @@ public class MainMenuUI : MonoBehaviour
         //Debug.Log("Seed: " + input);
         int i = -1;
         if(input=="") {
-            //Debug.Log("Empty");
             System.Random rnd = new System.Random();
             int value = rnd.Next(1, 99999989);
             PlayerGameManager.SeedValue = value;
-            //Debug.Log(PlayerGameManager.SeedValue);
         }
         else {
             bool isInt = int.TryParse(input, out i);
             if (isInt)
             {
-                //Debug.Log("IS INT");
                 PlayerGameManager.SeedValue = i;
-                //Debug.Log(PlayerGameManager.SeedValue);
             }
             else
             {
-                //Debug.Log("NOT INT");
                 return;
             }
         }

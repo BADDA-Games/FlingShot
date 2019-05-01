@@ -24,12 +24,10 @@ public class DataClass : ScriptableObject, INotifyPropertyChanged
     {
         if (s == "Red")
         {
-            Debug.Log("Red");
             return new Color(226, 97, 97, 255);
         }
         else if (s == "Orange")
         {
-            Debug.Log("Orange");
             return new Color(237, 151, 81, 255);
         }
         else if (s == "Yellow")
@@ -49,8 +47,8 @@ public class DataClass : ScriptableObject, INotifyPropertyChanged
             return new Color(239, 67, 202, 255);
         }
         else
-        {
-            Debug.Log("Green");
+        {   
+            // This is Green
             return new Color(105, 224, 99, 255);
         }
     }

@@ -151,7 +151,6 @@ public class PlayerMovement : MonoBehaviour
         if(totalTimeTaken >= 0){
           totalTimeTaken = totalTimeTaken + timeRemainingInt;
         }
-        // Debug.Log(totalTimeTaken);
         UpdateLevelText();
         pos = transform.position;
         board.ClearMap(true);
@@ -230,25 +229,6 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if (health != startHealth)
-        {
-            if (health == 3)
-            {
-            }
-            else if (health == 2)
-            {
-                // m_Image.sprite = m_Sprite;
-                Debug.Log("You now have two health");
-            }
-            else if (health == 1)
-            {
-                Debug.Log("You now have one health");
-            }
-            else if (health == 0)
-            {
-                Debug.Log("You are dead");
-            }
-        }
         if (health == 0)
         {
             GameOver();
@@ -290,22 +270,18 @@ public class PlayerMovement : MonoBehaviour
                     if (Input.GetKeyDown(KeyCode.LeftArrow))
                     {
                         dir = Direction.Left;
-                        // Debug.Log("Left");
                     }
                     else if (Input.GetKeyDown(KeyCode.RightArrow))
                     {
                         dir = Direction.Right;
-                        // Debug.Log("Right");
                     }
                     else if (Input.GetKeyDown(KeyCode.UpArrow))
                     {
                         dir = Direction.Up;
-                        // Debug.Log("Up");
                     }
                     else if (Input.GetKeyDown(KeyCode.DownArrow))
                     {
                         dir = Direction.Down;
-                        // Debug.Log("Down");
                     }
                 }
                 // if (Input.GetMouseButtonDown(0))
@@ -351,22 +327,16 @@ public class PlayerMovement : MonoBehaviour
             {
                 case Direction.Left:
                     hit = Physics2D.Raycast(transform.position + Vector3.left, Vector2.left, (float)0.1);
-                    // if (hit.collider != null)
-                    // {
-                    //   Debug.Log(hit.collider.name);
-                    // }
                     if (hit.collider == null)
                     {
                         pos = transform.position + Vector3.left;
                         animate.Play("Moving");
                         animate.ResetTrigger("left");
-                        // animate.SetTrigger("move");
                     }
                     else if (hit.collider.name == "walls")
                     {
                         dir = Direction.None;
                         animate.Play("Body_Compress_Left");
-                        // animate.ResetTrigger("move");
                         animate.SetTrigger("left");
                     }
                     else
@@ -382,13 +352,11 @@ public class PlayerMovement : MonoBehaviour
                         pos = transform.position + Vector3.right;
                         animate.Play("Moving");
                         animate.ResetTrigger("right");
-                        // animate.SetTrigger("move");
                     }
                     else if (hit.collider.name == "walls")
                     {
                         dir = Direction.None;
                         animate.Play("Body_Compress_Right");
-                        // animate.ResetTrigger("move");
                         animate.SetTrigger("right");
                     }
                     else
@@ -431,13 +399,11 @@ public class PlayerMovement : MonoBehaviour
                         pos = transform.position + Vector3.down;
                         animate.Play("Moving");
                         animate.ResetTrigger("down");
-                        // animate.SetTrigger("move");
                     }
                     else if (hit.collider.name == "walls")
                     {
                         dir = Direction.None;
                         animate.Play("Body_Compress_Down");
-                        // animate.ResetTrigger("move");
                         animate.SetTrigger("down");
                     }
                     else
@@ -445,8 +411,6 @@ public class PlayerMovement : MonoBehaviour
                         pos = transform.position + Vector3.down;
                         GameObjectCollision(hit.collider);
                     }
-                    break;
-                default:
                     break;
             }
         }

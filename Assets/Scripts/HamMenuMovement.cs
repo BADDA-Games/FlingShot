@@ -28,16 +28,13 @@ public class HamMenuMovement : MonoBehaviour
     void Update()
     {
         if(Move_H_Menu_Active) {
-            //Debug.Log("Move Active");
             H_Menu_Panel.transform.position = Vector3.Lerp(H_Menu_Panel.transform.position, H_Menu_ActivePOS.transform.position, Move_Speed = Time.deltaTime*10);
             if(H_Menu_Panel.transform.localPosition.x == tempMenuPos) {
-                //Debug.Log("first if");
                 Move_H_Menu_Active = false;
                 H_Menu_Panel.transform.position = H_Menu_ActivePOS.transform.position;
                 tempMenuPos = -99999999999999.99f; //TODO: Why this number? double check this number
             }
             if(Move_H_Menu_Active) {
-                //Debug.Log("second if");
                 tempMenuPos = H_Menu_Panel.transform.position.x;
             }
         }

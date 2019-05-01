@@ -132,8 +132,6 @@ public class BoardCreator : MonoBehaviour{
 
     private void PlacePuzzle(Texture[,] map)
     {
-        //TODO make algo that decides which wall texture to use
-        //for loops check where the walls are and adds them to tilemap
         Vector3Int coordinate = puzzle.WorldToCell(transform.position);
         for(int i = 0; i < width; i++)
         {
