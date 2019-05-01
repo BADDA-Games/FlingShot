@@ -51,6 +51,10 @@ public class PlayerMovement : MonoBehaviour
 
     public TrailRenderer tr;
 
+    private const int BOSS_FREQUENCY = 10;
+    private const int STANDARD_LEVEL_TIME = 15;
+    private const int INITIAL_LEVEL_TIME = 30;
+
     void UpdateLevelText()
     {
         if (currentLevel < 10)
@@ -61,7 +65,7 @@ public class PlayerMovement : MonoBehaviour
         {
             currentLevelText.text = currentLevel.ToString();
         }
-        timeRemaining = currentLevel == 00 ? 30 : 15;
+        timeRemaining = currentLevel == 00 ? INITIAL_LEVEL_TIME : STANDARD_LEVEL_TIME;
         UpdateTimeText();
 
     }
@@ -98,10 +102,10 @@ public class PlayerMovement : MonoBehaviour
           PlayerGameManager.UpdateHighScore(score);
         }
 
-
-
-
-        GameOverUI.SetActive(true);
+        if(GameOverUI != null)
+        {
+            GameOverUI.SetActive(true);
+        }
         gameOverBool = true;
     }
 
@@ -136,15 +140,12 @@ public class PlayerMovement : MonoBehaviour
         animate = gameObject.GetComponent<Animator>();
         goalAnimate = goalObject.GetComponent<Animator>();
         board = (BoardCreator)GameObject.Find("BoardCreator").GetComponent(typeof(BoardCreator));
-
     }
 
     void NextLevel()
     {
         dir = Direction.None;
         gameObject.transform.position = originalPos;
-
-        Debug.Log(currentLevel);
 
         currentLevel++;
 
@@ -155,14 +156,12 @@ public class PlayerMovement : MonoBehaviour
         pos = transform.position;
         board.ClearMap(true);
 
-        if(currentLevel % 10 == 0){
+        if(currentLevel % BOSS_FREQUENCY == 0){
           SceneManager.LoadSceneAsync("BossSceneThunk", LoadSceneMode.Additive);
-          // SceneManager.MoveGameObjectToScene(gameObject, SceneManager.GetSceneByName("BossSceneThunk"));
           levelType = "boss";
         }
-        else if((currentLevel % 10 == 1) && (currentLevel != 1)){
+        else if((currentLevel % BOSS_FREQUENCY == 1) && (currentLevel != 1)){
           SceneManager.UnloadSceneAsync("BossSceneThunk");
-          // SceneManager.MoveGameObjectToScene(gameObject, SceneManager.GetSceneByName("GameScene"));
           board.NextLevel();
           goalObject.transform.position = goalObject.transform.position + Vector3.up;
           levelType = "normal";
@@ -170,8 +169,6 @@ public class PlayerMovement : MonoBehaviour
         else{
           board.NextLevel();
         }
-
-
     }
 
     IEnumerator PlayGoalAnimation() {
@@ -210,7 +207,6 @@ public class PlayerMovement : MonoBehaviour
         {
             // Debug.Log(collisionObject);
             // RectTransform rt = healthIndicator.GetComponent<RectTransform>();
-
             switch (collisionObject.tag)
             {
                 case "one_health_remove":
@@ -228,7 +224,6 @@ public class PlayerMovement : MonoBehaviour
                     break;
             }
         }
-
         if (health == 0)
         {
             GameOver();
@@ -238,7 +233,6 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-
         Vector3 lookDir = (Goal.position - (Pupil.parent.position + Pupil.localPosition)).normalized;
         Pupil.localPosition = eyeCenter + (lookDir * eyeRadius);
 
@@ -249,17 +243,17 @@ public class PlayerMovement : MonoBehaviour
         if ((timeRemaining < 0))
         {
             if(levelType != "boss" && !animate.GetBool("atGoal")){
-              health--;
+                health--;
             }
 
             if(health <= 0){
-              UpdateTimeText();
-              GameOver();
+                UpdateTimeText();
+                GameOver();
             }
             else {
-              if (!animate.GetBool("atGoal") && levelType != "boss") {
-                NextLevel();
-              }
+                if (!animate.GetBool("atGoal") && levelType != "boss") {
+                    NextLevel();
+                }
             }
         }
 
@@ -367,7 +361,6 @@ public class PlayerMovement : MonoBehaviour
                     break;
                 case Direction.Up:
                     hit = Physics2D.Raycast(transform.position + Vector3.up, Vector2.up, (float)0.1);
-
                     if (levelType == "boss" && timeRemainingInt > 0)
                     {
                         dir = Direction.None;
@@ -418,7 +411,7 @@ public class PlayerMovement : MonoBehaviour
         {
             dir = Direction.None;
         }
-
+       
         transform.position = Vector3.MoveTowards(transform.position, pos, 100f * Time.deltaTime);
     }
 

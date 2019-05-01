@@ -26,7 +26,6 @@ public class SettingsUI : MonoBehaviour, INotifyPropertyChanged
         set {
             if (_myColor == value) { return; }
             _myColor = value;
-            //Data.TheColor = value;
             OnPropertyChanged("myColor");
             OnPropertyChanged("myButton");
         }
@@ -47,7 +46,7 @@ public class SettingsUI : MonoBehaviour, INotifyPropertyChanged
         if(c != null) {
             UIColor = c;
             colorName = PlayerGameManager.GetColorName();
-            myDropdown.value = colorIndex(colorName);
+            myDropdown.value = ColorIndex(colorName);
         }
         else {
             //Debug.Log("PGM gC returned null");
@@ -70,7 +69,7 @@ public class SettingsUI : MonoBehaviour, INotifyPropertyChanged
         if(myButton.colors.normalColor != PlayerGameManager.GetColor()) {
             myColor = PlayerGameManager.GetColor();
             colorName = PlayerGameManager.GetColorName();
-            myDropdown.value = colorIndex(colorName);
+            myDropdown.value = ColorIndex(colorName);
             ColorBlock colors = myButton.colors;
             colors.normalColor = myColor;
             myButton.colors = colors;
@@ -83,7 +82,7 @@ public class SettingsUI : MonoBehaviour, INotifyPropertyChanged
             myTimesPlayed.text = "" + PlayerGameManager.GetTimesPlayed();
             colorName = PlayerGameManager.GetColorName();
             myColor = PlayerGameManager.GetColor();
-            myDropdown.value = colorIndex(colorName);
+            myDropdown.value = ColorIndex(colorName);
             ColorBlock colors = myButton.colors;
             colors.normalColor = myColor;
             myButton.colors = colors;
@@ -120,38 +119,34 @@ public class SettingsUI : MonoBehaviour, INotifyPropertyChanged
     public Color MyGetColor(string s)
     {
         Color c;
-        if (s == "Red")
+        switch (s)
         {
-            c = new Color(0.8863f, 0.3804f, 0.3804f, 1.0f);
-        }
-        else if (s == "Orange")
-        {
-            c = new Color(0.9294f, 0.5921f, 0.3176f, 1.0f);
-        }
-        else if (s == "Yellow")
-        {
-            c = new Color(0.898f, 0.8118f, 0.3255f, 1.0f);
-        }
-        else if (s == "Teal")
-        {
-            c = new Color(0.3882f, 0.8784f, 0.9778f, 1.0f);
-        }
-        else if (s == "Purple")
-        {
-            c = new Color(0.6745f, 0.3882f, 0.8784f, 1.0f);
-        }
-        else if (s == "Pink")
-        {
-            c = new Color(0.9372f, 0.2627f, 0.7921f, 1.0f);
-        }
-        else
-        {
-            c = new Color(0.4117f, 0.8784f, 0.3882f, 1.0f);
+            case "Red":
+                c = new Color(0.8863f, 0.3804f, 0.3804f, 1.0f);
+                break;
+            case "Orange":
+                c = new Color(0.9294f, 0.5921f, 0.3176f, 1.0f);
+                break;
+            case "Yellow":
+                c = new Color(0.898f, 0.8118f, 0.3255f, 1.0f);
+                break;
+            case "Teal":
+                c = new Color(0.3882f, 0.8784f, 0.9778f, 1.0f);
+                break;
+            case "Purple":
+                c = new Color(0.6745f, 0.3882f, 0.8784f, 1.0f);
+                break;
+            case "Pink":
+                c = new Color(0.9372f, 0.2627f, 0.7921f, 1.0f);
+                break;
+            default:
+                c = new Color(0.4117f, 0.8784f, 0.3882f, 1.0f);
+                break;
         }
         return c;
     }
 
-    private int colorIndex(string clrstr) {
+    private int ColorIndex(string clrstr) {
         switch (clrstr)
         {
             case "Red":     return 0;
