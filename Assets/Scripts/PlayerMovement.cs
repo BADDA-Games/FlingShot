@@ -51,7 +51,7 @@ public class PlayerMovement : MonoBehaviour
 
     public TrailRenderer tr;
 
-    void updateLevelText()
+    void UpdateLevelText()
     {
         if (currentLevel < 10)
         {
@@ -62,11 +62,11 @@ public class PlayerMovement : MonoBehaviour
             currentLevelText.text = currentLevel.ToString();
         }
         timeRemaining = currentLevel == 00 ? 30 : 15;
-        updateTimeText();
+        UpdateTimeText();
 
     }
 
-    public void updateTimeText()
+    public void UpdateTimeText()
     {
 
         timeRemainingInt = (int)timeRemaining;
@@ -84,7 +84,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void gameOver()
+    public void GameOver()
     {
         //TRIGGER END GAME MENU
         score = totalTimeTaken * currentLevel;
@@ -126,7 +126,7 @@ public class PlayerMovement : MonoBehaviour
         health = 3;
         currentLevel = 00;
 
-        updateLevelText();
+        UpdateLevelText();
 
         eyeCenter = Pupil.localPosition;
         eyeRadius = (float)0.25;
@@ -152,7 +152,7 @@ public class PlayerMovement : MonoBehaviour
           totalTimeTaken = totalTimeTaken + timeRemainingInt;
         }
         // Debug.Log(totalTimeTaken);
-        updateLevelText();
+        UpdateLevelText();
         pos = transform.position;
         board.ClearMap(true);
 
@@ -175,7 +175,7 @@ public class PlayerMovement : MonoBehaviour
 
     }
 
-    IEnumerator playGoalAnimation() {
+    IEnumerator PlayGoalAnimation() {
       dir = Direction.None;
 
       animate.SetBool("atGoal", true);
@@ -195,7 +195,7 @@ public class PlayerMovement : MonoBehaviour
       // goalAnimate.Play("Spin");
     }
 
-    void gameObjectCollision(Collider2D collisionObject)
+    void GameObjectCollision(Collider2D collisionObject)
     {
         int startHealth = health;
 
@@ -204,7 +204,7 @@ public class PlayerMovement : MonoBehaviour
         if (collisionObject.name == "goal")
         {
             // NextLevel();
-            StartCoroutine(playGoalAnimation());
+            StartCoroutine(PlayGoalAnimation());
             // collisionObject.gameObject.SetActive(false);
         }
         else
@@ -251,7 +251,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (health == 0)
         {
-            gameOver();
+            GameOver();
         }
 
     }
@@ -265,7 +265,7 @@ public class PlayerMovement : MonoBehaviour
         RaycastHit2D hit;
 
         timeRemaining -= Time.deltaTime;
-        updateTimeText();
+        UpdateTimeText();
         if ((timeRemaining < 0))
         {
             if(levelType != "boss" && !animate.GetBool("atGoal")){
@@ -273,8 +273,8 @@ public class PlayerMovement : MonoBehaviour
             }
 
             if(health <= 0){
-              updateTimeText();
-              gameOver();
+              UpdateTimeText();
+              GameOver();
             }
             else {
               if (!animate.GetBool("atGoal") && levelType != "boss") {
@@ -315,13 +315,11 @@ public class PlayerMovement : MonoBehaviour
               if(dir == Direction.None){
                 if (Input.touchCount > 0)
                       {
-                          // Debug.Log("Test1");
                           Touch myTouch = Input.touches[0];
 
                           //Check if the phase of that touch equals Began
                           if (myTouch.phase == TouchPhase.Began)
                           {
-                            // Debug.Log("Touch phase begin");
                             touchOrigin = myTouch.position;
                           }
                           else if (myTouch.phase == TouchPhase.Ended && touchOrigin.x >= 0)
@@ -347,7 +345,7 @@ public class PlayerMovement : MonoBehaviour
               }
         #endif
 
-        if (((board.MapLoaded()) || (levelType == "boss")) && gameOverBool == false && !animate.GetBool("atGoal"))
+        if ((board.MapLoaded() || (levelType == "boss")) && gameOverBool == false && !animate.GetBool("atGoal"))
         {
             switch (dir)
             {
@@ -374,15 +372,11 @@ public class PlayerMovement : MonoBehaviour
                     else
                     {
                         pos = transform.position + Vector3.left;
-                        gameObjectCollision(hit.collider);
+                        GameObjectCollision(hit.collider);
                     }
                     break;
                 case Direction.Right:
                     hit = Physics2D.Raycast(transform.position + Vector3.right, Vector2.right, (float)0.1);
-                    // if (hit.collider != null)
-                    // {
-                    //   Debug.Log(hit.collider.name);
-                    // }
                     if (hit.collider == null)
                     {
                         pos = transform.position + Vector3.right;
@@ -400,15 +394,11 @@ public class PlayerMovement : MonoBehaviour
                     else
                     {
                         pos = transform.position + Vector3.right;
-                        gameObjectCollision(hit.collider);
+                        GameObjectCollision(hit.collider);
                     }
                     break;
                 case Direction.Up:
                     hit = Physics2D.Raycast(transform.position + Vector3.up, Vector2.up, (float)0.1);
-                    // if (hit.collider != null)
-                    // {
-                    //   Debug.Log(hit.collider.name);
-                    // }
 
                     if (levelType == "boss" && timeRemainingInt > 0)
                     {
@@ -431,15 +421,11 @@ public class PlayerMovement : MonoBehaviour
                     else
                     {
                         pos = transform.position + Vector3.up;
-                        gameObjectCollision(hit.collider);
+                        GameObjectCollision(hit.collider);
                     }
                     break;
                 case Direction.Down:
                     hit = Physics2D.Raycast(transform.position + Vector3.down, Vector2.down, (float)0.1);
-                    // if (hit.collider != null)
-                    // {
-                    //   Debug.Log(hit.collider.name);
-                    // }
                     if (hit.collider == null)
                     {
                         pos = transform.position + Vector3.down;
@@ -457,7 +443,7 @@ public class PlayerMovement : MonoBehaviour
                     else
                     {
                         pos = transform.position + Vector3.down;
-                        gameObjectCollision(hit.collider);
+                        GameObjectCollision(hit.collider);
                     }
                     break;
                 default:
@@ -473,7 +459,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private void OnDestroy() {
-      updateTimeText();
-      gameOver();
+      UpdateTimeText();
+      GameOver();
     }
 }

@@ -80,14 +80,7 @@ public class BoardCreator : MonoBehaviour{
       tBarbrRound,tBarbRound,rBartlRound,rBarblRound,rBarlRound,
       lBartrRound,lBarbrRound,lBarrRound,bBartrRound,bBartlRound,
       bBartRound,tlBarbrRound,trBarblRound,brBartlRound,blBartrRound,trblRound,tlbrRound,none,empty}
-      //finished: tBar,rBar,bBar,lBar,trBar,brBar,
-      //blBar,tlBar,tlrBar,tblBar,tbrBar,blrBar,tblrBar,trRound,
-      //brRound,blRound,tlRound,tRound,rRound,bRound,lRound,rtRound,
-      //lbRound,rbRound,ltRound,tbRound,none
-      //tbBar,lrBar,tBarblRound,tBarbrRound,tBarbRound,
-      //rBartlRound,rBarblRound,rBarlRound,lBartrRound,lBarbrRound,
-      //lBarrRound,bBartrRound,bBartlRound,bBartRound,tlBarbrRound,
-      //trBarblRound,brBartlRound,blBartrRound,trblRound,tlbrRound
+
     private Texture[,] puzzleMap;
 
     private const int MAX_QUEUE_SIZE = 20;
@@ -96,10 +89,8 @@ public class BoardCreator : MonoBehaviour{
 
     public void NextLevel()
     {
-        //Debug.Log(maps.Count);
         if(!loaded)
         {
-            // Debug.Log(maps.Count);
             while(maps.Count <= 0)
             {
                 Thread.Sleep(THREAD_SLEEP_TIME);
@@ -354,10 +345,6 @@ public class BoardCreator : MonoBehaviour{
         //     ClearMap(true);
         //     NextLevel();
         // }
-        //if(Input.GetMouseButtonDown(1)) //R click clears map
-        //{
-        //    ClearMap(true);
-        //}
     }
 
     public void ClearMap(bool complete)
@@ -373,279 +360,272 @@ public class BoardCreator : MonoBehaviour{
 
     private Texture[,] ConnectedTexture(int[,] nextMap)
     {
-      Texture[,] textured = new Texture[height,width];
+        Texture[,] textured = new Texture[height,width];
         for(int i = 0; i < width; i++)
         {
             for(int j = 0; j < height; j++)
             {
-              if(nextMap[j,i] == 0)
-              {
-                textured[j,i] = Texture.empty;
-              }
-              else
-              {
-                bool[,] surrounding = new bool[3,3];
-                for(int x = i-1; x <= i+1; x++)
+                if(nextMap[j,i] == 0)
                 {
-                  for(int y = j-1; y <= j+1; y++)
-                  {
-                    if(x >= width || x < 0 || y >= height || y < 0)
-                    {
-                      surrounding[y-j+1,x-i+1] = true;
-                    }
-                    //making an array for the surrounding walls
-                    else if(nextMap[y,x] != 0)
-                    {
-                      surrounding[y-j+1,x-i+1] = true;
-                    }
-                    else
-                    {
-                      surrounding[y-j+1,x-i+1] = false;
-                    }
-                  }
-                }
-                if(!surrounding[0,1] && surrounding[1,0] && surrounding[2,0] && surrounding[2,1] &&
-                surrounding[1,2] && surrounding[2,2])
-                {
-                  textured[j,i] = Texture.tBar;
-                }
-                else if(!surrounding[1,2] &&surrounding[0,0] && surrounding[0,1] && surrounding[1,0] &&
-                surrounding[2,0] && surrounding[2,1])
-                {
-                  textured[j,i] = Texture.rBar;
-                }
-                else if(!surrounding[2,1] &&surrounding[0,0] && surrounding[1,0] && surrounding[0,1] &&
-                surrounding[0,2] && surrounding[1,2])
-                {
-                  textured[j,i] = Texture.bBar;
-                }
-                else if(!surrounding[1,0] &&surrounding[0,1] && surrounding[0,2] && surrounding[1,2] &&
-                surrounding[2,1] && surrounding[2,2])
-                {
-                  textured[j,i] = Texture.lBar;
-                }
-                else if(!surrounding[0,1] && !surrounding[1,2] && surrounding[1,0] && surrounding[2,0] &&
-                surrounding[2,1])
-                {
-                  textured[j,i] = Texture.trBar;
-                }
-                else if(!surrounding[2,1] && !surrounding[1,2] && surrounding[0,0] && surrounding[0,1] &&
-                surrounding[1,0])
-                {
-                  textured[j,i] = Texture.brBar;
-                }
-                else if(!surrounding[2,1] && !surrounding[1,0] && surrounding[0,1] && surrounding[0,2] &&
-                surrounding[1,2])
-                {
-                  textured[j,i] = Texture.blBar;
-                }
-                else if(!surrounding[1,0] && !surrounding[0,1] && surrounding[1,2] && surrounding[2,1] &&
-                surrounding[2,2])
-                {
-                  textured[j,i] = Texture.tlBar;
-                }
-                else if(!surrounding[1,0] && !surrounding[0,1] && !surrounding[1,2] && surrounding[2,1])
-                {
-                  textured[j,i] = Texture.tlrBar;
-                }
-                else if(!surrounding[1,0] && !surrounding[0,1] && !surrounding[2,1] && surrounding[1,2])
-                {
-                  textured[j,i] = Texture.tblBar;
-                }
-                else if(!surrounding[1,2] && !surrounding[0,1] && !surrounding[2,1] && surrounding[1,0])
-                {
-                  textured[j,i] = Texture.tbrBar;
-                }
-                else if(!surrounding[1,0] && !surrounding[1,2] && !surrounding[2,1] && surrounding[0,1])
-                {
-                  textured[j,i] = Texture.blrBar;
-                }
-                else if(!surrounding[1,2] && !surrounding[0,1] && !surrounding[2,1] && !surrounding[1,0])
-                {
-                  textured[j,i] = Texture.tblrBar;
-                }
-                else if(!surrounding[0,2] && surrounding[0,0] && surrounding[0,1] && surrounding[1,0]
-                && surrounding[1,2] && surrounding[2,0] && surrounding[2,1] && surrounding[2,2])
-                {
-                  textured[j,i] = Texture.trRound;
-                }
-                else if(!surrounding[2,2] && surrounding[0,0] && surrounding[0,1] && surrounding[1,0]
-                && surrounding[1,2] && surrounding[2,0] && surrounding[2,1] && surrounding[0,2])
-                {
-                  textured[j,i] = Texture.brRound;
-                }
-                else if(!surrounding[2,0] && surrounding[0,0] && surrounding[0,1] && surrounding[1,0]
-                && surrounding[1,2] && surrounding[2,2] && surrounding[2,1] && surrounding[0,2])
-                {
-                  textured[j,i] = Texture.blRound;
-                }
-                else if(!surrounding[0,0] && surrounding[0,2] && surrounding[0,1] && surrounding[1,0]
-                && surrounding[1,2] && surrounding[2,0] && surrounding[2,1] && surrounding[2,2])
-                {
-                  textured[j,i] = Texture.tlRound;
-                }
-                else if(!surrounding[0,2] && !surrounding[0,0] && surrounding[0,1] && surrounding[1,0]
-                && surrounding[1,2] && surrounding[2,0] && surrounding[2,1] && surrounding[2,2])
-                {
-                  textured[j,i] = Texture.tRound;
-                }
-                else if(!surrounding[0,2] && surrounding[0,0] && surrounding[0,1] && surrounding[1,0]
-                && surrounding[1,2] && surrounding[2,0] && surrounding[2,1] && !surrounding[2,2])
-                {
-                  textured[j,i] = Texture.rRound;
-                }
-                else if(surrounding[0,2] && surrounding[0,0] && surrounding[0,1] && surrounding[1,0]
-                && surrounding[1,2] && !surrounding[2,0] && surrounding[2,1] && !surrounding[2,2])
-                {
-                  textured[j,i] = Texture.bRound;
-                }
-                else if(surrounding[0,2] && !surrounding[0,0] && surrounding[0,1] && surrounding[1,0]
-                && surrounding[1,2] && !surrounding[2,0] && surrounding[2,1] && surrounding[2,2])
-                {
-                  textured[j,i] = Texture.lRound;
-                }
-                else if( !surrounding[0,0] && surrounding[0,1] && !surrounding[0,2] && surrounding[1,0]
-                && surrounding[1,2] && surrounding[2,0] && surrounding[2,1] && !surrounding[2,2])
-                {
-                  textured[j,i] = Texture.rtRound;
-                }
-                else if( !surrounding[0,0] && surrounding[0,1] && surrounding[0,2] && surrounding[1,0]
-                && surrounding[1,2] && !surrounding[2,0] && surrounding[2,1] && !surrounding[2,2])
-                {
-                  textured[j,i] = Texture.lbRound;
-                }
-                else if( surrounding[0,0] && surrounding[0,1] && !surrounding[0,2] && surrounding[1,0]
-                && surrounding[1,2] && !surrounding[2,0] && surrounding[2,1] && !surrounding[2,2])
-                {
-                  textured[j,i] = Texture.rbRound;
-                }
-                else if( !surrounding[0,0] && surrounding[0,1] && !surrounding[0,2] && surrounding[1,0]
-                && surrounding[1,2] && !surrounding[2,0] && surrounding[2,1] && surrounding[2,2])
-                {
-                  textured[j,i] = Texture.ltRound;
-                }
-                else if( !surrounding[0,0] && surrounding[0,1] && !surrounding[0,2] && surrounding[1,0]
-                && surrounding[1,2] && !surrounding[2,0] && surrounding[2,1] && !surrounding[2,2])
-                {
-                  textured[j,i] = Texture.tbRound;
-                }
-                else if( !surrounding[0,1] && surrounding[1,0] && surrounding[1,2] && !surrounding[2,1])
-                {
-                  textured[j,i] = Texture.tbBar;
-                }
-                else if( surrounding[0,1] && !surrounding[1,0] && !surrounding[1,2] && surrounding[2,1])
-                {
-                  textured[j,i] = Texture.lrBar;
-                }
-                else if( !surrounding[0,1] && surrounding[1,0] && surrounding[1,2] && !surrounding[2,0]
-                && surrounding[2,1] && surrounding[2,2])
-                {
-                  textured[j,i] = Texture.tBarblRound;
-                }
-                else if(!surrounding[0,1] && surrounding[1,0] && surrounding[1,2] && surrounding[2,0]
-                && surrounding[2,1] && !surrounding[2,2])
-                {
-                  textured[j,i] = Texture.tBarbrRound;
-                }
-                else if(!surrounding[0,1] && surrounding[1,0] && surrounding[1,2] && !surrounding[2,0]
-                && surrounding[2,1] && !surrounding[2,2])
-                {
-                  textured[j,i] = Texture.tBarbRound;
-                }
-                else if( !surrounding[0,0] && surrounding[0,1] && surrounding[1,0]
-                && !surrounding[1,2] && surrounding[2,0] && surrounding[2,1])
-                {
-                  textured[j,i] = Texture.rBartlRound;
-                }
-                else if( surrounding[0,0] && surrounding[0,1] && surrounding[1,0]
-                && !surrounding[1,2] && !surrounding[2,0] && surrounding[2,1])
-                {
-                  textured[j,i] = Texture.rBarblRound;
-                }
-                else if( !surrounding[0,0] && surrounding[0,1] && surrounding[1,0]
-                && !surrounding[1,2] && !surrounding[2,0] && surrounding[2,1])
-                {
-                  textured[j,i] = Texture.rBarlRound;
-                }
-                else if( surrounding[0,1] && !surrounding[0,2] && !surrounding[1,0]
-                && surrounding[1,2] && surrounding[2,1] && surrounding[2,2])
-                {
-                  textured[j,i] = Texture.lBartrRound;
-                }
-                else if( surrounding[0,1] && surrounding[0,2] && !surrounding[1,0]
-                && surrounding[1,2] && surrounding[2,1] && !surrounding[2,2])
-                {
-                  textured[j,i] = Texture.lBarbrRound;
-                }
-                else if( surrounding[0,1] && !surrounding[0,2] && !surrounding[1,0]
-                && surrounding[1,2] && surrounding[2,1] && !surrounding[2,2])
-                {
-                  textured[j,i] = Texture.lBarrRound;
-                }
-                else if( surrounding[0,0] && surrounding[0,1] && !surrounding[0,2]
-                && surrounding[1,0] && surrounding[1,2] && !surrounding[2,1])
-                {
-                  textured[j,i] = Texture.bBartrRound;
-                }
-                else if( !surrounding[0,0] && surrounding[0,1] && surrounding[0,2]
-                && surrounding[1,0] && surrounding[1,2] && !surrounding[2,1])
-                {
-                  textured[j,i] = Texture.bBartlRound;
-                }
-                else if( !surrounding[0,0] && surrounding[0,1] && !surrounding[0,2]
-                && surrounding[1,0] && surrounding[1,2] && !surrounding[2,1])
-                {
-                  textured[j,i] = Texture.bBartRound;
-                }
-                else if( surrounding[0,0] && surrounding[0,1] && surrounding[0,2]
-                && surrounding[1,0] && surrounding[1,2] && !surrounding[2,1])
-                {
-                  textured[j,i] = Texture.tlBarbrRound;
-                }
-                else if( !surrounding[0,1] && !surrounding[1,0] && surrounding[1,2]
-                && surrounding[2,1] && !surrounding[2,2])
-                {
-                  textured[j,i] = Texture.tlBarbrRound;
-                }
-                else if( !surrounding[0,1] && surrounding[1,0] && !surrounding[1,2]
-                && !surrounding[2,0] && surrounding[2,1])
-                {
-                  textured[j,i] = Texture.trBarblRound;
-                }
-                else if( !surrounding[0,0] && surrounding[0,1] && surrounding[1,0]
-                && !surrounding[1,2] && !surrounding[2,1])
-                {
-                  textured[j,i] = Texture.brBartlRound;
-                }
-                else if( surrounding[0,1] && !surrounding[0,2] && !surrounding[1,0]
-                && surrounding[1,2] && !surrounding[2,1])
-                {
-                  textured[j,i] = Texture.blBartrRound;
-                }
-                else if( surrounding[0,0] && surrounding[0,1] && !surrounding[0,2] && surrounding[1,0]
-                && surrounding[1,2] && !surrounding[2,0] && surrounding[2,1] && surrounding[2,2] )
-                {
-                  textured[j,i] = Texture.trblRound;
-                }
-                else if( !surrounding[0,0] && surrounding[0,1] && surrounding[0,2] && surrounding[1,0]
-                && surrounding[1,2] && surrounding[2,0] && surrounding[2,1] && !surrounding[2,2] )
-                {
-                  textured[j,i] = Texture.tlbrRound;
-                }
-
-                else if(surrounding[2,2] && surrounding[0,0] && surrounding[0,1] && surrounding[1,0]
-                && surrounding[1,2] && surrounding[2,0] && surrounding[2,1] && surrounding[0,2])
-                {
-                  textured[j,i] = Texture.none;
+                    textured[j,i] = Texture.empty;
                 }
                 else
                 {
-                  textured[j,i] = Texture.tblrBar;
+                    bool[,] surrounding = new bool[3,3];
+                    for(int x = i-1; x <= i+1; x++)
+                    {
+                        for(int y = j-1; y <= j+1; y++)
+                        {
+                            if(x >= width || x < 0 || y >= height || y < 0)
+                            {
+                              surrounding[y-j+1,x-i+1] = true;
+                            }
+                            else
+                            {
+                              surrounding[y-j+1,x-i+1] = nextMap[y, x] != 0;
+                            }
+                        }
+                    }
+                    if(!surrounding[0,1] && surrounding[1,0] && surrounding[2,0] && surrounding[2,1] &&
+                    surrounding[1,2] && surrounding[2,2])
+                    {
+                        textured[j,i] = Texture.tBar;
+                    }
+                    else if(!surrounding[1,2] &&surrounding[0,0] && surrounding[0,1] && surrounding[1,0] &&
+                    surrounding[2,0] && surrounding[2,1])
+                    {
+                        textured[j,i] = Texture.rBar;
+                    }
+                    else if(!surrounding[2,1] &&surrounding[0,0] && surrounding[1,0] && surrounding[0,1] &&
+                    surrounding[0,2] && surrounding[1,2])
+                    {
+                        textured[j,i] = Texture.bBar;
+                    }
+                    else if(!surrounding[1,0] &&surrounding[0,1] && surrounding[0,2] && surrounding[1,2] &&
+                    surrounding[2,1] && surrounding[2,2])
+                    {
+                        textured[j,i] = Texture.lBar;
+                    }
+                    else if(!surrounding[0,1] && !surrounding[1,2] && surrounding[1,0] && surrounding[2,0] &&
+                    surrounding[2,1])
+                    {
+                        textured[j,i] = Texture.trBar;
+                    }
+                    else if(!surrounding[2,1] && !surrounding[1,2] && surrounding[0,0] && surrounding[0,1] &&
+                    surrounding[1,0])
+                    {
+                        textured[j,i] = Texture.brBar;
+                    }
+                    else if(!surrounding[2,1] && !surrounding[1,0] && surrounding[0,1] && surrounding[0,2] &&
+                    surrounding[1,2])
+                    {
+                        textured[j,i] = Texture.blBar;
+                    }
+                    else if(!surrounding[1,0] && !surrounding[0,1] && surrounding[1,2] && surrounding[2,1] &&
+                    surrounding[2,2])
+                    {
+                        textured[j,i] = Texture.tlBar;
+                    }
+                    else if(!surrounding[1,0] && !surrounding[0,1] && !surrounding[1,2] && surrounding[2,1])
+                    {
+                        textured[j,i] = Texture.tlrBar;
+                    }
+                    else if(!surrounding[1,0] && !surrounding[0,1] && !surrounding[2,1] && surrounding[1,2])
+                    {
+                        textured[j,i] = Texture.tblBar;
+                    }
+                    else if(!surrounding[1,2] && !surrounding[0,1] && !surrounding[2,1] && surrounding[1,0])
+                    {
+                        textured[j,i] = Texture.tbrBar;
+                    }
+                    else if(!surrounding[1,0] && !surrounding[1,2] && !surrounding[2,1] && surrounding[0,1])
+                    {
+                        textured[j,i] = Texture.blrBar;
+                    }
+                    else if(!surrounding[1,2] && !surrounding[0,1] && !surrounding[2,1] && !surrounding[1,0])
+                    {
+                        textured[j,i] = Texture.tblrBar;
+                    }
+                    else if(!surrounding[0,2] && surrounding[0,0] && surrounding[0,1] && surrounding[1,0]
+                    && surrounding[1,2] && surrounding[2,0] && surrounding[2,1] && surrounding[2,2])
+                    {
+                        textured[j,i] = Texture.trRound;
+                    }
+                    else if(!surrounding[2,2] && surrounding[0,0] && surrounding[0,1] && surrounding[1,0]
+                    && surrounding[1,2] && surrounding[2,0] && surrounding[2,1] && surrounding[0,2])
+                    {
+                        textured[j,i] = Texture.brRound;
+                    }
+                    else if(!surrounding[2,0] && surrounding[0,0] && surrounding[0,1] && surrounding[1,0]
+                    && surrounding[1,2] && surrounding[2,2] && surrounding[2,1] && surrounding[0,2])
+                    {
+                        textured[j,i] = Texture.blRound;
+                    }
+                    else if(!surrounding[0,0] && surrounding[0,2] && surrounding[0,1] && surrounding[1,0]
+                    && surrounding[1,2] && surrounding[2,0] && surrounding[2,1] && surrounding[2,2])
+                    {
+                        textured[j,i] = Texture.tlRound;
+                    }
+                    else if(!surrounding[0,2] && !surrounding[0,0] && surrounding[0,1] && surrounding[1,0]
+                    && surrounding[1,2] && surrounding[2,0] && surrounding[2,1] && surrounding[2,2])
+                    {
+                        textured[j,i] = Texture.tRound;
+                    }
+                    else if(!surrounding[0,2] && surrounding[0,0] && surrounding[0,1] && surrounding[1,0]
+                    && surrounding[1,2] && surrounding[2,0] && surrounding[2,1] && !surrounding[2,2])
+                    {
+                        textured[j,i] = Texture.rRound;
+                    }
+                    else if(surrounding[0,2] && surrounding[0,0] && surrounding[0,1] && surrounding[1,0]
+                    && surrounding[1,2] && !surrounding[2,0] && surrounding[2,1] && !surrounding[2,2])
+                    {
+                        textured[j,i] = Texture.bRound;
+                    }
+                    else if(surrounding[0,2] && !surrounding[0,0] && surrounding[0,1] && surrounding[1,0]
+                    && surrounding[1,2] && !surrounding[2,0] && surrounding[2,1] && surrounding[2,2])
+                    {
+                        textured[j,i] = Texture.lRound;
+                    }
+                    else if( !surrounding[0,0] && surrounding[0,1] && !surrounding[0,2] && surrounding[1,0]
+                    && surrounding[1,2] && surrounding[2,0] && surrounding[2,1] && !surrounding[2,2])
+                    {
+                        textured[j,i] = Texture.rtRound;
+                    }
+                    else if( !surrounding[0,0] && surrounding[0,1] && surrounding[0,2] && surrounding[1,0]
+                    && surrounding[1,2] && !surrounding[2,0] && surrounding[2,1] && !surrounding[2,2])
+                    {
+                        textured[j,i] = Texture.lbRound;
+                    }
+                    else if( surrounding[0,0] && surrounding[0,1] && !surrounding[0,2] && surrounding[1,0]
+                    && surrounding[1,2] && !surrounding[2,0] && surrounding[2,1] && !surrounding[2,2])
+                    {
+                        textured[j,i] = Texture.rbRound;
+                    }
+                    else if( !surrounding[0,0] && surrounding[0,1] && !surrounding[0,2] && surrounding[1,0]
+                    && surrounding[1,2] && !surrounding[2,0] && surrounding[2,1] && surrounding[2,2])
+                    {
+                        textured[j,i] = Texture.ltRound;
+                    }
+                    else if( !surrounding[0,0] && surrounding[0,1] && !surrounding[0,2] && surrounding[1,0]
+                    && surrounding[1,2] && !surrounding[2,0] && surrounding[2,1] && !surrounding[2,2])
+                    {
+                        textured[j,i] = Texture.tbRound;
+                    }
+                    else if( !surrounding[0,1] && surrounding[1,0] && surrounding[1,2] && !surrounding[2,1])
+                    {
+                        textured[j,i] = Texture.tbBar;
+                    }
+                    else if( surrounding[0,1] && !surrounding[1,0] && !surrounding[1,2] && surrounding[2,1])
+                    {
+                        textured[j,i] = Texture.lrBar;
+                    }
+                    else if( !surrounding[0,1] && surrounding[1,0] && surrounding[1,2] && !surrounding[2,0]
+                    && surrounding[2,1] && surrounding[2,2])
+                    {
+                        textured[j,i] = Texture.tBarblRound;
+                    }
+                    else if(!surrounding[0,1] && surrounding[1,0] && surrounding[1,2] && surrounding[2,0]
+                    && surrounding[2,1] && !surrounding[2,2])
+                    {
+                        textured[j,i] = Texture.tBarbrRound;
+                    }
+                    else if(!surrounding[0,1] && surrounding[1,0] && surrounding[1,2] && !surrounding[2,0]
+                    && surrounding[2,1] && !surrounding[2,2])
+                    {
+                        textured[j,i] = Texture.tBarbRound;
+                    }
+                    else if( !surrounding[0,0] && surrounding[0,1] && surrounding[1,0]
+                    && !surrounding[1,2] && surrounding[2,0] && surrounding[2,1])
+                    {
+                        textured[j,i] = Texture.rBartlRound;
+                    }
+                    else if( surrounding[0,0] && surrounding[0,1] && surrounding[1,0]
+                    && !surrounding[1,2] && !surrounding[2,0] && surrounding[2,1])
+                    {
+                        textured[j,i] = Texture.rBarblRound;
+                    }
+                    else if( !surrounding[0,0] && surrounding[0,1] && surrounding[1,0]
+                    && !surrounding[1,2] && !surrounding[2,0] && surrounding[2,1])
+                    {
+                        textured[j,i] = Texture.rBarlRound;
+                    }
+                    else if( surrounding[0,1] && !surrounding[0,2] && !surrounding[1,0]
+                    && surrounding[1,2] && surrounding[2,1] && surrounding[2,2])
+                    {
+                        textured[j,i] = Texture.lBartrRound;
+                    }
+                    else if( surrounding[0,1] && surrounding[0,2] && !surrounding[1,0]
+                    && surrounding[1,2] && surrounding[2,1] && !surrounding[2,2])
+                    {
+                        textured[j,i] = Texture.lBarbrRound;
+                    }
+                    else if( surrounding[0,1] && !surrounding[0,2] && !surrounding[1,0]
+                    && surrounding[1,2] && surrounding[2,1] && !surrounding[2,2])
+                    {
+                        textured[j,i] = Texture.lBarrRound;
+                    }
+                    else if( surrounding[0,0] && surrounding[0,1] && !surrounding[0,2]
+                    && surrounding[1,0] && surrounding[1,2] && !surrounding[2,1])
+                    {
+                        textured[j,i] = Texture.bBartrRound;
+                    }
+                    else if( !surrounding[0,0] && surrounding[0,1] && surrounding[0,2]
+                    && surrounding[1,0] && surrounding[1,2] && !surrounding[2,1])
+                    {
+                        textured[j,i] = Texture.bBartlRound;
+                    }
+                    else if( !surrounding[0,0] && surrounding[0,1] && !surrounding[0,2]
+                    && surrounding[1,0] && surrounding[1,2] && !surrounding[2,1])
+                    {
+                        textured[j,i] = Texture.bBartRound;
+                    }
+                    else if( surrounding[0,0] && surrounding[0,1] && surrounding[0,2]
+                    && surrounding[1,0] && surrounding[1,2] && !surrounding[2,1])
+                    {
+                        textured[j,i] = Texture.tlBarbrRound;
+                    }
+                    else if( !surrounding[0,1] && !surrounding[1,0] && surrounding[1,2]
+                    && surrounding[2,1] && !surrounding[2,2])
+                    {
+                        textured[j,i] = Texture.tlBarbrRound;
+                    }
+                    else if( !surrounding[0,1] && surrounding[1,0] && !surrounding[1,2]
+                    && !surrounding[2,0] && surrounding[2,1])
+                    {
+                        textured[j,i] = Texture.trBarblRound;
+                    }
+                    else if( !surrounding[0,0] && surrounding[0,1] && surrounding[1,0]
+                    && !surrounding[1,2] && !surrounding[2,1])
+                    {
+                        textured[j,i] = Texture.brBartlRound;
+                    }
+                    else if( surrounding[0,1] && !surrounding[0,2] && !surrounding[1,0]
+                    && surrounding[1,2] && !surrounding[2,1])
+                    {
+                        textured[j,i] = Texture.blBartrRound;
+                    }
+                    else if( surrounding[0,0] && surrounding[0,1] && !surrounding[0,2] && surrounding[1,0]
+                    && surrounding[1,2] && !surrounding[2,0] && surrounding[2,1] && surrounding[2,2] )
+                    {
+                        textured[j,i] = Texture.trblRound;
+                    }
+                    else if( !surrounding[0,0] && surrounding[0,1] && surrounding[0,2] && surrounding[1,0]
+                    && surrounding[1,2] && surrounding[2,0] && surrounding[2,1] && !surrounding[2,2] )
+                    {
+                        textured[j,i] = Texture.tlbrRound;
+                    }
+                    else if(surrounding[2,2] && surrounding[0,0] && surrounding[0,1] && surrounding[1,0]
+                    && surrounding[1,2] && surrounding[2,0] && surrounding[2,1] && surrounding[0,2])
+                    {
+                        textured[j,i] = Texture.none;
+                    }
+                    else
+                    {
+                        textured[j,i] = Texture.tblrBar;
+                    }
                 }
-
-              }
             }
         }
-      return(textured);
+      return textured;
     }
 }

@@ -8,7 +8,6 @@ public class GameOverMenu : MonoBehaviour
 
     public void loadMenu(){
       PlayerGameManager.IncrementTimesPlayed();
-      // Debug.Log("Returning to main menu");
       SceneManager.LoadScene("MainMenu");
       SceneManager.UnloadSceneAsync("GameScene");
 
@@ -22,13 +21,12 @@ public class GameOverMenu : MonoBehaviour
 
     }
 
-    public void restartGame(){
-      // Debug.Log("Restarting Game");
+    public void RestartGame(){
       PlayerGameManager.IncrementTimesPlayed();
       SceneManager.LoadScene("GameScene");
     }
 
-    public void newSeed()
+    public void NewSeed()
     {
         PlayerGameManager.IncrementTimesPlayed();
         System.Random rnd = new System.Random();
