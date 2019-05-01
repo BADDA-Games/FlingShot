@@ -103,9 +103,6 @@ public class PlayerMovement : MonoBehaviour
 
         GameOverUI.SetActive(true);
         gameOverBool = true;
-        // Debug.Log("Game Over");
-        // Debug.Log("Your score is:");
-        // Debug.Log(score);
     }
 
     void Start()
@@ -254,7 +251,6 @@ public class PlayerMovement : MonoBehaviour
         }
         if (health == 0)
         {
-            //TRIGGER GAME OVER
             gameOver();
         }
 
@@ -317,7 +313,6 @@ public class PlayerMovement : MonoBehaviour
         #elif UNITY_IOS || UNITY_ANDROID || UNITY_WP8 || UNITY_IPHONE
 
               if(dir == Direction.None){
-                Debug.Log("Waiting for touch");
                 if (Input.touchCount > 0)
                       {
                           // Debug.Log("Test1");
@@ -331,7 +326,6 @@ public class PlayerMovement : MonoBehaviour
                           }
                           else if (myTouch.phase == TouchPhase.Ended && touchOrigin.x >= 0)
                           {
-                            // Debug.Log("touch release");
                               //Set touchEnd to equal the position of this touch
                               Vector2 touchEnd = myTouch.position;
                               //Calculate the difference between the beginning and end of the touch on the x and y axis.
@@ -416,8 +410,11 @@ public class PlayerMovement : MonoBehaviour
                     //   Debug.Log(hit.collider.name);
                     // }
 
-
-                    if (hit.collider == null)
+                    if (levelType == "boss" && timeRemainingInt > 0)
+                    {
+                        dir = Direction.None;
+                    }
+                    else if (hit.collider == null)
                     {
                         pos = transform.position + Vector3.up;
                         animate.Play("Moving");
@@ -464,7 +461,6 @@ public class PlayerMovement : MonoBehaviour
                     }
                     break;
                 default:
-                    //Debug.Log("Error no Direction assigned...");
                     break;
             }
         }
