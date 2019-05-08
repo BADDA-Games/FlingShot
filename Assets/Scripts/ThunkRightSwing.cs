@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class ThunkRightSwing : StateMachineBehaviour
 {
-    public float timer = 1;
+    public float timer = Constants.THUNK_TIMER;
     public GameObject player;
-    public bool change = false;
+    public bool change;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

@@ -62,8 +62,6 @@ public class BoardCreator : MonoBehaviour{
 
     private Algorithm.Algorithm a;
 
-    private int width;
-    private int height;
     private int seed;
     private bool loaded;
 
@@ -81,17 +79,13 @@ public class BoardCreator : MonoBehaviour{
 
     private Texture[,] puzzleMap;
 
-    private const int MAX_QUEUE_SIZE = 20;
-    private const int THREAD_SLEEP_TIME = 25;
-
-
     public void NextLevel()
     {
         if(!loaded)
         {
             while(maps.Count <= 0)
             {
-                Thread.Sleep(THREAD_SLEEP_TIME);
+                Thread.Sleep(Constants.THREAD_SLEEP_TIME);
                 //Wait for other thread produces a map
             }
             mutex.WaitOne();
@@ -111,7 +105,7 @@ public class BoardCreator : MonoBehaviour{
     {
         while (true)
         {
-            if (maps.Count < MAX_QUEUE_SIZE)
+            if (maps.Count < Constants.MAX_BOARD_QUEUE_SIZE)
             {
                 int[,] nextMap = a.Generate();
                 Texture[,] textured = ConnectedTexture(nextMap);
@@ -121,7 +115,7 @@ public class BoardCreator : MonoBehaviour{
             }
             else
             {
-                Thread.Sleep(THREAD_SLEEP_TIME);
+                Thread.Sleep(Constants.THREAD_SLEEP_TIME);
                 //Wait until other thread consumes a map
             }
         }
@@ -131,13 +125,13 @@ public class BoardCreator : MonoBehaviour{
     private void PlacePuzzle(Texture[,] map)
     {
         Vector3Int coordinate;
-        for(int i = 0; i < width; i++)
+        for(int i = 0; i < Constants.WIDTH; i++)
         {
             //resets position with respect to the world
             coordinate = puzzle.WorldToCell(transform.position);
             coordinate.x += i-5;
             coordinate.y += 10;
-            for(int j = 0; j <= height; j++)
+            for(int j = 0; j <= Constants.HEIGHT; j++)
             {
                 coordinate.y--;
                 if(j == 0)
@@ -314,22 +308,13 @@ public class BoardCreator : MonoBehaviour{
 
     void Start()
     {
-        // if(OnlyMap != null){
-        //   Destroy(this.gameObject);
-        //   return;
-        // }
-        // OnlyMap = this;
-        // DontDestroyOnLoad(this.gameObject);
-
         seed = PlayerGameManager.SeedValue;
         a = new Algorithm.Algorithm(seed);
-        maps = new Queue<Texture[,]>(MAX_QUEUE_SIZE);
+        maps = new Queue<Texture[,]>(Constants.MAX_BOARD_QUEUE_SIZE);
         mutex = new Mutex();
         creator = new Thread(AddMazeToQueue);
         creator.Start();
         Debug.Log(seed);
-        width = 11;
-        height = 18;
         loaded = true;
     }
 
@@ -355,10 +340,10 @@ public class BoardCreator : MonoBehaviour{
 
     private Texture[,] ConnectedTexture(int[,] nextMap)
     {
-        Texture[,] textured = new Texture[height,width];
-        for(int i = 0; i < width; i++)
+        Texture[,] textured = new Texture[Constants.HEIGHT, Constants.WIDTH];
+        for(int i = 0; i < Constants.WIDTH; i++)
         {
-            for(int j = 0; j < height; j++)
+            for(int j = 0; j < Constants.HEIGHT; j++)
             {
                 if(nextMap[j,i] == 0)
                 {
@@ -371,7 +356,7 @@ public class BoardCreator : MonoBehaviour{
                     {
                         for(int y = j-1; y <= j+1; y++)
                         {
-                            if(x >= width || x < 0 || y >= height || y < 0)
+                            if(x >= Constants.WIDTH || x < 0 || y >= Constants.HEIGHT || y < 0)
                             {
                               surrounding[y-j+1,x-i+1] = true;
                             }

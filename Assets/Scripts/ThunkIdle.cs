@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class ThunkIdle : StateMachineBehaviour
 {
-    public float timer = 4;
-    public bool change = false;
+    public float timer = Constants.THUNK_TIMER * 4;
+    public bool change;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
       animator.ResetTrigger("idle");
-      timer = 2;
+      timer = Constants.THUNK_TIMER * 2;
       change = false;
     }
 

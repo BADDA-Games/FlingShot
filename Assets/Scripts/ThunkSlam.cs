@@ -4,36 +4,27 @@ using UnityEngine;
 
 public class ThunkSlam : StateMachineBehaviour
 {
-    public float timer = 1;
+    public float timer = Constants.THUNK_TIMER;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-      animator.ResetTrigger("slam-head");
-
-      // animator.SetBool("slam", false);
-
-      timer = 1;
+        animator.ResetTrigger("slam-head");
+        // animator.SetBool("slam", false);
+        timer = Constants.THUNK_TIMER;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         if(timer <= 0) {
-          animator.SetTrigger("idle");
+            // animator.ResetTrigger("slam-head");
+            animator.SetTrigger("idle");
+            //animator.SetBool("reset", true);
         }
         else {
-          timer -= Time.deltaTime;
+            timer -= Time.deltaTime;
         }
-
-        // if(timer <= 0) {
-        //   // animator.ResetTrigger("slam-head");
-        //   // animator.SetTrigger("idle");
-        //   animator.SetBool("reset", true);
-        // }
-        // else {
-        //   timer -= Time.deltaTime;
-        // }
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
