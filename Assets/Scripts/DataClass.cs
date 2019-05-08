@@ -7,7 +7,6 @@ public class DataClass : ScriptableObject, INotifyPropertyChanged
 {
     public event PropertyChangedEventHandler PropertyChanged;
     //Default to Green
-    //TODO: pull from local data
     private Color _MY_COLOR = new Color(105, 224, 99, 255);
     public Color TheColor {
         get { return _MY_COLOR; }
@@ -22,34 +21,23 @@ public class DataClass : ScriptableObject, INotifyPropertyChanged
 
     public Color MyGetColor(string s)
     {
-        if (s == "Red")
+        switch(s)
         {
-            return new Color(226, 97, 97, 255);
-        }
-        else if (s == "Orange")
-        {
-            return new Color(237, 151, 81, 255);
-        }
-        else if (s == "Yellow")
-        {
-            return new Color(229, 207, 83, 255);
-        }
-        else if (s == "Teal")
-        {
-            return new Color(99, 224, 220, 255);
-        }
-        else if (s == "Purple")
-        {
-            return new Color(172, 99, 224, 255);
-        }
-        else if (s == "Pink")
-        {
-            return new Color(239, 67, 202, 255);
-        }
-        else
-        {   
-            // This is Green
-            return new Color(105, 224, 99, 255);
+            case "Red":
+                return new Color(226, 97, 97, 255);
+            case "Orange":
+                return new Color(237, 151, 81, 255);
+            case "Yellow":
+                return new Color(229, 207, 83, 255);
+            case "Teal":
+                return new Color(99, 224, 220, 255);
+            case "Purple":
+                return new Color(172, 99, 224, 255);
+            case "Pink":
+                return new Color(239, 67, 202, 255);
+            default:
+                // This is Green
+                return new Color(105, 224, 99, 255);
         }
     }
     // Start is called before the first frame update

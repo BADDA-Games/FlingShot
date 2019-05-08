@@ -12,7 +12,6 @@ namespace Algorithm
         // Initial seed, not current seed!
         public int Seed { get; }
         public int Level { get; set; }
-        public int initSeed;
 
         private int height;
         private int width;
@@ -26,14 +25,12 @@ namespace Algorithm
         {
             System.Random sysrand = new System.Random();
             Seed = sysrand.Next(1, 99999989);
-            initSeed = Seed;
             Initialize();
         }
 
         public Algorithm(int seed)
         {
             Seed = seed;
-            initSeed = Seed;
             Initialize();
         }
 
@@ -58,11 +55,6 @@ namespace Algorithm
                 return false;
             }
             return true;
-        }
-
-        public int GetInitSeed()
-        {
-          return initSeed;
         }
 
         public int[,] Generate()

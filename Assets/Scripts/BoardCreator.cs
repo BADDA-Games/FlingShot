@@ -7,8 +7,6 @@ using UnityEditor;
 
 public class BoardCreator : MonoBehaviour{
 
-    // static BoardCreator OnlyMap;
-
     public Vector3Int tmapSize;
 
     public Tilemap puzzle;
@@ -106,7 +104,7 @@ public class BoardCreator : MonoBehaviour{
 
     public int getSeed()
     {
-      return(a.GetInitSeed());
+        return seed;
     }
 
     private void AddMazeToQueue()
@@ -132,7 +130,7 @@ public class BoardCreator : MonoBehaviour{
 
     private void PlacePuzzle(Texture[,] map)
     {
-        Vector3Int coordinate = puzzle.WorldToCell(transform.position);
+        Vector3Int coordinate;
         for(int i = 0; i < width; i++)
         {
             //resets position with respect to the world
@@ -141,25 +139,24 @@ public class BoardCreator : MonoBehaviour{
             coordinate.y += 10;
             for(int j = 0; j <= height; j++)
             {
-                coordinate.y --;
+                coordinate.y--;
                 if(j == 0)
                 {
-                  if(i == 4)
-                  {
-                    puzzle.SetTile(coordinate, brRound);
-                  }
-                  else if(i == 5)
-                  {
-                    puzzle.SetTile(coordinate, bBar);
-                  }
-                  else if(i == 6)
-                  {
-                    puzzle.SetTile(coordinate, blRound);
-                  }
-                  else
-                  {
-                    puzzle.SetTile(coordinate, none);
-                  }
+                    switch(i)
+                    {
+                        case 4:
+                            puzzle.SetTile(coordinate, brRound);
+                            break;
+                        case 5:
+                            puzzle.SetTile(coordinate, bBar);
+                            break;
+                        case 6:
+                            puzzle.SetTile(coordinate, blRound);
+                            break;
+                        default:
+                            puzzle.SetTile(coordinate, none);
+                            break;
+                    }
                 }
                 else if(map[j-1,i] != Texture.empty)
                 {

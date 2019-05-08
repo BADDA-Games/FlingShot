@@ -22,10 +22,6 @@ public class bodycolor : MonoBehaviour
         PlayerLid.color = color;
         Hearts.color = color;
         tr.startColor = color;
-
-        // PlayerBody.color = PlayerGameManager.GetColor();
-        // Debug.Log(PlayerGameManager.GetColor());
-        // Debug.Log(hit.collider.name)
     }
 
     // Update is called once per frame
