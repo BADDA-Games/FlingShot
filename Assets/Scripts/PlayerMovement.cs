@@ -51,10 +51,6 @@ public class PlayerMovement : MonoBehaviour
 
     public TrailRenderer tr;
 
-    private const int BOSS_FREQUENCY = 10;
-    private const int STANDARD_LEVEL_TIME = 15;
-    private const int INITIAL_LEVEL_TIME = 30;
-
     void UpdateLevelText()
     {
         if (currentLevel < 10)
@@ -65,7 +61,9 @@ public class PlayerMovement : MonoBehaviour
         {
             currentLevelText.text = currentLevel.ToString();
         }
-        timeRemaining = currentLevel == 00 ? INITIAL_LEVEL_TIME : STANDARD_LEVEL_TIME;
+        timeRemaining = currentLevel == 00 ? Constants.INITIAL_LEVEL_TIME : 
+            currentLevel % Constants.BOSS_FREQUENCY == 0 ? Constants.BOSS_LEVEL_TIME :
+            Constants.STANDARD_LEVEL_TIME;
         UpdateTimeText();
 
     }
@@ -150,17 +148,17 @@ public class PlayerMovement : MonoBehaviour
         currentLevel++;
 
         if(totalTimeTaken >= 0){
-          totalTimeTaken = totalTimeTaken + timeRemainingInt;
+          totalTimeTaken += timeRemainingInt;
         }
         UpdateLevelText();
         pos = transform.position;
         board.ClearMap(true);
 
-        if(currentLevel % BOSS_FREQUENCY == 0){
+        if(currentLevel % Constants.BOSS_FREQUENCY == 0){
           SceneManager.LoadSceneAsync("BossSceneThunk", LoadSceneMode.Additive);
           levelType = "boss";
         }
-        else if((currentLevel % BOSS_FREQUENCY == 1) && (currentLevel != 1)){
+        else if((currentLevel % Constants.BOSS_FREQUENCY == 1) && (currentLevel != 1)){
           SceneManager.UnloadSceneAsync("BossSceneThunk");
           board.NextLevel();
           goalObject.transform.position = goalObject.transform.position + Vector3.up;
@@ -178,7 +176,7 @@ public class PlayerMovement : MonoBehaviour
       // goalAnimate.SetBool("atGoal", true);
 
       animate.Play("Goal");
-      yield return new WaitForSecondsRealtime((animate.GetCurrentAnimatorStateInfo(0).length + animate.GetCurrentAnimatorStateInfo(0).normalizedTime));
+      yield return new WaitForSecondsRealtime(animate.GetCurrentAnimatorStateInfo(0).length + animate.GetCurrentAnimatorStateInfo(0).normalizedTime);
       // goalAnimate.Play("Shrink");
       // yield return new WaitForSecondsRealtime(goalAnimate.GetCurrentAnimatorStateInfo(0).length+goalAnimate.GetCurrentAnimatorStateInfo(0).normalizedTime);
 
@@ -193,8 +191,6 @@ public class PlayerMovement : MonoBehaviour
 
     void GameObjectCollision(Collider2D collisionObject)
     {
-        int startHealth = health;
-
         // Debug.Log(collisionObject.name);
 
         if (collisionObject.name == "goal")
