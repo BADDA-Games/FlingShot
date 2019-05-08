@@ -91,8 +91,7 @@ public class PlayerMovement : MonoBehaviour
         //TRIGGER END GAME MENU
         score = totalTimeTaken * currentLevel;
         scoreText.text = "Score: " + score.ToString();
-        seedText.text ="Seed: "+ board.getSeed().ToString();
-        // GameOverUI.endGame();
+        seedText.text ="Seed: "+ board.GetSeed().ToString();
 
         PlayerGameManager.UpdateLastScore(score);
 

@@ -9,9 +9,18 @@ public class ThunkIdle : StateMachineBehaviour
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-      animator.ResetTrigger("idle");
-      timer = Constants.THUNK_TIMER * 2;
-      change = false;
+        animator.ResetTrigger("idle");
+        timer = Constants.THUNK_TIMER * 2;
+        change = false;
+
+        //Determine speed of attacks
+        GameObject player = GameObject.Find("player");
+        if(player != null)
+        {
+            PlayerMovement script = player.GetComponent<PlayerMovement>();
+            float speed = 0.4f + 0.1f * (script.currentLevel / Constants.BOSS_FREQUENCY);
+            animator.SetFloat("speedMultiplier", System.Math.Min(1,speed));
+        }
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

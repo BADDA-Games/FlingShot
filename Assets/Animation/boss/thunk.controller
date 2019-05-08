@@ -39,7 +39,7 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
-  - m_Name: SpeedMultiplier
+  - m_Name: speedMultiplier
     m_Type: 1
     m_DefaultFloat: 1
     m_DefaultInt: 0
@@ -536,7 +536,7 @@ AnimatorState:
   m_TimeParameterActive: 0
   m_Motion: {fileID: 7400000, guid: 34a3a0979d3f54432bf890a5281cdca3, type: 2}
   m_Tag: 
-  m_SpeedParameter: SpeedMultiplier
+  m_SpeedParameter: speedMultiplier
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
@@ -567,7 +567,7 @@ AnimatorState:
   m_TimeParameterActive: 0
   m_Motion: {fileID: 7400000, guid: 1342b792d09084f568f85aca8285b433, type: 2}
   m_Tag: 
-  m_SpeedParameter: SpeedMultiplier
+  m_SpeedParameter: speedMultiplier
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
@@ -621,7 +621,7 @@ AnimatorState:
   m_TimeParameterActive: 0
   m_Motion: {fileID: 7400000, guid: c410a9eeb3c984b2ea2c06ab8b501299, type: 2}
   m_Tag: 
-  m_SpeedParameter: SpeedMultiplier
+  m_SpeedParameter: speedMultiplier
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
@@ -651,7 +651,7 @@ AnimatorState:
   m_TimeParameterActive: 0
   m_Motion: {fileID: 7400000, guid: 4fd611c6f348c4c3aac9822d594418e4, type: 2}
   m_Tag: 
-  m_SpeedParameter: SpeedMultiplier
+  m_SpeedParameter: speedMultiplier
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 

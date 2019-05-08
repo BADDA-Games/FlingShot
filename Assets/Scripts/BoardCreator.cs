@@ -96,7 +96,7 @@ public class BoardCreator : MonoBehaviour{
         }
     }
 
-    public int getSeed()
+    public int GetSeed()
     {
         return seed;
     }
@@ -320,11 +320,11 @@ public class BoardCreator : MonoBehaviour{
 
     void Update()
     {
-        // if(Input.GetMouseButtonDown(0)) //L click places map
-        // {
-        //     ClearMap(true);
-        //     NextLevel();
-        // }
+         //if(Input.GetMouseButtonDown(0)) //L click places map
+         //{
+         //    ClearMap(true);
+         //    NextLevel();
+         //}
     }
 
     public void ClearMap(bool complete)

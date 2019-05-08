@@ -10,27 +10,27 @@ public class ThunkMovement : MonoBehaviour {
    private float d;
 
    void Start () {
-       GameObject player = GameObject.Find("player");
-       goal = GameObject.Find("goal");
+        GameObject player = GameObject.Find("player");
+        goal = GameObject.Find("goal");
 
-       script = player.GetComponent<PlayerMovement>();
-       animate = gameObject.GetComponent<Animator>();
+        script = player.GetComponent<PlayerMovement>();
+        animate = gameObject.GetComponent<Animator>();
 
-       play = true;
-       d = 0f;
+        play = true;
+        d = 0f;
    }
 
    void Update () {
 
-     if (!play && d < 1f) {
-       Vector3 oldPosition = goal.transform.position;
-       goal.transform.position = Vector3.MoveTowards(goal.transform.position, goal.transform.position + Vector3.down, (float)1.0 * Time.deltaTime);
-       d += Vector3.Distance(oldPosition, goal.transform.position);
-     }
+        if (!play && d < 1f) {
+            Vector3 oldPosition = goal.transform.position;
+            goal.transform.position = Vector3.MoveTowards(goal.transform.position, goal.transform.position + Vector3.down, (float)1.0 * Time.deltaTime);
+            d += Vector3.Distance(oldPosition, goal.transform.position);
+        }
 
-     if(script.timeRemaining < 0 && play) {
-       StartCoroutine(playDeathAnimation());
-     }
+        if(script.timeRemaining < 0 && play) {
+            StartCoroutine(playDeathAnimation());
+        }
    }
 
    IEnumerator playDeathAnimation() {
