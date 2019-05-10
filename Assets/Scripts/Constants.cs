@@ -14,5 +14,5 @@ public static class Constants
     public const int STANDARD_LEVEL_TIME = 15;
     public const int INITIAL_LEVEL_TIME = 30;
     public const int BOSS_LEVEL_TIME = 30;
-    public const int BOSS_FREQUENCY = 10;
+    public const int BOSS_FREQUENCY = 20;
 }

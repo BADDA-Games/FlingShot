@@ -215,7 +215,7 @@ public class PlayerMovement : MonoBehaviour
                     // healthBar.text = "Count: " + health.ToString();
                     break;
                 default:
-                    Debug.Log("Obstacle Not Known");
+                    //Debug.Log("Obstacle Not Known");
                     break;
             }
         }

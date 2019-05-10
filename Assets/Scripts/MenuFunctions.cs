@@ -37,8 +37,8 @@ public class MenuFunctions : MonoBehaviour
     public Color TheColor {
         get { return myColor; }
         set {
-            Debug.Log("SETTER: color: "+value.ToString());
-            Debug.Log(tempCounter.ToString());
+            //Debug.Log("SETTER: color: "+value.ToString());
+            //Debug.Log(tempCounter.ToString());
             tempCounter++;
             if (myColor == value) { return; }
             myColor = value;

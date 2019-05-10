@@ -314,7 +314,7 @@ public class BoardCreator : MonoBehaviour{
         mutex = new Mutex();
         creator = new Thread(AddMazeToQueue);
         creator.Start();
-        Debug.Log(seed);
+        //Debug.Log(seed);
         loaded = true;
     }
 
