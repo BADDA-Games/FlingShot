@@ -1632,7 +1632,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Puzzle Climber Game: Beta V0.2'
+  m_Text: 'Puzzle Climber Game'
 --- !u!222 &824053840
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2915,7 +2915,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "We are BADDAGames. Five computer science seniors who came together over
+  m_Text: "We are BADDA Games. Five computer science seniors who came together over
     a shared love for mobile endless runner games and a desire to make one we could
     call our own. We have taken the features we find enjoyable in a mobile game and
     stripped away the elements that drive us nuts. \n\nOur end design? This mobile
