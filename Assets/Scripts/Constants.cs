@@ -15,4 +15,8 @@ public static class Constants
     public const int INITIAL_LEVEL_TIME = 30;
     public const int BOSS_LEVEL_TIME = 30;
     public const int BOSS_FREQUENCY = 20;
+
+    // Camera
+    public const int CAMERA_WIDTH = 2048;
+    public const int CAMERA_HEIGHT = 2732;
 }
