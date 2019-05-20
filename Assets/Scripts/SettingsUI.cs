@@ -11,12 +11,14 @@ public class SettingsUI : MonoBehaviour, INotifyPropertyChanged
 {
     public event PropertyChangedEventHandler PropertyChanged;
     public Dropdown myDropdown;
+    public Dropdown DiffDrop;
     public Button myButton;
     public Button resetButton;
     public Text myHighScore;
     public Text myLastScore;
     public Text myTimesPlayed;
     public Text myTitle;
+    public Text myDifficulty;
     private Color _UIColor = new Color(0.9294f, 0.5921f, 0.3176f, 1.0f);
     private Color _myColor = new Color(0.4117f, 0.8784f, 0.3882f, 1.0f);
     private string colorName = "Green";
@@ -52,6 +54,15 @@ public class SettingsUI : MonoBehaviour, INotifyPropertyChanged
             //Debug.Log("PGM gC returned null");
             UIColor = myColor;
         }
+        string d = PlayerGameManager.GetDifficulty();
+        if(d != null)
+        {
+          DiffDrop.value = DifficultyIndex(d);
+        }
+        else
+        {
+          DiffDrop.value = DifficultyIndex("Medium");
+        }
         ColorBlock colors = myButton.colors;
         colors.normalColor = UIColor;
         myButton.colors = colors;
@@ -60,6 +71,7 @@ public class SettingsUI : MonoBehaviour, INotifyPropertyChanged
         myLastScore.text = "" + PlayerGameManager.GetLastScore();
         myTimesPlayed.text = "" + PlayerGameManager.GetTimesPlayed();
         OnPropertyChanged("myDropdown");
+        OnPropertyChanged("DiffDrop");
 
     }
 
@@ -74,6 +86,7 @@ public class SettingsUI : MonoBehaviour, INotifyPropertyChanged
             colors.normalColor = myColor;
             myButton.colors = colors;
             resetButton.colors = colors;
+
             OnPropertyChanged("myButton");
         }
         if(myTimesPlayed.text != ""+PlayerGameManager.GetTimesPlayed()) {
@@ -87,6 +100,7 @@ public class SettingsUI : MonoBehaviour, INotifyPropertyChanged
             colors.normalColor = myColor;
             myButton.colors = colors;
             resetButton.colors = colors;
+            DiffDrop.value = DifficultyIndex(myDifficulty.text);
             OnPropertyChanged("myButton");
         }
     }
@@ -95,6 +109,11 @@ public class SettingsUI : MonoBehaviour, INotifyPropertyChanged
         Text txt = myDropdown.captionText;
         string str = txt.text;
         myColor = PlayerGameManager.UpdateGetColor(str);
+    }
+    public void Diff_Select(){
+      Text txt = DiffDrop.captionText;
+      string str = txt.text;
+      myDifficulty.text = PlayerGameManager.UpdateGetDifficulty(str);
     }
 
     public void BackButton() {
@@ -156,6 +175,15 @@ public class SettingsUI : MonoBehaviour, INotifyPropertyChanged
             case "Purple":  return 5;
             case "Pink":    return 6;
             default:        return 3;
+        }
+    }
+    private int DifficultyIndex(string diffstr) {
+        switch (diffstr)
+        {
+            case "Easy":     return 0;
+            case "Medium":  return 1;
+            case "Hard":  return 2;
+            default:        return 1;
         }
     }
 }

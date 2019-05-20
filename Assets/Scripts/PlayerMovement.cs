@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -61,8 +62,10 @@ public class PlayerMovement : MonoBehaviour
         {
             currentLevelText.text = currentLevel.ToString();
         }
-        timeRemaining = currentLevel == 00 ? Constants.INITIAL_LEVEL_TIME : 
+        timeRemaining = currentLevel == 00 ? Constants.INITIAL_LEVEL_TIME :
             currentLevel % Constants.BOSS_FREQUENCY == 0 ? Constants.BOSS_LEVEL_TIME :
+            PlayerGameManager.GetDifficulty() == "Easy" ? Constants.STANDARD_LEVEL_TIME + 5:
+            PlayerGameManager.GetDifficulty() == "Hard" ? Constants.STANDARD_LEVEL_TIME - 5:
             Constants.STANDARD_LEVEL_TIME;
         UpdateTimeText();
 
@@ -89,7 +92,19 @@ public class PlayerMovement : MonoBehaviour
     public void GameOver()
     {
         //TRIGGER END GAME MENU
-        score = totalTimeTaken * currentLevel;
+        int score = 0;
+        if(PlayerGameManager.GetDifficulty() == "Easy")
+        {
+          score = Convert.ToInt32(totalTimeTaken * currentLevel * .75);
+        }
+        else if(PlayerGameManager.GetDifficulty() == "Hard")
+        {
+          score = Convert.ToInt32(totalTimeTaken * currentLevel * 1.5);
+        }
+        else
+        {
+          score = totalTimeTaken * currentLevel;
+        }
         scoreText.text = "Score: " + score.ToString();
         seedText.text ="Seed: "+ board.GetSeed().ToString();
 
@@ -239,6 +254,10 @@ public class PlayerMovement : MonoBehaviour
         {
             if(levelType != "boss" && !animate.GetBool("atGoal")){
                 health--;
+            }
+            else if(levelType == "boss")
+            {
+              health++;
             }
 
             if(health <= 0){
@@ -406,7 +425,7 @@ public class PlayerMovement : MonoBehaviour
         {
             dir = Direction.None;
         }
-       
+
         transform.position = Vector3.MoveTowards(transform.position, pos, 100f * Time.deltaTime);
     }
 

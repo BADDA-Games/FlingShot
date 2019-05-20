@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 //Who ever wrote this thread
 //https://forum.unity.com/threads/simple-local-data-storage.468936/
-//deserves a shrine with worshippers 
+//deserves a shrine with worshippers
 //and my first born child named after them
 
 public class StorageHandler {
@@ -65,12 +65,13 @@ public static class PlayerGameManager
             if (_player == null)
             {
                 //Debug.Log("PGM: player == null");
-                StorageHandler storageHandler = new StorageHandler(); 
+                StorageHandler storageHandler = new StorageHandler();
                 _player = (Player)storageHandler.LoadData("player"); //Here
                 if(_player == null) {
                     //Debug.Log("CREATING NEW PLAYER;");
                     _player = new Player();
                     _player.PlayerColor = "Green";
+                    _player.PlayerDifficulty = "Medium";
                     _player.PlayerHighScore = 0;
                     _player.PlayerLastScore = 0;
                     _player.PlayerNumberTimesPlayed = 0;
@@ -83,7 +84,7 @@ public static class PlayerGameManager
 
     private static void Save() {
         StorageHandler storage = new StorageHandler();
-        storage.SaveData(player, "player"); //error 
+        storage.SaveData(player, "player"); //error
     }
 
     /*private static Scene _lastScene = SceneManager.GetSceneByName("MainMenu");
@@ -109,6 +110,15 @@ public static class PlayerGameManager
         Save(); // error
         Color temp = GetColor();
         return temp;
+    }
+    public static void UpdateDifficulty(string c) {
+        player.PlayerDifficulty = c;
+        Save();
+    }
+    public static string UpdateGetDifficulty(string c) {
+        player.PlayerDifficulty = c;
+        Save();
+        return player.PlayerDifficulty;
     }
 
     public static void UpdateHighScore(int hs) {
@@ -209,6 +219,10 @@ public static class PlayerGameManager
             c = new Color(0.4117f, 0.8784f, 0.3882f, 1.0f);
         }
         return c;
+    }
+
+    public static string GetDifficulty() {
+        return player.PlayerDifficulty;
     }
 
     public static int GetHighScore() {
