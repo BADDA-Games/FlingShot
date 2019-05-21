@@ -64,8 +64,8 @@ public class PlayerMovement : MonoBehaviour
         }
         timeRemaining = currentLevel == 00 ? Constants.INITIAL_LEVEL_TIME :
             currentLevel % Constants.BOSS_FREQUENCY == 0 ? Constants.BOSS_LEVEL_TIME :
-            PlayerGameManager.GetDifficulty() == "Easy" ? Constants.STANDARD_LEVEL_TIME + 5:
-            PlayerGameManager.GetDifficulty() == "Hard" ? Constants.STANDARD_LEVEL_TIME - 5:
+            PlayerGameManager.GetDifficulty() == "Easy" ? Constants.STANDARD_LEVEL_TIME + 15:
+            PlayerGameManager.GetDifficulty() == "Medium" ? Constants.STANDARD_LEVEL_TIME + 5:
             Constants.STANDARD_LEVEL_TIME;
         UpdateTimeText();
 
