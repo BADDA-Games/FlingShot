@@ -56,25 +56,50 @@ public static class PlayerGameManager
         }
     }
 
-    private static Player _player;
-    public static Player player
+    private static PlayerUD_1_1 _player;
+    public static PlayerUD_1_1 player
     {
         get
         {
             //Debug.Log("getting player");
             if (_player == null)
             {
-                //Debug.Log("PGM: player == null");
+                /*
                 StorageHandler storageHandler = new StorageHandler();
-                _player = (Player)storageHandler.LoadData("player"); //Here
+                _player = (Player)storageHandler.LoadData("player"); 
                 if(_player == null) {
-                    //Debug.Log("CREATING NEW PLAYER;");
                     _player = new Player();
                     _player.PlayerColor = "Green";
-                    _player.PlayerDifficulty = "Medium";
                     _player.PlayerHighScore = 0;
                     _player.PlayerLastScore = 0;
                     _player.PlayerNumberTimesPlayed = 0;
+                }
+                */
+                StorageHandler storageHandler = new StorageHandler();
+                _player = (PlayerUD_1_1)storageHandler.LoadData("playerUDoneone");
+                if(_player == null) {
+                    _player = new PlayerUD_1_1();
+                    Player temp = (Player)storageHandler.LoadData("player");
+                    if(temp != null) {
+                        _player.PlayerColor = temp.PlayerColor;
+                        _player.PHS_Hard = temp.PlayerHighScore;
+                        _player.PLS_Hard = temp.PlayerLastScore;
+                        _player.PTP_Hard = temp.PlayerNumberTimesPlayed;
+                        _player.PlayerDifficulty = "Hard";
+                    }
+                    else {
+                        _player.PlayerColor = "Green";
+                        _player.PHS_Hard = 0;
+                        _player.PLS_Hard = 0;
+                        _player.PTP_Hard = 0;
+                        _player.PlayerDifficulty = "Hard";
+                    }
+                    _player.PHS_Easy = 0;
+                    _player.PHS_Medium = 0;
+                    _player.PLS_Easy = 0;
+                    _player.PLS_Medium = 0;
+                    _player.PTP_Easy = 0;
+                    _player.PTP_Medium = 0;
                 }
             }
             return _player;
@@ -84,7 +109,7 @@ public static class PlayerGameManager
 
     private static void Save() {
         StorageHandler storage = new StorageHandler();
-        storage.SaveData(player, "player"); //error
+        storage.SaveData(player, "playerUDoneone");
     }
 
     /*private static Scene _lastScene = SceneManager.GetSceneByName("MainMenu");
@@ -107,14 +132,16 @@ public static class PlayerGameManager
     }
     public static Color UpdateGetColor(string c) {
         player.PlayerColor = c;
-        Save(); // error
+        Save(); 
         Color temp = GetColor();
         return temp;
     }
+
     public static void UpdateDifficulty(string c) {
         player.PlayerDifficulty = c;
         Save();
     }
+
     public static string UpdateGetDifficulty(string c) {
         player.PlayerDifficulty = c;
         Save();
@@ -122,55 +149,146 @@ public static class PlayerGameManager
     }
 
     public static void UpdateHighScore(int hs) {
-        player.PlayerHighScore = hs;
+        string pdiff = player.PlayerDifficulty;
+        if (pdiff == "Easy") {
+            player.PHS_Easy = hs;
+        }
+        else if(pdiff == "Medium") {
+            player.PHS_Medium = hs;
+        }
+        else {
+            player.PHS_Hard = hs;
+        }
         Save();
     }
+
     public static int UpdateGetHighScore(int hs) {
-        player.PlayerHighScore = hs;
+        string pdiff = player.PlayerDifficulty;
+        int returner;
+        if (pdiff == "Easy")
+        {
+            player.PHS_Easy = hs;
+            returner = player.PHS_Easy;
+        }
+        else if (pdiff == "Medium")
+        {
+            player.PHS_Medium = hs;
+            returner = player.PHS_Medium;
+        }
+        else
+        {
+            player.PHS_Hard = hs;
+            returner = player.PHS_Hard;
+        }
         Save();
-        return player.PlayerHighScore;
+        return returner;
     }
 
     public static void UpdateLastScore(int ls) {
-        player.PlayerLastScore = ls;
+        string pdiff = player.PlayerDifficulty;
+        if (pdiff == "Easy")
+        {
+            player.PLS_Easy = ls;
+        }
+        else if (pdiff == "Medium")
+        {
+            player.PLS_Medium = ls;
+        }
+        else
+        {
+            player.PLS_Hard = ls;
+        }
         Save();
     }
+
     public static int UpdateGetLastScore(int ls)
     {
-        player.PlayerLastScore = ls;
+        string pdiff = player.PlayerDifficulty;
+        int returner;
+        if (pdiff == "Easy")
+        {
+            player.PLS_Easy = ls;
+            returner = player.PLS_Easy;
+        }
+        else if (pdiff == "Medium")
+        {
+            player.PLS_Medium = ls;
+            returner = player.PLS_Medium;
+        }
+        else
+        {
+            player.PLS_Hard = ls;
+            returner = player.PLS_Hard;
+        }
         Save();
-        return player.PlayerLastScore;
+        return returner;
     }
 
     public static void UpdateTimesPlayed(int tp) {
-        player.PlayerNumberTimesPlayed = tp;
-        Save();
-    }
-    /*
-    public static void UpdateSound(bool s) {
-        player.PlayerSound = s;
+        string pdiff = player.PlayerDifficulty;
+        if (pdiff == "Easy")
+        {
+            player.PTP_Easy = tp;
+        }
+        else if (pdiff == "Medium")
+        {
+            player.PTP_Medium = tp;
+        }
+        else
+        {
+            player.PTP_Hard = tp;
+        }
         Save();
     }
 
-    public static bool UpdateGetSound(bool s) {
-        player.PlayerSound = s;
-        Save();
-        return player.PlayerSound;
-    }
-    */
     public static void IncrementTimesPlayed() {
-        int tp = player.PlayerNumberTimesPlayed;
-        tp = tp + 1;
-        player.PlayerNumberTimesPlayed = tp;
+        string pdiff = player.PlayerDifficulty;
+        int tp;
+        if (pdiff == "Easy")
+        {
+            tp = player.PTP_Easy;
+            tp = tp + 1;
+            player.PTP_Easy = tp;
+        }
+        else if (pdiff == "Medium")
+        {
+            tp = player.PTP_Medium;
+            tp = tp + 1;
+            player.PTP_Medium = tp;
+        }
+        else
+        {
+            tp = player.PTP_Hard;
+            tp = tp + 1;
+            player.PTP_Hard = tp;
+        }
         Save();
     }
+
     public static int IncrementGetTimesPlayed()
     {
-        int tp = player.PlayerNumberTimesPlayed;
-        tp = tp + 1;
-        player.PlayerNumberTimesPlayed = tp;
+        string pdiff = player.PlayerDifficulty;
+        int tp;
+        if (pdiff == "Easy")
+        {
+            tp = player.PTP_Easy;
+            tp = tp + 1;
+            player.PTP_Easy = tp;
+        }
+        else if (pdiff == "Medium")
+        {
+            tp = player.PTP_Medium;
+            tp = tp + 1;
+            player.PTP_Medium = tp;
+        }
+        else
+        {
+            tp = player.PTP_Hard;
+            tp = tp + 1;
+            player.PTP_Hard = tp;
+        }
         Save();
-        return player.PlayerNumberTimesPlayed;
+        return tp;
     }
 
     public static Color GetColor() {
@@ -226,15 +344,51 @@ public static class PlayerGameManager
     }
 
     public static int GetHighScore() {
-        return player.PlayerHighScore;
+        string pdiff = player.PlayerDifficulty;
+        if (pdiff == "Easy")
+        {
+            return player.PHS_Easy;
+        }
+        else if (pdiff == "Medium")
+        {
+            return player.PHS_Medium;
+        }
+        else
+        {
+            return player.PHS_Hard;
+        }
     }
 
     public static int GetLastScore() {
-        return player.PlayerLastScore;
+        string pdiff = player.PlayerDifficulty;
+        if (pdiff == "Easy")
+        {
+            return player.PLS_Easy;
+        }
+        else if (pdiff == "Medium")
+        {
+            return player.PLS_Medium;
+        }
+        else
+        {
+            return player.PLS_Hard;
+        }
     }
 
     public static int GetTimesPlayed() {
-        return player.PlayerNumberTimesPlayed;
+        string pdiff = player.PlayerDifficulty;
+        if (pdiff == "Easy")
+        {
+            return player.PTP_Easy;
+        }
+        else if (pdiff == "Medium")
+        {
+            return player.PTP_Medium;
+        }
+        else
+        {
+            return player.PTP_Hard;
+        }
     }
 
     public static string GetColorName() {
@@ -245,4 +399,96 @@ public static class PlayerGameManager
         return player.PlayerSound;
     }
     */
+
+    public static int GetPHS(string difficulty) {
+        if (difficulty == "Easy")
+        {
+            return player.PHS_Easy;
+        }
+        else if (difficulty == "Medium")
+        {
+            return player.PHS_Medium;
+        }
+        else
+        {
+            return player.PHS_Hard;
+        }
+    }
+
+    public static void SetPHS(string difficulty, int hs) {
+        if (difficulty == "Easy")
+        {
+            player.PHS_Easy = hs;
+        }
+        else if (difficulty == "Medium")
+        {
+            player.PHS_Medium = hs;
+        }
+        else
+        {
+            player.PHS_Hard = hs;
+        }
+    }
+
+    public static int GetLHS(string difficulty) {
+        if (difficulty == "Easy")
+        {
+            return player.PLS_Easy;
+        }
+        else if (difficulty == "Medium")
+        {
+            return player.PLS_Medium;
+        }
+        else
+        {
+            return player.PLS_Hard;
+        }
+    }
+
+    public static void SetPLS(string difficulty, int ls)
+    {
+        if (difficulty == "Easy")
+        {
+            player.PLS_Easy = ls;
+        }
+        else if (difficulty == "Medium")
+        {
+            player.PLS_Medium = ls;
+        }
+        else
+        {
+            player.PLS_Hard = ls;
+        }
+    }
+
+    public static int GetPTP(string difficulty) {
+        if (difficulty == "Easy")
+        {
+            return player.PTP_Easy;
+        }
+        else if (difficulty == "Medium")
+        {
+            return player.PTP_Medium;
+        }
+        else
+        {
+            return player.PTP_Hard;
+        }
+    }
+
+    public static void SetPTP(string difficulty, int tp)
+    {
+        if (difficulty == "Easy")
+        {
+            player.PTP_Easy = tp;
+        }
+        else if (difficulty == "Medium")
+        {
+            player.PTP_Medium = tp;
+        }
+        else
+        {
+            player.PTP_Hard = tp;
+        }
+    }
 }

@@ -22,6 +22,7 @@ public class SettingsUI : MonoBehaviour, INotifyPropertyChanged
     private Color _UIColor = new Color(0.9294f, 0.5921f, 0.3176f, 1.0f);
     private Color _myColor = new Color(0.4117f, 0.8784f, 0.3882f, 1.0f);
     private string colorName = "Green";
+    private string difficultyName = "Hard";
 
     public Color myColor {
         get { return _myColor; }
@@ -57,11 +58,12 @@ public class SettingsUI : MonoBehaviour, INotifyPropertyChanged
         string d = PlayerGameManager.GetDifficulty();
         if(d != null)
         {
-          DiffDrop.value = DifficultyIndex(d);
+            difficultyName = PlayerGameManager.GetDifficulty();
+            DiffDrop.value = DifficultyIndex(difficultyName);
         }
         else
         {
-          DiffDrop.value = DifficultyIndex("Medium");
+            DiffDrop.value = DifficultyIndex("Hard");
         }
         ColorBlock colors = myButton.colors;
         colors.normalColor = UIColor;
@@ -81,26 +83,29 @@ public class SettingsUI : MonoBehaviour, INotifyPropertyChanged
         if(myButton.colors.normalColor != PlayerGameManager.GetColor()) {
             myColor = PlayerGameManager.GetColor();
             colorName = PlayerGameManager.GetColorName();
+            difficultyName = PlayerGameManager.GetDifficulty();
             myDropdown.value = ColorIndex(colorName);
+            DiffDrop.value = DifficultyIndex(difficultyName);
             ColorBlock colors = myButton.colors;
             colors.normalColor = myColor;
             myButton.colors = colors;
             resetButton.colors = colors;
-
             OnPropertyChanged("myButton");
         }
-        if(myTimesPlayed.text != ""+PlayerGameManager.GetTimesPlayed()) {
+        if(myTimesPlayed.text != ""+PlayerGameManager.GetTimesPlayed() || myHighScore.text != ""+PlayerGameManager.GetHighScore() || myLastScore.text != ""+PlayerGameManager.GetLastScore()) {
             myHighScore.text = "" + PlayerGameManager.GetHighScore();
             myLastScore.text = "" + PlayerGameManager.GetLastScore();
             myTimesPlayed.text = "" + PlayerGameManager.GetTimesPlayed();
             colorName = PlayerGameManager.GetColorName();
             myColor = PlayerGameManager.GetColor();
+            difficultyName = PlayerGameManager.GetDifficulty();
             myDropdown.value = ColorIndex(colorName);
+            DiffDrop.value = DifficultyIndex(difficultyName);
             ColorBlock colors = myButton.colors;
             colors.normalColor = myColor;
             myButton.colors = colors;
             resetButton.colors = colors;
-            DiffDrop.value = DifficultyIndex(myDifficulty.text);
+            //DiffDrop.value = DifficultyIndex(myDifficulty.text);
             OnPropertyChanged("myButton");
         }
     }
@@ -111,9 +116,10 @@ public class SettingsUI : MonoBehaviour, INotifyPropertyChanged
         myColor = PlayerGameManager.UpdateGetColor(str);
     }
     public void Diff_Select(){
-      Text txt = DiffDrop.captionText;
-      string str = txt.text;
-      myDifficulty.text = PlayerGameManager.UpdateGetDifficulty(str);
+        Text txt = DiffDrop.captionText;
+        string str = txt.text;
+        difficultyName = PlayerGameManager.UpdateGetDifficulty(str);
+        myDifficulty.text = difficultyName;
     }
 
     public void BackButton() {

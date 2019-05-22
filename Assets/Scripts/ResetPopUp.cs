@@ -32,9 +32,16 @@ public class ResetPopUp : MonoBehaviour
     public void Reset()
     {
         PlayerGameManager.UpdateColor("Green");
-        PlayerGameManager.UpdateHighScore(0);
-        PlayerGameManager.UpdateLastScore(0);
-        PlayerGameManager.UpdateTimesPlayed(0);
+        PlayerGameManager.SetPHS("Easy", 0);
+        PlayerGameManager.SetPHS("Medium", 0);
+        PlayerGameManager.SetPHS("Hard", 0);
+        PlayerGameManager.SetPLS("Easy", 0);
+        PlayerGameManager.SetPLS("Medium", 0);
+        PlayerGameManager.SetPLS("Hard", 0);
+        PlayerGameManager.SetPTP("Easy", 0);
+        PlayerGameManager.SetPTP("Medium", 0);
+        PlayerGameManager.SetPTP("Hard", 0);
+        PlayerGameManager.UpdateDifficulty("Medium");
         Screen.transform.position = Screen_StartPOS.transform.position;
         ResetPop.transform.position = Pop_StartPOS.transform.position;
     }
