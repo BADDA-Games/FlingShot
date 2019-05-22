@@ -168,11 +168,11 @@ public class PlayerMovement : MonoBehaviour
         pos = transform.position;
         board.ClearMap(true);
 
-        if(currentLevel % 3 == 0){
+        if(currentLevel % Constants.BOSS_FREQUENCY == 0){
           SceneManager.LoadSceneAsync("BossSceneThunk", LoadSceneMode.Additive);
           levelType = "boss";
         }
-        else if((currentLevel % 3 == 1) && (currentLevel != 1)){
+        else if((currentLevel % Constants.BOSS_FREQUENCY == 1) && (currentLevel != 1)){
           SceneManager.UnloadSceneAsync("BossSceneThunk");
           board.NextLevel();
           goalObject.transform.position = goalObject.transform.position + Vector3.up;
