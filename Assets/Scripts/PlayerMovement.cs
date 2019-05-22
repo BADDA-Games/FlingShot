@@ -168,11 +168,11 @@ public class PlayerMovement : MonoBehaviour
         pos = transform.position;
         board.ClearMap(true);
 
-        if(currentLevel % Constants.BOSS_FREQUENCY == 0){
+        if(currentLevel % 3 == 0){
           SceneManager.LoadSceneAsync("BossSceneThunk", LoadSceneMode.Additive);
           levelType = "boss";
         }
-        else if((currentLevel % Constants.BOSS_FREQUENCY == 1) && (currentLevel != 1)){
+        else if((currentLevel % 3 == 1) && (currentLevel != 1)){
           SceneManager.UnloadSceneAsync("BossSceneThunk");
           board.NextLevel();
           goalObject.transform.position = goalObject.transform.position + Vector3.up;
@@ -210,6 +210,10 @@ public class PlayerMovement : MonoBehaviour
         if (collisionObject.name == "goal")
         {
             // NextLevel();
+            if(levelType == "boss" && health < 3)
+            {
+              health++;
+            }
             StartCoroutine(PlayGoalAnimation());
             // collisionObject.gameObject.SetActive(false);
         }
@@ -254,10 +258,6 @@ public class PlayerMovement : MonoBehaviour
         {
             if(levelType != "boss" && !animate.GetBool("atGoal")){
                 health--;
-            }
-            else if(levelType == "boss")
-            {
-              health++;
             }
 
             if(health <= 0){
