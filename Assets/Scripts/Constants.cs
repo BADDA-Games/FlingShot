@@ -11,7 +11,9 @@ public static class Constants
     public const int HEIGHT = 18;
 
     // Player Movement
-    public const int STANDARD_LEVEL_TIME = 15;
+    public const int EASY_TIME = 30;
+    public const int MEDIUM_TIME = 20;
+    public const int HARD_TIME = 15;
     public const int INITIAL_LEVEL_TIME = 30;
     public const int BOSS_LEVEL_TIME = 30;
     public const int BOSS_FREQUENCY = 20;
@@ -19,4 +21,9 @@ public static class Constants
     // Camera
     public const int CAMERA_WIDTH = 2048;
     public const int CAMERA_HEIGHT = 2732;
+
+    // Scoring
+    public const double EASY_SCORE_MODIFIER = 0.5;
+    public const double MEDIUM_SCORE_MODIFIER = 1;
+    public const double HARD_SCORE_MODIFIER = 2;
 }

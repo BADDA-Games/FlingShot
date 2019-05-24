@@ -64,9 +64,9 @@ public class PlayerMovement : MonoBehaviour
         }
         timeRemaining = currentLevel == 00 ? Constants.INITIAL_LEVEL_TIME :
             currentLevel % Constants.BOSS_FREQUENCY == 0 ? Constants.BOSS_LEVEL_TIME :
-            PlayerGameManager.GetDifficulty() == "Easy" ? Constants.STANDARD_LEVEL_TIME + 15:
-            PlayerGameManager.GetDifficulty() == "Medium" ? Constants.STANDARD_LEVEL_TIME + 5:
-            Constants.STANDARD_LEVEL_TIME;
+            PlayerGameManager.GetDifficulty() == "Easy" ? Constants.EASY_TIME:
+            PlayerGameManager.GetDifficulty() == "Medium" ? Constants.MEDIUM_TIME:
+            Constants.HARD_TIME;
         UpdateTimeText();
 
     }
@@ -92,21 +92,20 @@ public class PlayerMovement : MonoBehaviour
     public void GameOver()
     {
         //TRIGGER END GAME MENU
-        int score = 0;
-        if(PlayerGameManager.GetDifficulty() == "Easy")
+        switch (PlayerGameManager.GetDifficulty())
         {
-          score = Convert.ToInt32(totalTimeTaken * currentLevel * .75);
-        }
-        else if(PlayerGameManager.GetDifficulty() == "Hard")
-        {
-          score = Convert.ToInt32(totalTimeTaken * currentLevel * 1.5);
-        }
-        else
-        {
-          score = totalTimeTaken * currentLevel;
+            case "Easy":
+                score = Convert.ToInt32(totalTimeTaken * currentLevel * Constants.EASY_SCORE_MODIFIER);
+                break;
+            case "Hard":
+                score = Convert.ToInt32(totalTimeTaken * currentLevel * Constants.HARD_SCORE_MODIFIER);
+                break;
+            default:
+                score = Convert.ToInt32(totalTimeTaken * currentLevel * Constants.MEDIUM_SCORE_MODIFIER);
+                break;
         }
         scoreText.text = "Score: " + score.ToString();
-        seedText.text ="Seed: "+ board.GetSeed().ToString();
+        seedText.text = "Seed: " + board.GetSeed().ToString();
 
         PlayerGameManager.UpdateLastScore(score);
 
