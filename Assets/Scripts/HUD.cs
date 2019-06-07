@@ -2,27 +2,43 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class HUD : MonoBehaviour
 {
-  public Sprite[] HeartSprites;
-  public Image HeartUI;
-  public PlayerMovement player;
+    public Sprite[] HeartSprites;
+    public Image HeartUI;
+    public PlayerMovement player;
+    public GameObject PauseUI;
 
-  void Start()
-  {
+    private bool isPaused;
+
+    void Start()
+    {
         // DontDestroyOnLoad(this.gameObject);
         player = GameObject.FindGameObjectWithTag("player").GetComponent<PlayerMovement>();
-  }
+    }
 
-  void Update()
-  {
+    void Update()
+    {
         if(player.health >= 0)
         {
             HeartUI.sprite = HeartSprites[player.health];
         }
-  }
+    }
 
-
-
+    void Pause()
+    {
+        switch (isPaused)
+        {
+            case true:
+                Time.timeScale = 1;
+                isPaused = false;
+                break;
+            case false:
+                Time.timeScale = 0;
+                isPaused = true;
+                break;
+        }
+    }
 }

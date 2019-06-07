@@ -292,7 +292,7 @@ public class PlayerMovement : MonoBehaviour
                     }
                 }
                 // if (Input.GetMouseButtonDown(0))
-                //   gameOver();
+                //   GameOver();
         #elif UNITY_IOS || UNITY_ANDROID || UNITY_WP8 || UNITY_IPHONE
 
               if(dir == Direction.None){
