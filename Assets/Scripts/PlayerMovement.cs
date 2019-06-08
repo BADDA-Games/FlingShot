@@ -62,13 +62,38 @@ public class PlayerMovement : MonoBehaviour
         {
             currentLevelText.text = currentLevel.ToString();
         }
-        timeRemaining = currentLevel == 00 ? Constants.INITIAL_LEVEL_TIME :
-            currentLevel % Constants.BOSS_FREQUENCY == 0 ? Constants.BOSS_LEVEL_TIME :
-            PlayerGameManager.GetDifficulty() == "Easy" ? Constants.EASY_TIME:
-            PlayerGameManager.GetDifficulty() == "Medium" ? Constants.MEDIUM_TIME:
-            Constants.HARD_TIME;
+        timeRemaining = TimeRemaining();
         UpdateTimeText();
 
+    }
+
+    private int TimeRemaining()
+    {
+        if(currentLevel == 0)
+        {
+            return Constants.INITIAL_LEVEL_TIME;
+        }
+        else if(currentLevel % Constants.BOSS_FREQUENCY == 0)
+        {
+            return Constants.BOSS_LEVEL_TIME;
+        }
+        else if(PlayerGameManager.GetDifficulty() == "Easy")
+        {
+            return Constants.EASY_TIME;
+        }
+        else if(PlayerGameManager.GetDifficulty() == "Medium")
+        {
+            return Constants.MEDIUM_TIME;
+        }
+        else if(PlayerGameManager.GetDifficulty() == "Hard")
+        {
+            return Constants.HARD_TIME;
+        }
+        else
+        {
+            Debug.Log("Cannot determine appropriate level timer!");
+            return Constants.MEDIUM_TIME;
+        }
     }
 
     public void UpdateTimeText()
@@ -91,7 +116,6 @@ public class PlayerMovement : MonoBehaviour
 
     public void GameOver()
     {
-        //TRIGGER END GAME MENU
         switch (PlayerGameManager.GetDifficulty())
         {
             case "Easy":
@@ -122,14 +146,6 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
-        // if(OnlyPlayer != null){
-        //   Destroy(this.gameObject);
-        //   return;
-        // }
-        // OnlyPlayer = this;
-        // DontDestroyOnLoad(this.gameObject);
-        // SceneManager.UnloadSceneAsync("BossSceneThunk");
-
         pos = transform.position;
         step = 1.0f;
         dir = Direction.None;
@@ -150,6 +166,7 @@ public class PlayerMovement : MonoBehaviour
 
         animate = gameObject.GetComponent<Animator>();
         goalAnimate = goalObject.GetComponent<Animator>();
+
         board = (BoardCreator)GameObject.Find("BoardCreator").GetComponent(typeof(BoardCreator));
     }
 
@@ -183,32 +200,20 @@ public class PlayerMovement : MonoBehaviour
     }
 
     IEnumerator PlayGoalAnimation() {
-      dir = Direction.None;
-
-      animate.SetBool("atGoal", true);
-      // goalAnimate.SetBool("atGoal", true);
-
-      animate.Play("Goal");
-      yield return new WaitForSecondsRealtime(animate.GetCurrentAnimatorStateInfo(0).length + animate.GetCurrentAnimatorStateInfo(0).normalizedTime);
-      // goalAnimate.Play("Shrink");
-      // yield return new WaitForSecondsRealtime(goalAnimate.GetCurrentAnimatorStateInfo(0).length+goalAnimate.GetCurrentAnimatorStateInfo(0).normalizedTime);
-
-      NextLevel();
-
-      animate.SetBool("atGoal", false);
-      // goalAnimate.SetBool("atGoal", false);
-
-      animate.Play("Start");
-      // goalAnimate.Play("Spin");
+        dir = Direction.None;
+        animate.SetBool("atGoal", true);
+        // goalAnimate.SetBool("atGoal", true);
+        animate.Play("Goal");
+        yield return new WaitForSecondsRealtime(animate.GetCurrentAnimatorStateInfo(0).length + animate.GetCurrentAnimatorStateInfo(0).normalizedTime);
+        NextLevel();
+        animate.SetBool("atGoal", false);
+        animate.Play("Start");
     }
 
     void GameObjectCollision(Collider2D collisionObject)
     {
-        // Debug.Log(collisionObject.name);
-
         if (collisionObject.name == "goal")
         {
-            // NextLevel();
             if(levelType == "boss" && health < 3)
             {
               health++;
@@ -218,19 +223,14 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            // Debug.Log(collisionObject);
-            // RectTransform rt = healthIndicator.GetComponent<RectTransform>();
             switch (collisionObject.tag)
             {
                 case "one_health_remove":
                     health--;
                     collisionObject.gameObject.SetActive(false);
-                    // healthBar.text = "Count: " + health.ToString();
                     break;
                 case "one_health_no_remove":
                     health--;
-                    // collisionObject.gameObject.SetActive(false);
-                    // healthBar.text = "Count: " + health.ToString();
                     break;
                 default:
                     //Debug.Log("Obstacle Not Known");
@@ -241,7 +241,6 @@ public class PlayerMovement : MonoBehaviour
         {
             GameOver();
         }
-
     }
 
     void Update()

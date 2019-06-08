@@ -32,7 +32,7 @@ public class HamMenuMovement : MonoBehaviour
             if(H_Menu_Panel.transform.localPosition.x == tempMenuPos) {
                 Move_H_Menu_Active = false;
                 H_Menu_Panel.transform.position = H_Menu_ActivePOS.transform.position;
-                tempMenuPos = -99999999999999.99f; //TODO: Why this number? double check this number
+                tempMenuPos = -99999999999999.99f;
             }
             if(Move_H_Menu_Active) {
                 tempMenuPos = H_Menu_Panel.transform.position.x;
@@ -43,7 +43,7 @@ public class HamMenuMovement : MonoBehaviour
             if(H_Menu_Panel.transform.localPosition.x == tempMenuPos) {
                 Move_H_Menu_Back = false;
                 H_Menu_Panel.transform.position = H_Menu_StartPOS.transform.position;
-                tempMenuPos = -99999999999999.99f; //TODO: Why this number? double check this number
+                tempMenuPos = -99999999999999.99f;
             }
             if(Move_H_Menu_Back) {
                 tempMenuPos = H_Menu_Panel.transform.position.x;

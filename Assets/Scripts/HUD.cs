@@ -9,9 +9,6 @@ public class HUD : MonoBehaviour
     public Sprite[] HeartSprites;
     public Image HeartUI;
     public PlayerMovement player;
-    public GameObject PauseUI;
-
-    private bool isPaused;
 
     void Start()
     {
@@ -24,21 +21,6 @@ public class HUD : MonoBehaviour
         if(player.health >= 0)
         {
             HeartUI.sprite = HeartSprites[player.health];
-        }
-    }
-
-    void Pause()
-    {
-        switch (isPaused)
-        {
-            case true:
-                Time.timeScale = 1;
-                isPaused = false;
-                break;
-            case false:
-                Time.timeScale = 0;
-                isPaused = true;
-                break;
         }
     }
 }
