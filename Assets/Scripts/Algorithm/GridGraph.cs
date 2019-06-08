@@ -7,7 +7,6 @@ using Directions = System.Collections.Generic.List<char>;
 
 namespace Algorithm
 {
-    //TODO documentation on private classes?
     public class GridGraph
     {
         public int Width { get; }
@@ -503,7 +502,7 @@ namespace Algorithm
         /// <returns>A floating point approximation of the difficulty.</returns>
         public int Difficulty()
         {
-            //TODO write difficulty
+            //Make more complicated?
             return FastestPath();
         }
 

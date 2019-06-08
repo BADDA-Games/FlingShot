@@ -14,6 +14,7 @@ public class PauseMenu : MonoBehaviour
         Debug.Log(PauseUI == null);
     }
 
+    //TODO TEMPORARY - Remove before production!
     void Update()
     {
         if(Input.GetMouseButtonDown(0))

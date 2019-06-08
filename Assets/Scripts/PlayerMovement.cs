@@ -62,12 +62,12 @@ public class PlayerMovement : MonoBehaviour
         {
             currentLevelText.text = currentLevel.ToString();
         }
-        timeRemaining = TimeRemaining();
+        timeRemaining = LevelTime();
         UpdateTimeText();
 
     }
 
-    private int TimeRemaining()
+    private int LevelTime()
     {
         if(currentLevel == 0)
         {
@@ -92,6 +92,7 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             Debug.Log("Cannot determine appropriate level timer!");
+            // Default to the default time
             return Constants.MEDIUM_TIME;
         }
     }
