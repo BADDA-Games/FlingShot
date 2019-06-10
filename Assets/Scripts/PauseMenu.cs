@@ -9,14 +9,16 @@ public class PauseMenu : MonoBehaviour
 
     private bool isPaused;
     public GameObject PauseUI;
+    public GameObject PauseButton;
 
     void Start()
     {
         Image panel = PauseUI.GetComponent<Image>();
+        Image pauseButton = PauseButton.GetComponent<Image>();
         panel.color = PlayerGameManager.GetColor();
+        pauseButton.color = PlayerGameManager.GetColor();
     }
 
-    //TODO TEMPORARY - Remove before production!
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -57,11 +59,13 @@ public class PauseMenu : MonoBehaviour
                 Time.timeScale = 1;
                 isPaused = false;
                 PauseUI.SetActive(false);
+                PauseButton.SetActive(true);
                 break;
             case false:
                 Time.timeScale = 0;
                 isPaused = true;
                 PauseUI.SetActive(true);
+                PauseButton.SetActive(false);
                 break;
         }
     }
