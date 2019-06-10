@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameOverMenu : MonoBehaviour
 {
 
-    public void loadMenu(){
+    public void LoadMainMenu(){
       PlayerGameManager.IncrementTimesPlayed();
       SceneManager.LoadScene("MainMenu");
       SceneManager.UnloadSceneAsync("GameScene");
