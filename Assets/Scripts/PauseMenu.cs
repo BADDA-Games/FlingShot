@@ -18,9 +18,12 @@ public class PauseMenu : MonoBehaviour
     //TODO TEMPORARY - Remove before production!
     void Update()
     {
-        if(Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))
         {
-            Pause();
+            if (!isPaused)
+            {
+                Pause();
+            }
         }
     }
 
@@ -45,18 +48,12 @@ public class PauseMenu : MonoBehaviour
             case true:
                 Time.timeScale = 1;
                 isPaused = false;
-                if (PauseUI != null)
-                {
-                    PauseUI.SetActive(false);
-                }
+                PauseUI.SetActive(false);
                 break;
             case false:
                 Time.timeScale = 0;
                 isPaused = true;
-                if (PauseUI != null)
-                {
-                    PauseUI.SetActive(true);
-                }
+                PauseUI.SetActive(true);
                 break;
         }
     }
