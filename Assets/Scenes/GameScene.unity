@@ -2676,6 +2676,7 @@ GameObject:
   - component: {fileID: 276035042}
   - component: {fileID: 276035044}
   - component: {fileID: 276035043}
+  - component: {fileID: 276035045}
   m_Layer: 5
   m_Name: GameOverMenu
   m_TagString: Untagged
@@ -2744,6 +2745,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 276035041}
   m_CullTransparentMesh: 0
+--- !u!95 &276035045
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 276035041}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 56f6d2a0953504ee4a86e8479fc49622, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 2
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!4 &356648839 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5453113721322216315, guid: ed48c233b69ee4ab2a2ec9071797d978,
@@ -5430,6 +5450,7 @@ GameObject:
   - component: {fileID: 1658327229}
   - component: {fileID: 1658327231}
   - component: {fileID: 1658327230}
+  - component: {fileID: 1658327232}
   m_Layer: 5
   m_Name: PauseMenu
   m_TagString: Untagged
@@ -5496,6 +5517,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1658327228}
   m_CullTransparentMesh: 0
+--- !u!95 &1658327232
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1658327228}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 66fa5df04354a422396e190f34780fc8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 2
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1718175118
 GameObject:
   m_ObjectHideFlags: 0
