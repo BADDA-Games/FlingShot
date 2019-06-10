@@ -51,7 +51,7 @@ public static class PlayerGameManager
             if (value < 0) {
                 value = value * -1;
             }
-            value = value % 99999989;
+            value = value % 100000000;
             _seedValue = value;
         }
     }

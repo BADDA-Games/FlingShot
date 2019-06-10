@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -11,16 +12,16 @@ public class PauseMenu : MonoBehaviour
 
     void Start()
     {
-        PauseUI = GameObject.Find("PauseMenu");
-        Debug.Log(PauseUI == null);
+        Image panel = PauseUI.GetComponent<Image>();
+        panel.color = PlayerGameManager.GetColor();
     }
 
     //TODO TEMPORARY - Remove before production!
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (!isPaused)
+            if (SceneManager.GetActiveScene().name == "GameScene")
             {
                 Pause();
             }
@@ -29,6 +30,7 @@ public class PauseMenu : MonoBehaviour
 
     public void Quit()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene("MainMenu");
         SceneManager.UnloadSceneAsync("GameScene");
     }
@@ -39,6 +41,12 @@ public class PauseMenu : MonoBehaviour
         {
             Pause();
         }
+    }
+
+    public void Restart()
+    {
+        Time.timeScale = 1;
+        SceneManager.LoadScene("GameScene");
     }
 
     public void Pause()
