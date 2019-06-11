@@ -17,8 +17,7 @@ public class ThunkIdle : StateMachineBehaviour
         GameObject player = GameObject.Find("player");
         if(player != null)
         {
-            PlayerMovement script = player.GetComponent<PlayerMovement>();
-            float speed = 0.4f + 0.1f * (script.currentLevel / Constants.BOSS_FREQUENCY);
+            float speed = 0.4f + 0.1f * (GameVariables.CurrentLevel / Constants.BOSS_FREQUENCY);
             animator.SetFloat("speedMultiplier", System.Math.Min(1,speed));
         }
     }

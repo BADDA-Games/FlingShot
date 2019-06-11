@@ -19,14 +19,6 @@ public class PlayerMovement : MonoBehaviour
     public int health;
     public string collisionString;
 
-    public bool isGameOver;
-
-    public Text currentLevelText;
-    public int currentLevel;
-
-    public Text scoreText;
-    public Text seedText;
-
     private Vector2 touchOrigin = -Vector2.one;
     private Vector3 originalPos;
 
@@ -36,6 +28,7 @@ public class PlayerMovement : MonoBehaviour
     private Animator animate;
     public BoardCreator board;
     public Timer timer;
+    public Level level;
     public GameOverMenu gameOverMenu;
     public TrailRenderer tr;
 
@@ -46,21 +39,6 @@ public class PlayerMovement : MonoBehaviour
     Vector3 eyeCenter;
 
     public int score;
-    public int totalTimeTaken;
-
-    void UpdateLevelText()
-    {
-        if (currentLevel < 10)
-        {
-            currentLevelText.text = "0" + currentLevel.ToString();
-        }
-        else
-        {
-            currentLevelText.text = currentLevel.ToString();
-        }
-        timer.ResetLevelTime();
-
-    }
 
     void Start()
     {
@@ -68,14 +46,10 @@ public class PlayerMovement : MonoBehaviour
         step = 1.0f;
         dir = Direction.None;
         levelType = LevelType.Normal;
-        isGameOver = false;
 
         originalPos = gameObject.transform.position;
 
-        health = 3;
-        currentLevel = 00;
-
-        UpdateLevelText();
+        level.UpdateLevelText();
 
         eyeCenter = Pupil.localPosition;
         eyeRadius = (float)0.25;
@@ -89,20 +63,18 @@ public class PlayerMovement : MonoBehaviour
         dir = Direction.None;
         gameObject.transform.position = originalPos;
 
-        currentLevel++;
-
-        if(totalTimeTaken >= 0){
-            totalTimeTaken += (int)timer.TimeRemaining;
+        if(GameVariables.TotalTimeTaken >= 0){
+            GameVariables.TotalTimeTaken += (int) GameVariables.TimeRemaining;
         }
-        UpdateLevelText();
+        level.AdvanceLevel();
         pos = transform.position;
-        board.ClearMap(true);
+        board.ClearMap();
 
-        if(currentLevel % Constants.BOSS_FREQUENCY == 0){
+        if(GameVariables.CurrentLevel % Constants.BOSS_FREQUENCY == 0){
           SceneManager.LoadSceneAsync("BossSceneThunk", LoadSceneMode.Additive);
           levelType = LevelType.Boss;
         }
-        else if((currentLevel % Constants.BOSS_FREQUENCY == 1) && (currentLevel != 1)){
+        else if((GameVariables.CurrentLevel % Constants.BOSS_FREQUENCY == 1) && (GameVariables.CurrentLevel != 1)){
           SceneManager.UnloadSceneAsync("BossSceneThunk");
           board.NextLevel();
           goalObject.transform.position = goalObject.transform.position + Vector3.up;
@@ -161,8 +133,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 lookDir = (Goal.position - (Pupil.parent.position + Pupil.localPosition)).normalized;
         Pupil.localPosition = eyeCenter + (lookDir * eyeRadius);
 
-        timer.UpdateTimeText();
-        if (timer.TimeRemaining < 0)
+        if (GameVariables.TimeRemaining < 0)
         {
             if(levelType != LevelType.Boss && !animate.GetBool("atGoal")){
                 health--;
@@ -236,7 +207,7 @@ public class PlayerMovement : MonoBehaviour
               }
         #endif
 
-        if ((board.MapLoaded() || (levelType == LevelType.Boss)) && isGameOver == false && !animate.GetBool("atGoal"))
+        if ((board.MapLoaded() || (levelType == LevelType.Boss)) && GameVariables.IsGameOver == false && !animate.GetBool("atGoal"))
         {
             RaycastHit2D hit;
             switch (dir)
@@ -283,7 +254,7 @@ public class PlayerMovement : MonoBehaviour
                     break;
                 case Direction.Up:
                     hit = Physics2D.Raycast(transform.position + Vector3.up, Vector2.up, (float)0.1);
-                    if (levelType == LevelType.Boss && (int) timer.TimeRemaining > 0)
+                    if (levelType == LevelType.Boss && (int) GameVariables.TimeRemaining > 0)
                     {
                         dir = Direction.None;
                     }

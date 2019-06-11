@@ -62,7 +62,6 @@ public class BoardCreator : MonoBehaviour{
 
     private Algorithm.Algorithm a;
 
-    private int seed;
     private bool loaded;
 
     private Queue<Texture[,]> maps;
@@ -94,11 +93,6 @@ public class BoardCreator : MonoBehaviour{
             PlacePuzzle(puzzleMap);
             loaded = true;
         }
-    }
-
-    public int GetSeed()
-    {
-        return seed;
     }
 
     private void AddMazeToQueue()
@@ -308,26 +302,21 @@ public class BoardCreator : MonoBehaviour{
 
     void Start()
     {
-        seed = PlayerGameManager.SeedValue;
-        a = new Algorithm.Algorithm(seed);
+        GameVariables.Seed = PlayerGameManager.SeedValue;
+        a = new Algorithm.Algorithm(GameVariables.Seed);
         maps = new Queue<Texture[,]>(Constants.MAX_BOARD_QUEUE_SIZE);
         mutex = new Mutex();
         creator = new Thread(AddMazeToQueue);
         creator.Start();
-        //Debug.Log(seed);
         loaded = true;
     }
 
     void Update()
     {
-         //if(Input.GetMouseButtonDown(0)) //L click places map
-         //{
-         //    ClearMap(true);
-         //    NextLevel();
-         //}
+
     }
 
-    public void ClearMap(bool complete)
+    public void ClearMap()
     {
         puzzle.ClearAllTiles();
         loaded = false;

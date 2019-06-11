@@ -11,10 +11,6 @@ public class GameOverMenu : MonoBehaviour
     public Text seedText;
     public GameObject GameOverUI;
     public GameObject PauseButton;
-    public PlayerMovement playerMovement;
-    public BoardCreator board;
-
-    public bool isGameOver;
 
     public void LoadMainMenu(){
       PlayerGameManager.IncrementTimesPlayed();
@@ -41,17 +37,17 @@ public class GameOverMenu : MonoBehaviour
         switch (PlayerGameManager.GetDifficulty())
         {
             case "Easy":
-                score = Convert.ToInt32(playerMovement.totalTimeTaken * playerMovement.currentLevel * Constants.EASY_SCORE_MODIFIER);
+                score = Convert.ToInt32(GameVariables.TotalTimeTaken * GameVariables.CurrentLevel * Constants.EASY_SCORE_MODIFIER);
                 break;
             case "Hard":
-                score = Convert.ToInt32(playerMovement.totalTimeTaken * playerMovement.currentLevel * Constants.HARD_SCORE_MODIFIER);
+                score = Convert.ToInt32(GameVariables.TotalTimeTaken * GameVariables.CurrentLevel * Constants.HARD_SCORE_MODIFIER);
                 break;
             default:
-                score = Convert.ToInt32(playerMovement.totalTimeTaken * playerMovement.currentLevel * Constants.MEDIUM_SCORE_MODIFIER);
+                score = Convert.ToInt32(GameVariables.TotalTimeTaken * GameVariables.CurrentLevel * Constants.MEDIUM_SCORE_MODIFIER);
                 break;
         }
         scoreText.text = "Score: " + score.ToString();
-        seedText.text = "Seed: " + board.GetSeed().ToString();
+        seedText.text = "Seed: " + GameVariables.Seed.ToString();
 
         PlayerGameManager.UpdateLastScore(score);
 
@@ -65,7 +61,7 @@ public class GameOverMenu : MonoBehaviour
             GameOverUI.SetActive(true);
         }
         PauseButton.SetActive(false);
-        playerMovement.isGameOver = true;
+        GameVariables.IsGameOver = true;
     }
 
 }

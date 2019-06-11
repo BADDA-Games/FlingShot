@@ -717,6 +717,7 @@ MonoBehaviour:
   PauseButton: {fileID: 0}
   playerMovement: {fileID: 0}
   board: {fileID: 0}
+  level: {fileID: 0}
   isGameOver: 0
 --- !u!114 &218632051
 MonoBehaviour:
@@ -2791,6 +2792,7 @@ MonoBehaviour:
   PauseButton: {fileID: 1430747644}
   playerMovement: {fileID: 859898658}
   board: {fileID: 435501542}
+  level: {fileID: 1977250078}
   isGameOver: 0
 --- !u!4 &356648839 stripped
 Transform:
@@ -3316,6 +3318,11 @@ PrefabInstance:
       propertyPath: gameOverMenu
       value: 
       objectReference: {fileID: 276035046}
+    - target: {fileID: 5453113721030043475, guid: ed48c233b69ee4ab2a2ec9071797d978,
+        type: 3}
+      propertyPath: level
+      value: 
+      objectReference: {fileID: 1977250078}
     - target: {fileID: 5453113721666776576, guid: ed48c233b69ee4ab2a2ec9071797d978,
         type: 3}
       propertyPath: m_Sprite
@@ -3363,7 +3370,13 @@ MonoBehaviour:
   PlayerBody: {fileID: 859898648}
   PlayerLid: {fileID: 859898647}
   Hearts: {fileID: 1352868903}
-  tr: {fileID: 0}
+  tr: {fileID: 859898652}
+--- !u!96 &859898652 stripped
+TrailRenderer:
+  m_CorrespondingSourceObject: {fileID: 1973238408838079596, guid: ed48c233b69ee4ab2a2ec9071797d978,
+    type: 3}
+  m_PrefabInstance: {fileID: 859898645}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &859898658 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5453113721030043475, guid: ed48c233b69ee4ab2a2ec9071797d978,
@@ -4922,6 +4935,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeRemainingText: {fileID: 1072620482}
   playerMovement: {fileID: 859898658}
+  level: {fileID: 1977250078}
 --- !u!1001 &1194300860
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6332,6 +6346,7 @@ GameObject:
   - component: {fileID: 1977250075}
   - component: {fileID: 1977250077}
   - component: {fileID: 1977250076}
+  - component: {fileID: 1977250078}
   m_Layer: 5
   m_Name: currentLevelText
   m_TagString: Untagged
@@ -6400,6 +6415,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1977250074}
   m_CullTransparentMesh: 0
+--- !u!114 &1977250078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1977250074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccb0f524362594db28c3e82305b0cdcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentLevelText: {fileID: 1977250076}
+  currentLevel: 0
+  timer: {fileID: 1072620484}
 --- !u!1 &2104390377
 GameObject:
   m_ObjectHideFlags: 0

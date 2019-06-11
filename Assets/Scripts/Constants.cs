@@ -10,7 +10,7 @@ public static class Constants
     public const int WIDTH = 11;
     public const int HEIGHT = 18;
 
-    // Player Movement
+    // Timers
     public const int EASY_TIME = 30;
     public const int MEDIUM_TIME = 20;
     public const int HARD_TIME = 15;

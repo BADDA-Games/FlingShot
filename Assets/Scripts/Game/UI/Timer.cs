@@ -6,51 +6,46 @@ using UnityEngine.UI;
 public class Timer : MonoBehaviour
 {
     public Text timeRemainingText;
-    public float TimeRemaining { get; set; }
     public PlayerMovement playerMovement;
+    public Level level;
 
     // Start is called before the first frame update
     void Start()
     {
-        TimeRemaining = Constants.INITIAL_LEVEL_TIME;
+        GameVariables.TimeRemaining = Constants.INITIAL_LEVEL_TIME;
     }
 
     // Update is called once per frame
     void Update()
     {
-        TimeRemaining -= Time.deltaTime;
+        GameVariables.TimeRemaining -= Time.deltaTime;
+        UpdateTimeText();
     }
 
     public void UpdateTimeText()
     {
-        int remaining = (int)TimeRemaining;
-        if(TimeRemaining < 0)
+        int remaining = (int)GameVariables.TimeRemaining;
+        if(GameVariables.TimeRemaining < 0)
         {
             return;
         }
-        if(0 <= remaining && remaining < 10)
-        {
-            timeRemainingText.text = "0" + remaining.ToString();
-        }
-        else
-        {
-            timeRemainingText.text = remaining.ToString();
-        }
+        timeRemainingText.text = (0 <= remaining && remaining < 10) ?
+            "0" + remaining.ToString() : remaining.ToString();
     }
 
     public void ResetLevelTime()
     {
-        TimeRemaining = LevelTime();
+        GameVariables.TimeRemaining = LevelTime();
         UpdateTimeText();
     }
 
     private int LevelTime()
     {
-        if (playerMovement.currentLevel == 0)
+        if (GameVariables.CurrentLevel == 0)
         {
             return Constants.INITIAL_LEVEL_TIME;
         }
-        if (playerMovement.currentLevel % Constants.BOSS_FREQUENCY == 0)
+        if (GameVariables.CurrentLevel % Constants.BOSS_FREQUENCY == 0)
         {
             return Constants.BOSS_LEVEL_TIME;
         }

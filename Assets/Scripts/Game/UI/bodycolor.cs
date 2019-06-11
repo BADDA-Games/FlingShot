@@ -16,8 +16,6 @@ public class bodycolor : MonoBehaviour
     void Start()
     {
         Color color = PlayerGameManager.GetColor();
-        tr = GetComponent<TrailRenderer>();
-
         PlayerBody.color = color;
         PlayerLid.color = color;
         Hearts.color = color;

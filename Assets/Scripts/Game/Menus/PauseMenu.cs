@@ -10,7 +10,6 @@ public class PauseMenu : MonoBehaviour
     private bool isPaused;
     public GameObject PauseUI;
     public GameObject PauseButton;
-    public PlayerMovement playerMovement;
 
     void Start()
     {
@@ -22,7 +21,7 @@ public class PauseMenu : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && !playerMovement.isGameOver)
+        if (Input.GetKeyDown(KeyCode.Escape) && !GameVariables.IsGameOver) //TODO
         {
             if (SceneManager.GetActiveScene().name == "GameScene")
             {
