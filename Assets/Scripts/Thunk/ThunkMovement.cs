@@ -5,15 +5,15 @@ using UnityEngine;
 public class ThunkMovement : MonoBehaviour {
    private Animator animate;
    private GameObject goal;
-   private PlayerMovement script;
+   //private PlayerMovement script;
+   private Timer timer;
    private bool play;
    private float d;
 
    void Start () {
-        GameObject player = GameObject.Find("player");
         goal = GameObject.Find("goal");
-
-        script = player.GetComponent<PlayerMovement>();
+        GameObject timeRemaining = GameObject.Find("timeRemainingText");
+        timer = timeRemaining.GetComponent<Timer>();
         animate = gameObject.GetComponent<Animator>();
 
         play = true;
@@ -28,7 +28,7 @@ public class ThunkMovement : MonoBehaviour {
             d += Vector3.Distance(oldPosition, goal.transform.position);
         }
 
-        if(script.timeRemaining < 0 && play) {
+        if(timer != null && timer.TimeRemaining < 0 && play) {
             StartCoroutine(playDeathAnimation());
         }
    }

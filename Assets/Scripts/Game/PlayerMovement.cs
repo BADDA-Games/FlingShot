@@ -22,10 +22,6 @@ public class PlayerMovement : MonoBehaviour
     public Text currentLevelText;
     public int currentLevel;
 
-    public Text timeRemainingText;
-    public float timeRemaining;
-    private int timeRemainingInt;
-
     public Text scoreText;
     public Text seedText;
 
@@ -37,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
     private Animator goalAnimate;
     private Animator animate;
     private BoardCreator board;
+    public Timer timer;
     public GameObject GameOverUI;
 
     public Transform Goal;
@@ -62,8 +59,8 @@ public class PlayerMovement : MonoBehaviour
         {
             currentLevelText.text = currentLevel.ToString();
         }
-        timeRemaining = LevelTime();
-        UpdateTimeText();
+        timer.TimeRemaining = LevelTime();
+        timer.UpdateTimeText();
 
     }
 
@@ -94,24 +91,6 @@ public class PlayerMovement : MonoBehaviour
             Debug.Log("Cannot determine appropriate level timer!");
             // Default to the default time
             return Constants.MEDIUM_TIME;
-        }
-    }
-
-    public void UpdateTimeText()
-    {
-
-        timeRemainingInt = (int)timeRemaining;
-        if (timeRemaining < 0)
-        {
-
-        }
-        else if (timeRemainingInt < 10 && timeRemainingInt >= 0)
-        {
-            timeRemainingText.text = "0" + timeRemainingInt.ToString();
-        }
-        else
-        {
-            timeRemainingText.text = timeRemainingInt.ToString();
         }
     }
 
@@ -163,8 +142,6 @@ public class PlayerMovement : MonoBehaviour
         eyeCenter = Pupil.localPosition;
         eyeRadius = (float)0.25;
 
-        tr = GetComponent<TrailRenderer>();
-
         animate = gameObject.GetComponent<Animator>();
         goalAnimate = goalObject.GetComponent<Animator>();
 
@@ -179,7 +156,7 @@ public class PlayerMovement : MonoBehaviour
         currentLevel++;
 
         if(totalTimeTaken >= 0){
-          totalTimeTaken += timeRemainingInt;
+            totalTimeTaken += (int)timer.TimeRemaining;
         }
         UpdateLevelText();
         pos = transform.position;
@@ -251,16 +228,16 @@ public class PlayerMovement : MonoBehaviour
 
         RaycastHit2D hit;
 
-        timeRemaining -= Time.deltaTime;
-        UpdateTimeText();
-        if ((timeRemaining < 0))
+        //timeRemaining -= Time.deltaTime;
+        timer.UpdateTimeText();
+        if (timer.TimeRemaining < 0)
         {
             if(levelType != "boss" && !animate.GetBool("atGoal")){
                 health--;
             }
 
             if(health <= 0){
-                UpdateTimeText();
+                timer.UpdateTimeText();
                 GameOver();
             }
             else {
@@ -291,8 +268,7 @@ public class PlayerMovement : MonoBehaviour
                         dir = Direction.Down;
                     }
                 }
-                // if (Input.GetMouseButtonDown(0))
-                //   GameOver();
+
         #elif UNITY_IOS || UNITY_ANDROID || UNITY_WP8 || UNITY_IPHONE
 
               if(dir == Direction.None){
@@ -374,7 +350,7 @@ public class PlayerMovement : MonoBehaviour
                     break;
                 case Direction.Up:
                     hit = Physics2D.Raycast(transform.position + Vector3.up, Vector2.up, (float)0.1);
-                    if (levelType == "boss" && timeRemainingInt > 0)
+                    if (levelType == "boss" && (int) timer.TimeRemaining > 0)
                     {
                         dir = Direction.None;
                     }
@@ -429,7 +405,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private void OnDestroy() {
-      UpdateTimeText();
+      timer.UpdateTimeText();
       GameOver();
     }
 }
