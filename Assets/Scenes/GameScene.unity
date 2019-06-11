@@ -711,6 +711,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fc9440f6302740c0a65e67967e2ef97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  scoreText: {fileID: 0}
+  seedText: {fileID: 0}
+  GameOverUI: {fileID: 0}
+  PauseButton: {fileID: 0}
+  playerMovement: {fileID: 0}
+  board: {fileID: 0}
+  isGameOver: 0
 --- !u!114 &218632051
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -725,6 +732,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PauseUI: {fileID: 1658327228}
   PauseButton: {fileID: 1430747644}
+  playerMovement: {fileID: 859898658}
 --- !u!1 &255406445
 GameObject:
   m_ObjectHideFlags: 0
@@ -2677,6 +2685,7 @@ GameObject:
   - component: {fileID: 276035044}
   - component: {fileID: 276035043}
   - component: {fileID: 276035045}
+  - component: {fileID: 276035046}
   m_Layer: 5
   m_Name: GameOverMenu
   m_TagString: Untagged
@@ -2764,6 +2773,25 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &276035046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 276035041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fc9440f6302740c0a65e67967e2ef97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreText: {fileID: 899246377}
+  seedText: {fileID: 1207802442}
+  GameOverUI: {fileID: 276035041}
+  PauseButton: {fileID: 1430747644}
+  playerMovement: {fileID: 859898658}
+  board: {fileID: 435501542}
+  isGameOver: 0
 --- !u!4 &356648839 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5453113721322216315, guid: ed48c233b69ee4ab2a2ec9071797d978,
@@ -3278,6 +3306,16 @@ PrefabInstance:
       propertyPath: tr
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 5453113721030043475, guid: ed48c233b69ee4ab2a2ec9071797d978,
+        type: 3}
+      propertyPath: board
+      value: 
+      objectReference: {fileID: 435501542}
+    - target: {fileID: 5453113721030043475, guid: ed48c233b69ee4ab2a2ec9071797d978,
+        type: 3}
+      propertyPath: gameOverMenu
+      value: 
+      objectReference: {fileID: 276035046}
     - target: {fileID: 5453113721666776576, guid: ed48c233b69ee4ab2a2ec9071797d978,
         type: 3}
       propertyPath: m_Sprite
@@ -4883,6 +4921,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeRemainingText: {fileID: 1072620482}
+  playerMovement: {fileID: 859898658}
 --- !u!1001 &1194300860
 PrefabInstance:
   m_ObjectHideFlags: 0

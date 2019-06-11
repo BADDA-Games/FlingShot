@@ -7,17 +7,19 @@ using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
-    // static PlayerMovement OnlyPlayer;
-
     private Vector3 pos;
     private float step;
+
     enum Direction { None, Up, Down, Left, Right }
     private Direction dir;
+
+    enum LevelType { Normal, Boss }
+    private LevelType levelType;
 
     public int health;
     public string collisionString;
 
-    public bool gameOverBool;
+    public bool isGameOver;
 
     public Text currentLevelText;
     public int currentLevel;
@@ -32,9 +34,10 @@ public class PlayerMovement : MonoBehaviour
     public GameObject goalObject;
     private Animator goalAnimate;
     private Animator animate;
-    private BoardCreator board;
+    public BoardCreator board;
     public Timer timer;
-    public GameObject GameOverUI;
+    public GameOverMenu gameOverMenu;
+    public TrailRenderer tr;
 
     public Transform Goal;
     public Transform Pupil;
@@ -44,10 +47,6 @@ public class PlayerMovement : MonoBehaviour
 
     public int score;
     public int totalTimeTaken;
-
-    private string levelType;
-
-    public TrailRenderer tr;
 
     void UpdateLevelText()
     {
@@ -59,69 +58,8 @@ public class PlayerMovement : MonoBehaviour
         {
             currentLevelText.text = currentLevel.ToString();
         }
-        timer.TimeRemaining = LevelTime();
-        timer.UpdateTimeText();
+        timer.ResetLevelTime();
 
-    }
-
-    private int LevelTime()
-    {
-        if(currentLevel == 0)
-        {
-            return Constants.INITIAL_LEVEL_TIME;
-        }
-        else if(currentLevel % Constants.BOSS_FREQUENCY == 0)
-        {
-            return Constants.BOSS_LEVEL_TIME;
-        }
-        else if(PlayerGameManager.GetDifficulty() == "Easy")
-        {
-            return Constants.EASY_TIME;
-        }
-        else if(PlayerGameManager.GetDifficulty() == "Medium")
-        {
-            return Constants.MEDIUM_TIME;
-        }
-        else if(PlayerGameManager.GetDifficulty() == "Hard")
-        {
-            return Constants.HARD_TIME;
-        }
-        else
-        {
-            Debug.Log("Cannot determine appropriate level timer!");
-            // Default to the default time
-            return Constants.MEDIUM_TIME;
-        }
-    }
-
-    public void GameOver()
-    {
-        switch (PlayerGameManager.GetDifficulty())
-        {
-            case "Easy":
-                score = Convert.ToInt32(totalTimeTaken * currentLevel * Constants.EASY_SCORE_MODIFIER);
-                break;
-            case "Hard":
-                score = Convert.ToInt32(totalTimeTaken * currentLevel * Constants.HARD_SCORE_MODIFIER);
-                break;
-            default:
-                score = Convert.ToInt32(totalTimeTaken * currentLevel * Constants.MEDIUM_SCORE_MODIFIER);
-                break;
-        }
-        scoreText.text = "Score: " + score.ToString();
-        seedText.text = "Seed: " + board.GetSeed().ToString();
-
-        PlayerGameManager.UpdateLastScore(score);
-
-        if(PlayerGameManager.GetHighScore() < score){
-          PlayerGameManager.UpdateHighScore(score);
-        }
-
-        if(GameOverUI != null)
-        {
-            GameOverUI.SetActive(true);
-        }
-        gameOverBool = true;
     }
 
     void Start()
@@ -129,8 +67,8 @@ public class PlayerMovement : MonoBehaviour
         pos = transform.position;
         step = 1.0f;
         dir = Direction.None;
-        levelType = "normal";
-        gameOverBool = false;
+        levelType = LevelType.Normal;
+        isGameOver = false;
 
         originalPos = gameObject.transform.position;
 
@@ -144,8 +82,6 @@ public class PlayerMovement : MonoBehaviour
 
         animate = gameObject.GetComponent<Animator>();
         goalAnimate = goalObject.GetComponent<Animator>();
-
-        board = (BoardCreator)GameObject.Find("BoardCreator").GetComponent(typeof(BoardCreator));
     }
 
     void NextLevel()
@@ -164,13 +100,13 @@ public class PlayerMovement : MonoBehaviour
 
         if(currentLevel % Constants.BOSS_FREQUENCY == 0){
           SceneManager.LoadSceneAsync("BossSceneThunk", LoadSceneMode.Additive);
-          levelType = "boss";
+          levelType = LevelType.Boss;
         }
         else if((currentLevel % Constants.BOSS_FREQUENCY == 1) && (currentLevel != 1)){
           SceneManager.UnloadSceneAsync("BossSceneThunk");
           board.NextLevel();
           goalObject.transform.position = goalObject.transform.position + Vector3.up;
-          levelType = "normal";
+          levelType = LevelType.Normal;
         }
         else{
           board.NextLevel();
@@ -180,7 +116,6 @@ public class PlayerMovement : MonoBehaviour
     IEnumerator PlayGoalAnimation() {
         dir = Direction.None;
         animate.SetBool("atGoal", true);
-        // goalAnimate.SetBool("atGoal", true);
         animate.Play("Goal");
         yield return new WaitForSecondsRealtime(animate.GetCurrentAnimatorStateInfo(0).length + animate.GetCurrentAnimatorStateInfo(0).normalizedTime);
         NextLevel();
@@ -192,7 +127,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collisionObject.name == "goal")
         {
-            if(levelType == "boss" && health < 3)
+            if(levelType == LevelType.Boss && health < 3)
             {
               health++;
             }
@@ -217,7 +152,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (health == 0)
         {
-            GameOver();
+            gameOverMenu.TriggerGameOver();
         }
     }
 
@@ -226,22 +161,19 @@ public class PlayerMovement : MonoBehaviour
         Vector3 lookDir = (Goal.position - (Pupil.parent.position + Pupil.localPosition)).normalized;
         Pupil.localPosition = eyeCenter + (lookDir * eyeRadius);
 
-        RaycastHit2D hit;
-
-        //timeRemaining -= Time.deltaTime;
         timer.UpdateTimeText();
         if (timer.TimeRemaining < 0)
         {
-            if(levelType != "boss" && !animate.GetBool("atGoal")){
+            if(levelType != LevelType.Boss && !animate.GetBool("atGoal")){
                 health--;
             }
 
             if(health <= 0){
                 timer.UpdateTimeText();
-                GameOver();
+                gameOverMenu.TriggerGameOver();
             }
             else {
-                if (!animate.GetBool("atGoal") && levelType != "boss") {
+                if (!animate.GetBool("atGoal") && levelType != LevelType.Boss) {
                     NextLevel();
                 }
             }
@@ -304,8 +236,9 @@ public class PlayerMovement : MonoBehaviour
               }
         #endif
 
-        if ((board.MapLoaded() || (levelType == "boss")) && gameOverBool == false && !animate.GetBool("atGoal"))
+        if ((board.MapLoaded() || (levelType == LevelType.Boss)) && isGameOver == false && !animate.GetBool("atGoal"))
         {
+            RaycastHit2D hit;
             switch (dir)
             {
                 case Direction.Left:
@@ -350,7 +283,7 @@ public class PlayerMovement : MonoBehaviour
                     break;
                 case Direction.Up:
                     hit = Physics2D.Raycast(transform.position + Vector3.up, Vector2.up, (float)0.1);
-                    if (levelType == "boss" && (int) timer.TimeRemaining > 0)
+                    if (levelType == LevelType.Boss && (int) timer.TimeRemaining > 0)
                     {
                         dir = Direction.None;
                     }
@@ -359,13 +292,11 @@ public class PlayerMovement : MonoBehaviour
                         pos = transform.position + Vector3.up;
                         animate.Play("Moving");
                         animate.ResetTrigger("up");
-                        // animate.SetTrigger("move");
                     }
                     else if (hit.collider.name == "walls")
                     {
                         dir = Direction.None;
                         animate.Play("Body_Compress_Up");
-                        // animate.ResetTrigger("move");
                         animate.SetTrigger("up");
                     }
                     else
@@ -405,7 +336,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private void OnDestroy() {
-      timer.UpdateTimeText();
-      GameOver();
+        timer.UpdateTimeText();
+        gameOverMenu.TriggerGameOver();
     }
 }

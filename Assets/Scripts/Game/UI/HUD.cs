@@ -12,8 +12,7 @@ public class HUD : MonoBehaviour
 
     void Start()
     {
-        // DontDestroyOnLoad(this.gameObject);
-        player = GameObject.FindGameObjectWithTag("player").GetComponent<PlayerMovement>();
+
     }
 
     void Update()
