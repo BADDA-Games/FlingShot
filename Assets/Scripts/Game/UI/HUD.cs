@@ -8,7 +8,6 @@ public class HUD : MonoBehaviour
 {
     public Sprite[] HeartSprites;
     public Image HeartUI;
-    public PlayerMovement player;
 
     void Start()
     {
@@ -17,9 +16,9 @@ public class HUD : MonoBehaviour
 
     void Update()
     {
-        if(player.health >= 0)
+        if(GameVariables.Health >= 0)
         {
-            HeartUI.sprite = HeartSprites[player.health];
+            HeartUI.sprite = HeartSprites[GameVariables.Health];
         }
     }
 }

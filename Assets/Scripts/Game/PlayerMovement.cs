@@ -8,7 +8,6 @@ using UnityEngine.SceneManagement;
 public class PlayerMovement : MonoBehaviour
 {
     private Vector3 pos;
-    private float step;
 
     enum Direction { None, Up, Down, Left, Right }
     private Direction dir;
@@ -16,7 +15,6 @@ public class PlayerMovement : MonoBehaviour
     enum LevelType { Normal, Boss }
     private LevelType levelType;
 
-    public int health;
     public string collisionString;
 
     private Vector2 touchOrigin = -Vector2.one;
@@ -43,7 +41,6 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         pos = transform.position;
-        step = 1.0f;
         dir = Direction.None;
         levelType = LevelType.Normal;
 
@@ -52,7 +49,7 @@ public class PlayerMovement : MonoBehaviour
         level.UpdateLevelText();
 
         eyeCenter = Pupil.localPosition;
-        eyeRadius = (float)0.25;
+        eyeRadius = (float) 0.25;
 
         animate = gameObject.GetComponent<Animator>();
         goalAnimate = goalObject.GetComponent<Animator>();
@@ -99,9 +96,9 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collisionObject.name == "goal")
         {
-            if(levelType == LevelType.Boss && health < 3)
+            if(levelType == LevelType.Boss && GameVariables.Health < 3)
             {
-              health++;
+                GameVariables.Health++;
             }
             StartCoroutine(PlayGoalAnimation());
             // collisionObject.gameObject.SetActive(false);
@@ -111,18 +108,18 @@ public class PlayerMovement : MonoBehaviour
             switch (collisionObject.tag)
             {
                 case "one_health_remove":
-                    health--;
+                    GameVariables.Health--;
                     collisionObject.gameObject.SetActive(false);
                     break;
                 case "one_health_no_remove":
-                    health--;
+                    GameVariables.Health--;
                     break;
                 default:
                     //Debug.Log("Obstacle Not Known");
                     break;
             }
         }
-        if (health == 0)
+        if (GameVariables.Health == 0)
         {
             gameOverMenu.TriggerGameOver();
         }
@@ -136,10 +133,10 @@ public class PlayerMovement : MonoBehaviour
         if (GameVariables.TimeRemaining < 0)
         {
             if(levelType != LevelType.Boss && !animate.GetBool("atGoal")){
-                health--;
+                GameVariables.Health--;
             }
 
-            if(health <= 0){
+            if(GameVariables.Health <= 0){
                 timer.UpdateTimeText();
                 gameOverMenu.TriggerGameOver();
             }

@@ -7,7 +7,6 @@ public class Timer : MonoBehaviour
 {
     public Text timeRemainingText;
     public PlayerMovement playerMovement;
-    public Level level;
 
     // Start is called before the first frame update
     void Start()

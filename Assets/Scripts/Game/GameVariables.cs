@@ -6,6 +6,7 @@ public static class GameVariables
     public static int Seed;
     public static bool IsGameOver;
     public static int TotalTimeTaken;
+    public static int Health;
 
     public static void Reset(int initialTimeRemaining)
     {
@@ -14,5 +15,6 @@ public static class GameVariables
         Seed = -1;
         IsGameOver = false;
         TotalTimeTaken = 0;
+        Health = 3;
     }
 }

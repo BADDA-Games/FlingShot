@@ -715,10 +715,6 @@ MonoBehaviour:
   seedText: {fileID: 0}
   GameOverUI: {fileID: 0}
   PauseButton: {fileID: 0}
-  playerMovement: {fileID: 0}
-  board: {fileID: 0}
-  level: {fileID: 0}
-  isGameOver: 0
 --- !u!114 &218632051
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -733,7 +729,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PauseUI: {fileID: 1658327228}
   PauseButton: {fileID: 1430747644}
-  playerMovement: {fileID: 859898658}
 --- !u!1 &255406445
 GameObject:
   m_ObjectHideFlags: 0
@@ -2790,10 +2785,6 @@ MonoBehaviour:
   seedText: {fileID: 1207802442}
   GameOverUI: {fileID: 276035041}
   PauseButton: {fileID: 1430747644}
-  playerMovement: {fileID: 859898658}
-  board: {fileID: 435501542}
-  level: {fileID: 1977250078}
-  isGameOver: 0
 --- !u!4 &356648839 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5453113721322216315, guid: ed48c233b69ee4ab2a2ec9071797d978,
@@ -5199,7 +5190,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 100, y: -100}
+  m_AnchoredPosition: {x: 100, y: -130}
   m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1430747646
@@ -6428,7 +6419,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentLevelText: {fileID: 1977250076}
-  currentLevel: 0
   timer: {fileID: 1072620484}
 --- !u!1 &2104390377
 GameObject:
