@@ -497,12 +497,13 @@ namespace Algorithm
         }
 
         /// <summary>
-        /// The difficulty of the GridGraph's adjacency list, based somehow...
+        /// The difficulty of the GridGraph's adjacency list, based on the
+        /// number of moves required to reach the goal.
         /// </summary>
         /// <returns>A floating point approximation of the difficulty.</returns>
         public int Difficulty()
         {
-            //Make more complicated?
+            //TODO Seed -1 level 4 is wrong. Why?
             return FastestPath();
         }
 

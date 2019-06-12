@@ -10,7 +10,7 @@ public class Level : MonoBehaviour
 
     void Awake()
     {
-        GameVariables.Reset(Constants.INITIAL_LEVEL_TIME);
+        GameVariables.Reset(GameType.Standard);
     }
 
     // Start is called before the first frame update

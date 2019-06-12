@@ -9,10 +9,9 @@ public class PlayerMovement : MonoBehaviour
 {
     private Vector3 pos;
 
-    enum Direction { None, Up, Down, Left, Right }
     private Direction dir;
+    private Direction previousDir;
 
-    enum LevelType { Normal, Boss }
     private LevelType levelType;
 
     public string collisionString;
@@ -42,6 +41,7 @@ public class PlayerMovement : MonoBehaviour
     {
         pos = transform.position;
         dir = Direction.None;
+        previousDir = Direction.None;
         levelType = LevelType.Normal;
 
         originalPos = gameObject.transform.position;
@@ -130,7 +130,8 @@ public class PlayerMovement : MonoBehaviour
         Vector3 lookDir = (Goal.position - (Pupil.parent.position + Pupil.localPosition)).normalized;
         Pupil.localPosition = eyeCenter + (lookDir * eyeRadius);
 
-        if (GameVariables.TimeRemaining < 0)
+        if ((GameVariables.GameType == GameType.Standard && GameVariables.TimeRemaining < 0) ||
+            (GameVariables.GameType == GameType.Puzzle && GameVariables.TimeRemaining <= 0))
         {
             if(levelType != LevelType.Boss && !animate.GetBool("atGoal")){
                 GameVariables.Health--;
@@ -219,6 +220,12 @@ public class PlayerMovement : MonoBehaviour
                     }
                     else if (hit.collider.name == "walls")
                     {
+                        if (GameVariables.GameType == GameType.Puzzle && dir != previousDir)
+                        {
+                            GameVariables.TimeRemaining--;
+                            timer.UpdateTimeText();
+                            previousDir = dir;
+                        }
                         dir = Direction.None;
                         animate.Play("Body_Compress_Left");
                         animate.SetTrigger("left");
@@ -239,6 +246,12 @@ public class PlayerMovement : MonoBehaviour
                     }
                     else if (hit.collider.name == "walls")
                     {
+                        if (GameVariables.GameType == GameType.Puzzle && dir != previousDir)
+                        {
+                            GameVariables.TimeRemaining--;
+                            timer.UpdateTimeText();
+                            previousDir = dir;
+                        }
                         dir = Direction.None;
                         animate.Play("Body_Compress_Right");
                         animate.SetTrigger("right");
@@ -263,6 +276,12 @@ public class PlayerMovement : MonoBehaviour
                     }
                     else if (hit.collider.name == "walls")
                     {
+                        if (GameVariables.GameType == GameType.Puzzle && dir != previousDir)
+                        {
+                            GameVariables.TimeRemaining--;
+                            timer.UpdateTimeText();
+                            previousDir = dir;
+                        }
                         dir = Direction.None;
                         animate.Play("Body_Compress_Up");
                         animate.SetTrigger("up");
@@ -283,6 +302,12 @@ public class PlayerMovement : MonoBehaviour
                     }
                     else if (hit.collider.name == "walls")
                     {
+                        if (GameVariables.GameType == GameType.Puzzle && dir != previousDir)
+                        {
+                            GameVariables.TimeRemaining--;
+                            timer.UpdateTimeText();
+                            previousDir = dir;
+                        }
                         dir = Direction.None;
                         animate.Play("Body_Compress_Down");
                         animate.SetTrigger("down");

@@ -12,6 +12,7 @@ namespace Algorithm
         // Initial seed, not current seed!
         public int Seed { get; }
         public int Level { get; set; }
+        public int Difficulty { get; set; }
 
         private int height;
         private int width;
@@ -96,6 +97,9 @@ namespace Algorithm
                 fullMap[j, width + 1] = 1;
             }
             fullMap[0, width / 2 + 1] = 0;
+
+            //+1 is offset for final move to get in goal
+            Difficulty = gg.Difficulty() + 1;
 
             return fullMap;
         }

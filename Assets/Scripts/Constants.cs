@@ -9,6 +9,7 @@ public static class Constants
     public const int THREAD_SLEEP_TIME = 25;
     public const int WIDTH = 11;
     public const int HEIGHT = 18;
+    public const int STARTER_LEVEL_DIFFICULTY = 17;
 
     // Timers
     public const int EASY_TIME = 30;

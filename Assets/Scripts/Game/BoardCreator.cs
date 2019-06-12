@@ -60,21 +60,16 @@ public class BoardCreator : MonoBehaviour{
 
     public Tile none;
 
+    public Timer timer;
+
     private Algorithm.Algorithm a;
 
     private bool loaded;
 
     private Queue<Texture[,]> maps;
+    private Queue<int> difficulties;
     private Mutex mutex;
     private Thread creator;
-
-    enum Texture {tBar,rBar,bBar,lBar,trBar,brBar,
-      blBar,tlBar,tlrBar,tblBar,tbrBar,blrBar,tblrBar,trRound,
-      brRound,blRound,tlRound,tRound,rRound,bRound,lRound,rtRound,
-      lbRound,rbRound,ltRound,tbRound,tbBar,lrBar,tBarblRound,
-      tBarbrRound,tBarbRound,rBartlRound,rBarblRound,rBarlRound,
-      lBartrRound,lBarbrRound,lBarrRound,bBartrRound,bBartlRound,
-      bBartRound,tlBarbrRound,trBarblRound,brBartlRound,blBartrRound,trblRound,tlbrRound,none,empty}
 
     private Texture[,] puzzleMap;
 
@@ -89,8 +84,10 @@ public class BoardCreator : MonoBehaviour{
             }
             mutex.WaitOne();
             puzzleMap = maps.Dequeue();
+            GameVariables.CurrentDifficulty = difficulties.Dequeue();
             mutex.ReleaseMutex();
             PlacePuzzle(puzzleMap);
+            timer.ResetLevelTime();
             loaded = true;
         }
     }
@@ -104,6 +101,7 @@ public class BoardCreator : MonoBehaviour{
                 int[,] nextMap = a.Generate();
                 Texture[,] textured = ConnectedTexture(nextMap);
                 mutex.WaitOne();
+                difficulties.Enqueue(a.Difficulty);
                 maps.Enqueue(textured);
                 mutex.ReleaseMutex();
             }
@@ -305,6 +303,7 @@ public class BoardCreator : MonoBehaviour{
         GameVariables.Seed = PlayerGameManager.SeedValue;
         a = new Algorithm.Algorithm(GameVariables.Seed);
         maps = new Queue<Texture[,]>(Constants.MAX_BOARD_QUEUE_SIZE);
+        difficulties = new Queue<int>(Constants.MAX_BOARD_QUEUE_SIZE);
         mutex = new Mutex();
         creator = new Thread(AddMazeToQueue);
         creator.Start();

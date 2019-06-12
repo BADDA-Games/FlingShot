@@ -2871,6 +2871,7 @@ MonoBehaviour:
   trblRound: {fileID: 11400000, guid: 31c0136400a0d4ded8e4e62794e8c62b, type: 2}
   tlbrRound: {fileID: 11400000, guid: 80ae8bcf82b154d28872137e07073af6, type: 2}
   none: {fileID: 11400000, guid: 682d1458753a54e9aab4e5a8928c25e3, type: 2}
+  timer: {fileID: 1072620484}
 --- !u!156049354 &435501543
 Grid:
   m_ObjectHideFlags: 0
@@ -3015,7 +3016,6 @@ MonoBehaviour:
   - {fileID: 21300002, guid: 9bfc22a8d7fa04f469fd4fe1cfa27cac, type: 3}
   - {fileID: 21300000, guid: 9bfc22a8d7fa04f469fd4fe1cfa27cac, type: 3}
   HeartUI: {fileID: 1352868903}
-  player: {fileID: 859898658}
 --- !u!114 &519420034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4926,7 +4926,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeRemainingText: {fileID: 1072620482}
   playerMovement: {fileID: 859898658}
-  level: {fileID: 1977250078}
 --- !u!1001 &1194300860
 PrefabInstance:
   m_ObjectHideFlags: 0
