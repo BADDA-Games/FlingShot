@@ -331,6 +331,5 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnDestroy() {
         timer.UpdateTimeText();
-        gameOverMenu.TriggerGameOver();
     }
 }
