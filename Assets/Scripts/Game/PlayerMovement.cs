@@ -303,7 +303,7 @@ public class PlayerMovement : MonoBehaviour
                     }
                     else if (hit.collider.name == "walls")
                     {
-                        if (GameVariables.GameType == GameType.Puzzle && dir != previousDir)
+                        if (GameVariables.GameType == GameType.Puzzle && dir != previousDir && levelType != LevelType.Boss)
                         {
                             GameVariables.TimeRemaining--;
                             timer.UpdateTimeText();

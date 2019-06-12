@@ -3,6 +3,7 @@ public static class Constants
 {
     // Thunk
     public const int THUNK_TIMER = 1;
+    public const int THUNK_PUZZLE_MOVES = 25;
 
     // Board Creator
     public const int MAX_BOARD_QUEUE_SIZE = 20;

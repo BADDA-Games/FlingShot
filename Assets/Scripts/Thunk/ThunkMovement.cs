@@ -24,7 +24,7 @@ public class ThunkMovement : MonoBehaviour {
             d += Vector3.Distance(oldPosition, goal.transform.position);
         }
 
-        if(GameVariables.TimeRemaining < 0 && play) {
+        if(GameVariables.TimeRemaining <= 0 && play) {
             StartCoroutine(playDeathAnimation());
         }
    }

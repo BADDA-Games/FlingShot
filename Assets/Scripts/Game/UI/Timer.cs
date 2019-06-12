@@ -86,6 +86,10 @@ public class Timer : MonoBehaviour
                         return Constants.MEDIUM_TIME;
                 }
             case GameType.Puzzle:
+                if(GameVariables.CurrentLevel % Constants.BOSS_FREQUENCY == 0 && GameVariables.CurrentLevel > 0)
+                {
+                    return Constants.THUNK_PUZZLE_MOVES;
+                }
                 return GameVariables.CurrentDifficulty;
             default:
                 Debug.Log("Cannot produce a valid Level Time for this game mode!");
