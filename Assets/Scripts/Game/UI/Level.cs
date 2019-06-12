@@ -10,7 +10,7 @@ public class Level : MonoBehaviour
 
     void Awake()
     {
-        GameVariables.Reset(GameType.Standard);
+        GameVariables.Reset(GameType.Puzzle);
     }
 
     // Start is called before the first frame update

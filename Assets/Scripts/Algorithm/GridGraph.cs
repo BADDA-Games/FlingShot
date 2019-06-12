@@ -503,7 +503,7 @@ namespace Algorithm
         /// <returns>A floating point approximation of the difficulty.</returns>
         public int Difficulty()
         {
-            //TODO Seed -1 level 4 is wrong. Why?
+            //This is necessary for Puzzle Mode. Consider the consequences of modifying.
             return FastestPath();
         }
 

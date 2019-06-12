@@ -58,6 +58,7 @@ public class PlayerMovement : MonoBehaviour
     void NextLevel()
     {
         dir = Direction.None;
+        previousDir = Direction.None;
         gameObject.transform.position = originalPos;
 
         if(GameVariables.TotalTimeTaken >= 0){
