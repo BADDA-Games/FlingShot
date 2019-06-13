@@ -19,6 +19,9 @@ namespace Algorithm
         private GridGraph gg;
         private Random rand;
 
+        private bool valid;
+        private bool copy;
+
         public Algorithm()
         {
             System.Random sysrand = new System.Random();
@@ -98,14 +101,10 @@ namespace Algorithm
             return ranges;
         }
 
-        private bool valid;
-        private bool copy;
-
         private bool GoodMap(GridGraph g)
         {
             // Make static if this takes too long
-            int min = 5;
-            if(!g.Possible() || g.Difficulty() <= min)
+            if(!g.Possible() || g.Difficulty() <= 5)
             {
                 return false;
             }

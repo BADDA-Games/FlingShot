@@ -7,7 +7,7 @@ public static class Constants
 
     // Board Creator
     public const int MAX_BOARD_QUEUE_SIZE = 10;
-    public const int THREAD_SLEEP_TIME = 25;
+    public const int THREAD_SLEEP_TIME = 50;
     public const int WIDTH = 11;
     public const int HEIGHT = 18;
     public const int STARTER_LEVEL_DIFFICULTY = 17;
