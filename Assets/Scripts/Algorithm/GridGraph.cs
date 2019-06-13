@@ -552,35 +552,58 @@ namespace Algorithm
         }
 
         /// <summary>
-        /// Based solely on p's location in the grid, determines the directions
-        /// it could ever possibly move in. Essentially, if it's next to a wall.
+        /// Finds directions viable for building in
         /// </summary>
-        /// <returns>A list of character directions from U, D, L, R.</returns>
-        /// <param name="p">A point in the GridGraph.</param>
-        public List<char> PotentialDirections(Pair p)
+        /// <returns>A list of good building directions.</returns>
+        /// <param name="p">P.</param>
+        public List<char> GoodDirections(Pair p)
         {
-            List<char> dirs = new List<char>{ 'U', 'D', 'L', 'R' };
-            if (p.Item1 == 0)
-            {
-                dirs.Remove('L');
+            List<char> built = BuiltDirections[p.Item1, p.Item2];
+            List<char> movable = MovableDirections[p.Item1, p.Item2];
+            char initial = InitialBuiltDirection[p.Item1, p.Item2];
+            if(p.Equals(Start) && movable.Count == 1 && movable[0] == 'D'){
+                return new List<char>();
             }
-            else if(p.Item1 == Width - 1)
+            List<char> good = new List<char>();
+            foreach(char c in PotentialDirections(p))
             {
-                dirs.Remove('R');
+                good.Add(c);
             }
-            if(p.Item2 == 0)
+            if (initial == 'U' || initial == 'D')
             {
-                dirs.Remove('U');
+                if (good.Contains('U'))
+                {
+                    good.Remove('U');
+                }
+                if (good.Contains('D'))
+                {
+                    good.Remove('D');
+                }
             }
-            else if(p.Item2 == Height - 1)
+            else if (initial == 'L' || initial == 'R')
             {
-                dirs.Remove('D');
+                if (good.Contains('L'))
+                {
+                    good.Remove('L');
+                }
+                if (good.Contains('R'))
+                {
+                    good.Remove('R');
+                }
             }
-            return dirs;
+            foreach (char c in built)
+            {
+                if (good.Contains(c))
+                {
+                    good.Remove(c);
+                }
+            }
+            return good;
         }
 
-        // Not gonna change this one it's hilarious
+        // -----------------------------------------------------------------
 
+        // Not gonna change this one it's hilarious
         /// <summary> 
         /// Ises the in grid.
         /// </summary>
@@ -1110,6 +1133,34 @@ namespace Algorithm
                     MovableDirections[v.Item1, v.Item2].Add('R');
                 }
             }
+        }
+
+        /// <summary>
+        /// Based solely on p's location in the grid, determines the directions
+        /// it could ever possibly move in. Essentially, if it's next to a wall.
+        /// </summary>
+        /// <returns>A list of character directions from U, D, L, R.</returns>
+        /// <param name="p">A point in the GridGraph.</param>
+        private List<char> PotentialDirections(Pair p)
+        {
+            List<char> dirs = new List<char> { 'U', 'D', 'L', 'R' };
+            if (p.Item1 == 0)
+            {
+                dirs.Remove('L');
+            }
+            else if (p.Item1 == Width - 1)
+            {
+                dirs.Remove('R');
+            }
+            if (p.Item2 == 0)
+            {
+                dirs.Remove('U');
+            }
+            else if (p.Item2 == Height - 1)
+            {
+                dirs.Remove('D');
+            }
+            return dirs;
         }
 
         /// <summary>

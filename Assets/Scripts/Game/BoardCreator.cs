@@ -315,6 +315,11 @@ public class BoardCreator : MonoBehaviour{
 
     }
 
+    void OnDestroy()
+    {
+        creator.Abort();
+    }
+
     public void ClearMap()
     {
         puzzle.ClearAllTiles();

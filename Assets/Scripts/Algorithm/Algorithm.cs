@@ -12,15 +12,12 @@ namespace Algorithm
         // Initial seed, not current seed!
         public int Seed { get; }
         public int Level { get; set; }
-        public int Difficulty { get; set; }
+        public int Difficulty { get; private set; }
 
         private int height;
         private int width;
         private GridGraph gg;
         private Random rand;
-
-        bool valid;
-        bool copy;
 
         public Algorithm()
         {
@@ -43,31 +40,10 @@ namespace Algorithm
             rand = new Random(Seed);
         }
 
-        private bool GoodMap(GridGraph g)
+        private int[,] ConvertArray()
         {
-            // Make static if this takes too long
-            int min = Math.Min(Level / 10 + 5, 8);
-            if(!g.Possible() || g.Difficulty() <= min)
-            {
-                return false;
-            }
-            if(g.CanGetStuck())
-            {
-                return false;
-            }
-            return true;
-        }
-
-        public int[,] Generate()
-        {
-            gg = new GridGraph(width, height);
-            Build();
-            while(!GoodMap(gg)){
-              gg = new GridGraph(width, height);
-              Build();
-            }
-            int times = Level % 199;
-            for(int i = 0; i < times ; i++)
+            int times = Level % 97;
+            for (int i = 0; i < times; i++)
             {
                 // This offsets the random number a different, fixed
                 // amount of times. We do this so that if two seed paths
@@ -79,17 +55,17 @@ namespace Algorithm
             int[,] fullMap = new int[height + 2, width + 2];
             int[,] cellArray = gg.GetCellArray();
 
-            for(int i = 0; i < height; i++)
+            for (int i = 0; i < height; i++)
             {
-                for(int j = 0; j < width; j++)
+                for (int j = 0; j < width; j++)
                 {
                     fullMap[i + 1, j + 1] = cellArray[j, i];
                 }
             }
-            for(int i = 0; i < width + 2; i++)
+            for (int i = 0; i < width + 2; i++)
             {
                 fullMap[0, i] = 1;
-                fullMap[height+1, i] = 1;
+                fullMap[height + 1, i] = 1;
             }
             for (int j = 1; j < height + 1; j++)
             {
@@ -104,20 +80,61 @@ namespace Algorithm
             return fullMap;
         }
 
+        private PairList MakeRanges(List<int> probabilities)
+        {
+            PairList ranges = new PairList();
+            foreach (int p in probabilities)
+            {
+                if (ranges.Count == 0)
+                {
+                    ranges.Add(new Pair(0, probabilities[0]));
+                }
+                else
+                {
+                    int next = ranges[ranges.Count - 1].Item2 + 1;
+                    ranges.Add(new Pair(next, next + p));
+                }
+            }
+            return ranges;
+        }
+
+        private bool valid;
+        private bool copy;
+
+        private bool GoodMap(GridGraph g)
+        {
+            // Make static if this takes too long
+            int min = 5;
+            if(!g.Possible() || g.Difficulty() <= min)
+            {
+                return false;
+            }
+            if(g.CanGetStuck())
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public int[,] Generate()
+        {
+            //gg = SkeletonMaze(5);
+            gg = new GridGraph(width, height);
+            Iterate();
+            while (!GoodMap(gg)){
+                gg = new GridGraph(width, height);
+                Iterate();
+            }
+            gg.DetermineExtraPaths(rand);
+            return ConvertArray();
+        }
+
         // **RESOURCES**
         // Random - Generate, ChooseFrom
         // GridGraph - Copy Constructor, BuildPath, InDeg, OutDeg, TrapVertices,
         // CanGetStuck, FastestPath, FastestPathFrom, LongestPath,
-        // VerticesInDirection, WallOf, Depth, Complexity, *Difficulty*,
-        // *EssentialVertices*, BuiltDirections, MovableDirections,
-        // Possible, PossibleFromLocation
-
-        private void Build()
-        {
-            Iterate();
-            gg.DetermineExtraPaths(rand);
-            //gg.DebugArray();
-        }
+        // VerticesInDirection, WallOf, Depth, Complexity, Difficulty,
+        // BuiltDirections, MovableDirections, Possible
 
         private void Iterate()
         {
@@ -154,7 +171,6 @@ namespace Algorithm
                     }
                 }
             }
-
             //TODO change to another looping condition
             for (int i = 0; i < 60; i++)
             {
@@ -181,76 +197,9 @@ namespace Algorithm
             return probabilities;
         }
 
-        private PairList MakeRanges(List<int> probabilities)
-        {
-            PairList ranges = new PairList();
-            foreach(int p in probabilities)
-            {
-                if(ranges.Count == 0)
-                {
-                    ranges.Add(new Pair(0, probabilities[0]));
-                }
-                else
-                {
-                    int next = ranges[ranges.Count - 1].Item2 + 1;
-                    ranges.Add(new Pair(next, next + p));
-                }
-            }
-            return ranges;
-        }
-
         private bool TryBuild(GridGraph g, Pair v)
         {
-            List<char> built = new List<char>();
-            foreach(char c in g.BuiltDirections[v.Item1, v.Item2])
-            {
-                built.Add(c);
-            }
-            List<char> movable = new List<char>();
-            foreach(char c in g.MovableDirections[v.Item1, v.Item2])
-            {
-                movable.Add(c);
-            }
-            char initial = g.InitialBuiltDirection[v.Item1, v.Item2];
-            // Special case for cell right below exit
-            if(v.Equals(new Pair(g.Width / 2, 0)) && movable.Count == 1 && movable[0] == 'D')
-            {
-                return false;
-            }
-            List<char> good = new List<char>();
-            foreach(char c in g.PotentialDirections(v))
-            {
-                good.Add(c);
-            }
-            if (initial == 'U' || initial == 'D')
-            {
-                if (good.Contains('U'))
-                {
-                    good.Remove('U');
-                }
-                if (good.Contains('D'))
-                {
-                    good.Remove('D');
-                }
-            }
-            else if(initial == 'L' || initial == 'R')
-            {
-                if (good.Contains('L'))
-                {
-                    good.Remove('L');
-                }
-                if (good.Contains('R'))
-                {
-                    good.Remove('R');
-                }
-            }
-            foreach (char c in built)
-            {
-                if (good.Contains(c))
-                {
-                    good.Remove(c);
-                }
-            }
+            List<char> good = g.GoodDirections(v);
             List<int> probabilities = new List<int>();
             foreach (char c in good)
             {
@@ -275,8 +224,7 @@ namespace Algorithm
                 PairList ranges = MakeRanges(probabilities);
                 int choice = rand.ChooseFrom(ranges);
                 char dir = good[choice]; // Ha!
-                // TODO change 1 to some general function for n
-                int max_length = g.LongestPath(v, dir, 1);
+                int max_length = g.LongestPath(v, dir, 1); //Change from 1?
                 if (dir == 'D')
                 {
                     //TODO more calculations into max length
@@ -308,9 +256,6 @@ namespace Algorithm
             {
                 return;
             }
-            //Console.WriteLine("New: " + g.Complexity());
-            //Console.WriteLine("Old: " + gg.Complexity());
-            //TODO proper looping condition?
             if(g.Complexity() >= gg.Complexity())
             {
                 valid = true;
@@ -318,5 +263,82 @@ namespace Algorithm
             }
 
         }
+
+        //public GridGraph SkeletonMaze(int difficulty)
+        //{
+        //    gg = new GridGraph(width, height);
+        //    SkeletonMazeRecursive(difficulty, difficulty, gg, gg.Start);
+        //    return gg;
+        //}
+
+        //public void SkeletonMazeRecursive(int difficulty, int moves, GridGraph gg, Pair p)
+        //{
+        //    if(moves == 0)
+        //    {
+        //        return;
+        //    }
+        //    if(p == null)
+        //    {
+        //        return;
+        //    }
+        //    List<char> good = gg.GoodDirections(p);
+        //    Pair next = null;
+        //    switch (moves % 2)
+        //    {
+        //        case 0:
+        //            if(good.Contains('L') && good.Contains('R'))
+        //            {
+        //                int lMax = gg.LongestPath(p, 'L', 10);
+        //                int rMax = gg.LongestPath(p, 'R', 10);
+        //                bool choice = rand.Generate(0, 1) != 0; //TODO update
+        //                int length = choice ? rand.Generate(1, lMax) : rand.Generate(1, rMax);
+        //                next = choice ? gg.BuildPath(p, 'L', length) : gg.BuildPath(p, 'R', length);
+        //            }
+        //            else if (good.Contains('L'))
+        //            {
+        //                int max = gg.LongestPath(p, 'L', 10);
+        //                int length = rand.Generate(1, max);
+        //                next = gg.BuildPath(p, 'L', length);
+        //            }
+        //            else if (good.Contains('R'))
+        //            {
+        //                int max = gg.LongestPath(p, 'R', 10);
+        //                int length = rand.Generate(1, max);
+        //                next = gg.BuildPath(p, 'R', length);
+        //            }
+        //            else
+        //            {
+        //                Debug.Log("Panic!");
+        //            }
+        //            break;
+        //        case 1:
+        //            if (good.Contains('U') && good.Contains('D'))
+        //            {
+        //                int uMax = gg.LongestPath(p, 'U', 10);
+        //                int dMax = gg.LongestPath(p, 'D', 10);
+        //                bool choice = rand.Generate(0, 1) != 0; //TODO change
+        //                int length = choice ? rand.Generate(1, uMax) : rand.Generate(1, dMax);
+        //                next = choice ? gg.BuildPath(p, 'U', length) : gg.BuildPath(p, 'D', length);
+        //            }
+        //            else if (good.Contains('U'))
+        //            {
+        //                int max = gg.LongestPath(p, 'U', 10);
+        //                int length = rand.Generate(1, max);
+        //                next = gg.BuildPath(p, 'U', length);
+        //            }
+        //            else if (good.Contains('D'))
+        //            {
+        //                int max = gg.LongestPath(p, 'D', 10);
+        //                int length = rand.Generate(1, max);
+        //                next = gg.BuildPath(p, 'D', length);
+        //            }
+        //            else
+        //            {
+        //                Debug.Log("Panic!");
+        //            }
+        //            break;
+        //    }
+        //    SkeletonMazeRecursive(difficulty, moves-1, gg, next);
+        //}
     }
 }
