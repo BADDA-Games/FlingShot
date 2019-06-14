@@ -60,9 +60,12 @@ public class PlayerMovement : MonoBehaviour
         dir = Direction.None;
         previousDir = Direction.None;
         gameObject.transform.position = originalPos;
-
-        if(GameVariables.TotalTimeTaken >= 0){
-            GameVariables.TotalTimeTaken += (int) GameVariables.TimeRemaining;
+        if(levelType == LevelType.Normal)
+        {
+            if (GameVariables.TotalTimeTaken >= 0)
+            {
+                GameVariables.TotalTimeTaken += (int)GameVariables.TimeRemaining;
+            }
         }
         level.AdvanceLevel();
         pos = transform.position;
@@ -331,5 +334,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnDestroy() {
         timer.UpdateTimeText();
+        if(levelType == LevelType.Boss)
+        {
+            gameOverMenu.TriggerGameOver();
+        }
+
     }
 }
