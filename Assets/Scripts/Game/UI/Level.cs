@@ -10,7 +10,14 @@ public class Level : MonoBehaviour
 
     void Awake()
     {
-        GameVariables.Reset(GameType.Standard);
+        if(PlayerGameManager.GetDifficulty() == Difficulty.Puzzle)
+        {
+            GameVariables.Reset(GameType.Puzzle);
+        }
+        else
+        {
+            GameVariables.Reset(GameType.Standard);
+        }
     }
 
     // Start is called before the first frame update

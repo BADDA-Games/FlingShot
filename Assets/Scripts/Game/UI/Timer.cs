@@ -75,11 +75,11 @@ public class Timer : MonoBehaviour
                 }
                 switch (PlayerGameManager.GetDifficulty())
                 {
-                    case "Easy":
+                    case Difficulty.Easy:
                         return Constants.EASY_TIME;
-                    case "Medium":
+                    case Difficulty.Medium:
                         return Constants.MEDIUM_TIME;
-                    case "Hard":
+                    case Difficulty.Hard:
                         return Constants.HARD_TIME;
                     default:
                         Debug.Log("Cannot determine appropriate level timer!");

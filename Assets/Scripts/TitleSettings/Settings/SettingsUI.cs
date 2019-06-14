@@ -22,7 +22,7 @@ public class SettingsUI : MonoBehaviour, INotifyPropertyChanged
     private Color _UIColor = new Color(0.9294f, 0.5921f, 0.3176f, 1.0f);
     private Color _myColor = new Color(0.4117f, 0.8784f, 0.3882f, 1.0f);
     private string colorName = "Green";
-    private string difficultyName = "Hard";
+    private Difficulty difficulty = Difficulty.Easy;
 
     public Color myColor {
         get { return _myColor; }
@@ -55,15 +55,15 @@ public class SettingsUI : MonoBehaviour, INotifyPropertyChanged
             //Debug.Log("PGM gC returned null");
             UIColor = myColor;
         }
-        string d = PlayerGameManager.GetDifficulty();
+        Difficulty d = PlayerGameManager.GetDifficulty();
         if(d != null)
         {
-            difficultyName = PlayerGameManager.GetDifficulty();
-            DiffDrop.value = DifficultyIndex(difficultyName);
+            difficulty = PlayerGameManager.GetDifficulty();
+            DiffDrop.value = DifficultyIndex(difficulty);
         }
         else
         {
-            DiffDrop.value = DifficultyIndex("Hard");
+            DiffDrop.value = DifficultyIndex(Difficulty.Easy);
         }
         ColorBlock colors = myButton.colors;
         colors.normalColor = UIColor;
@@ -83,9 +83,9 @@ public class SettingsUI : MonoBehaviour, INotifyPropertyChanged
         if(myButton.colors.normalColor != PlayerGameManager.GetColor()) {
             myColor = PlayerGameManager.GetColor();
             colorName = PlayerGameManager.GetColorName();
-            difficultyName = PlayerGameManager.GetDifficulty();
+            difficulty = PlayerGameManager.GetDifficulty();
             myDropdown.value = ColorIndex(colorName);
-            DiffDrop.value = DifficultyIndex(difficultyName);
+            DiffDrop.value = DifficultyIndex(difficulty);
             ColorBlock colors = myButton.colors;
             colors.normalColor = myColor;
             myButton.colors = colors;
@@ -98,9 +98,9 @@ public class SettingsUI : MonoBehaviour, INotifyPropertyChanged
             myTimesPlayed.text = "" + PlayerGameManager.GetTimesPlayed();
             colorName = PlayerGameManager.GetColorName();
             myColor = PlayerGameManager.GetColor();
-            difficultyName = PlayerGameManager.GetDifficulty();
+            difficulty = PlayerGameManager.GetDifficulty();
             myDropdown.value = ColorIndex(colorName);
-            DiffDrop.value = DifficultyIndex(difficultyName);
+            DiffDrop.value = DifficultyIndex(difficulty);
             ColorBlock colors = myButton.colors;
             colors.normalColor = myColor;
             myButton.colors = colors;
@@ -115,11 +115,13 @@ public class SettingsUI : MonoBehaviour, INotifyPropertyChanged
         string str = txt.text;
         myColor = PlayerGameManager.UpdateGetColor(str);
     }
+
     public void Diff_Select(){
         Text txt = DiffDrop.captionText;
         string str = txt.text;
-        difficultyName = PlayerGameManager.UpdateGetDifficulty(str);
-        myDifficulty.text = difficultyName;
+        Difficulty diff = StringDifficulty(str);
+        difficulty = PlayerGameManager.UpdateGetDifficulty(diff);
+        myDifficulty.text = DifficultyString(difficulty);
     }
 
     public void BackButton() {
@@ -134,11 +136,7 @@ public class SettingsUI : MonoBehaviour, INotifyPropertyChanged
 
     private void OnPropertyChanged(string propertyName)
     {
-        if (PropertyChanged != null)
-        {
-            //Debug.Log("Changing " + propertyName);
-            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-        }
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
     public Color MyGetColor(string s)
@@ -183,13 +181,53 @@ public class SettingsUI : MonoBehaviour, INotifyPropertyChanged
             default:        return 3;
         }
     }
-    private int DifficultyIndex(string diffstr) {
-        switch (diffstr)
+    private int DifficultyIndex(Difficulty diff) {
+        switch (diff)
         {
-            case "Easy":     return 0;
-            case "Medium":  return 1;
-            case "Hard":  return 2;
-            default:        return 1;
+            case Difficulty.Easy: 
+                return 0;
+            case Difficulty.Medium:
+                return 1;
+            case Difficulty.Hard:
+                return 2;
+            case Difficulty.Puzzle:
+                return 3;
+            default:
+                return 0;
+        }
+    }
+
+    private string DifficultyString(Difficulty diff)
+    {
+        switch (diff)
+        {
+            case Difficulty.Easy:
+                return "Easy";
+            case Difficulty.Medium:
+                return "Medium";
+            case Difficulty.Hard:
+                return "Hard";
+            case Difficulty.Puzzle:
+                return "Puzzle";
+            default:
+                return "Easy";
+        }
+    }
+
+    private Difficulty StringDifficulty(string diffString)
+    {
+        switch (diffString)
+        {
+            case "Easy":
+                return Difficulty.Easy;
+            case "Medium":
+                return Difficulty.Medium;
+            case "Hard":
+                return Difficulty.Hard;
+            case "Puzzle":
+                return Difficulty.Puzzle;
+            default:
+                return Difficulty.Easy;
         }
     }
 }

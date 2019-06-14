@@ -45,9 +45,6 @@ public class PlayerUD_1_2
     public int PTP_Hard;
     public int PTP_Puzzle;
     //
-    public string PlayerDifficulty;
+    public Difficulty PlayerDifficulty;
     public string PlayerColor;
-    public int PlayerHighScore;
-    public int PlayerLastScore;
-    public int PlayerNumberTimesPlayed;
 }

@@ -32,16 +32,19 @@ public class ResetPopUp : MonoBehaviour
     public void Reset()
     {
         PlayerGameManager.UpdateColor("Green");
-        PlayerGameManager.SetPHS("Easy", 0);
-        PlayerGameManager.SetPHS("Medium", 0);
-        PlayerGameManager.SetPHS("Hard", 0);
-        PlayerGameManager.SetPLS("Easy", 0);
-        PlayerGameManager.SetPLS("Medium", 0);
-        PlayerGameManager.SetPLS("Hard", 0);
-        PlayerGameManager.SetPTP("Easy", 0);
-        PlayerGameManager.SetPTP("Medium", 0);
-        PlayerGameManager.SetPTP("Hard", 0);
-        PlayerGameManager.UpdateDifficulty("Medium");
+        PlayerGameManager.SetPHS(Difficulty.Easy, 0);
+        PlayerGameManager.SetPHS(Difficulty.Medium, 0);
+        PlayerGameManager.SetPHS(Difficulty.Hard, 0);
+        PlayerGameManager.SetPHS(Difficulty.Puzzle, 0);
+        PlayerGameManager.SetPLS(Difficulty.Easy, 0);
+        PlayerGameManager.SetPLS(Difficulty.Medium, 0);
+        PlayerGameManager.SetPLS(Difficulty.Hard, 0);
+        PlayerGameManager.SetPLS(Difficulty.Puzzle, 0);
+        PlayerGameManager.SetPTP(Difficulty.Easy, 0);
+        PlayerGameManager.SetPTP(Difficulty.Medium, 0);
+        PlayerGameManager.SetPTP(Difficulty.Hard, 0);
+        PlayerGameManager.SetPTP(Difficulty.Puzzle, 0);
+        PlayerGameManager.UpdateDifficulty(Difficulty.Easy);
         Screen.transform.position = Screen_StartPOS.transform.position;
         ResetPop.transform.position = Pop_StartPOS.transform.position;
     }

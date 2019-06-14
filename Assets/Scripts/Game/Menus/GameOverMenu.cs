@@ -36,14 +36,20 @@ public class GameOverMenu : MonoBehaviour
         int score;
         switch (PlayerGameManager.GetDifficulty())
         {
-            case "Easy":
+            case Difficulty.Easy:
                 score = Convert.ToInt32(GameVariables.TotalTimeTaken * GameVariables.CurrentLevel * Constants.EASY_SCORE_MODIFIER);
                 break;
-            case "Hard":
+            case Difficulty.Medium:
+                score = Convert.ToInt32(GameVariables.TotalTimeTaken * GameVariables.CurrentLevel * Constants.MEDIUM_SCORE_MODIFIER);
+                break;
+            case Difficulty.Hard:
                 score = Convert.ToInt32(GameVariables.TotalTimeTaken * GameVariables.CurrentLevel * Constants.HARD_SCORE_MODIFIER);
                 break;
+            case Difficulty.Puzzle:
+                score = Convert.ToInt32(GameVariables.TotalTimeTaken * GameVariables.CurrentLevel * GameVariables.CurrentLevel);
+                break;
             default:
-                score = Convert.ToInt32(GameVariables.TotalTimeTaken * GameVariables.CurrentLevel * Constants.MEDIUM_SCORE_MODIFIER);
+                score = -1;
                 break;
         }
         scoreText.text = "Score: " + score.ToString();
