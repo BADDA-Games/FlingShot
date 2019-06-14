@@ -47,15 +47,7 @@ public class DataClass : ScriptableObject, INotifyPropertyChanged
         _MY_COLOR = new Color(105, 224, 99, 255);
     }
 
-    // Update is called once per frame
-    /*void Update()
-    {
-        
-    }*/
-
     private void OnPropertyChanged(string propertyName) {
-        if(PropertyChanged != null) {
-            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-        }
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

@@ -20,6 +20,14 @@ public enum Direction
     Right
 }
 
+public enum Difficulty
+{
+    Easy,
+    Medium,
+    Hard,
+    Puzzle
+}
+
 public enum Texture
 {
     tBar,
