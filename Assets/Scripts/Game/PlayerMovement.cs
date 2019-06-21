@@ -152,6 +152,12 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
+        if (GameVariables.IgnoreNextFrame)
+        {
+            GameVariables.IgnoreNextFrame = false;
+            return;
+        }
+
         #if UNITY_STANDALONE || UNITY_WEBPLAYER
 
                 if (dir == Direction.None)
@@ -176,9 +182,9 @@ public class PlayerMovement : MonoBehaviour
 
         #elif UNITY_IOS || UNITY_ANDROID || UNITY_WP8 || UNITY_IPHONE
 
-              if(dir == Direction.None){
+            if (dir == Direction.None && !GameVariables.IsPaused){
                 if (Input.touchCount > 0)
-                      {
+                     {
                           Touch myTouch = Input.touches[0];
 
                           //Check if the phase of that touch equals Began
@@ -330,6 +336,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         transform.position = Vector3.MoveTowards(transform.position, pos, 100f * Time.deltaTime);
+        GameVariables.IgnoreNextFrame = false;
     }
 
     private void OnDestroy() {

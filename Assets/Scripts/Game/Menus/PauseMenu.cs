@@ -6,8 +6,6 @@ using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour
 {
-
-    private bool isPaused;
     public GameObject PauseUI;
     public GameObject PauseButton;
 
@@ -39,7 +37,7 @@ public class PauseMenu : MonoBehaviour
 
     public void Resume()
     {
-        if (isPaused)
+        if (GameVariables.IsPaused)
         {
             Pause();
         }
@@ -53,20 +51,26 @@ public class PauseMenu : MonoBehaviour
 
     public void Pause()
     {
-        switch (isPaused)
+        switch (GameVariables.IsPaused)
         {
             case true:
                 Time.timeScale = 1;
-                isPaused = false;
+                UnPause();
                 PauseUI.SetActive(false);
                 PauseButton.SetActive(true);
                 break;
             case false:
                 Time.timeScale = 0;
-                isPaused = true;
+                GameVariables.IsPaused = true;
                 PauseUI.SetActive(true);
                 PauseButton.SetActive(false);
                 break;
         }
+    }
+
+    private void UnPause()
+    {
+        GameVariables.IgnoreNextFrame = true;
+        GameVariables.IsPaused = false;
     }
 }
