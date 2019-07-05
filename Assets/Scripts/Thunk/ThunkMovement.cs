@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,8 +17,7 @@ public class ThunkMovement : MonoBehaviour {
         d = 0f;
    }
 
-   void Update () {
-
+   void Update() {
         if (!play && d < 1f) {
             Vector3 oldPosition = goal.transform.position;
             goal.transform.position = Vector3.MoveTowards(goal.transform.position, goal.transform.position + Vector3.down, (float)1.0 * Time.deltaTime);
@@ -25,13 +25,14 @@ public class ThunkMovement : MonoBehaviour {
         }
 
         if(GameVariables.TimeRemaining <= 0 && play) {
-            StartCoroutine(playDeathAnimation());
+            StartCoroutine(PlayDeathAnimation());
         }
    }
 
-   IEnumerator playDeathAnimation() {
-     animate.SetBool("dead", true);
-     yield return new WaitForSecondsRealtime((animate.GetCurrentAnimatorStateInfo(0).length + animate.GetCurrentAnimatorStateInfo(0).normalizedTime));
-     play = false;
+   IEnumerator PlayDeathAnimation() {
+        animate.SetBool("dead", true);
+        float normalizedTime = Math.Min(animate.GetCurrentAnimatorStateInfo(0).normalizedTime, Constants.MAX_NORMALIZED_TIME);
+        yield return new WaitForSecondsRealtime(animate.GetCurrentAnimatorStateInfo(0).length + normalizedTime);
+        play = false;
    }
 }

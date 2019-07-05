@@ -90,7 +90,8 @@ public class PlayerMovement : MonoBehaviour
         dir = Direction.None;
         animate.SetBool("atGoal", true);
         animate.Play("Goal");
-        yield return new WaitForSecondsRealtime(animate.GetCurrentAnimatorStateInfo(0).length + animate.GetCurrentAnimatorStateInfo(0).normalizedTime);
+        float normalizedTime = Math.Min(animate.GetCurrentAnimatorStateInfo(0).normalizedTime, Constants.MAX_NORMALIZED_TIME);
+        yield return new WaitForSecondsRealtime(1 + normalizedTime);
         NextLevel();
         animate.SetBool("atGoal", false);
         animate.Play("Start");
@@ -100,7 +101,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collisionObject.name == "goal")
         {
-            if(levelType == LevelType.Boss && GameVariables.Health < 3)
+            if (levelType == LevelType.Boss && GameVariables.Health < 3)
             {
                 GameVariables.Health++;
             }

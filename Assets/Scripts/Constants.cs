@@ -28,4 +28,7 @@ public static class Constants
     public const double EASY_SCORE_MODIFIER = 0.5;
     public const double MEDIUM_SCORE_MODIFIER = 1;
     public const double HARD_SCORE_MODIFIER = 2;
+
+    // Animations
+    public const float MAX_NORMALIZED_TIME = 0.05f;
 }
