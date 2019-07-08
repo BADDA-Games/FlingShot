@@ -4,6 +4,7 @@ using Pair = System.Tuple<int, int>;
 using PairList = System.Collections.Generic.List<System.Tuple<int, int>>;
 using Directions = System.Collections.Generic.List<System.Collections.Generic.List<System.Collections.Generic.List<char>>>;
 using Bools = System.Collections.Generic.List<System.Collections.Generic.List<bool>>;
+using UnityEngine;
 
 namespace Algorithm
 {
@@ -18,6 +19,7 @@ namespace Algorithm
         private int width;
         private GridGraph gg;
         private Random rand;
+        private Random randKey;
 
         private bool valid;
         private bool copy;
@@ -41,6 +43,7 @@ namespace Algorithm
             width = 9;
             Level = 1;
             rand = new Random(Seed);
+            randKey = new Random((Seed * 2019) % 99999989);
         }
 
         private int[,] ConvertArray()
@@ -57,6 +60,47 @@ namespace Algorithm
             Level++;
             int[,] fullMap = new int[height + 2, width + 2];
             int[,] cellArray = gg.GetCellArray();
+
+            for (int i = 0; i < height; i++)
+            {
+                for (int j = 0; j < width; j++)
+                {
+                    fullMap[i + 1, j + 1] = cellArray[j, i];
+                }
+            }
+            for (int i = 0; i < width + 2; i++)
+            {
+                fullMap[0, i] = 1;
+                fullMap[height + 1, i] = 1;
+            }
+            for (int j = 1; j < height + 1; j++)
+            {
+                fullMap[j, 0] = 1;
+                fullMap[j, width + 1] = 1;
+            }
+            fullMap[0, width / 2 + 1] = 0;
+
+            //+1 is offset for final move to get in goal
+            Difficulty = gg.Difficulty() + 1;
+
+            return fullMap;
+        }
+
+        private int[,] ConvertArray(Pair key)
+        {
+            int times = Level % 97;
+            for (int i = 0; i < times; i++)
+            {
+                // This offsets the random number a different, fixed
+                // amount of times. We do this so that if two seed paths
+                // stumble upon the same seed and start producing the same maze
+                // then the offset will prevent future concurrency
+                rand.Generate(0, 1);
+            }
+            Level++;
+            int[,] fullMap = new int[height + 2, width + 2];
+            int[,] cellArray = gg.GetCellArray();
+            cellArray[key.Item1, key.Item2] = 2;
 
             for (int i = 0; i < height; i++)
             {
@@ -126,6 +170,61 @@ namespace Algorithm
             }
             gg.DetermineExtraPaths(rand);
             return ConvertArray();
+        }
+
+        public int[,] GenerateWithKey()
+        {
+            gg = new GridGraph(width, height);
+            Iterate();
+            while (!GoodMap(gg))
+            {
+                gg = new GridGraph(width, height);
+                Iterate();
+            }
+            gg.DetermineExtraPaths(rand);
+            Pair key = AddKey(gg);
+            return ConvertArray();
+        }
+
+        private Pair AddKey(GridGraph g)
+        {
+            List<Tuple<Pair, int>> distances = g.Distance;
+            List<Tuple<Pair, int>> totalDistance = new List<Tuple<Pair, int>>();
+            //Deepcopy distances to totalDistance
+            foreach(Tuple<Pair, int> cur in distances)
+            {
+                int distanceToExit = g.FastestPathFrom(cur.Item1);
+                int p1 = cur.Item1.Item1;
+                int p2 = cur.Item1.Item2;
+                int i = cur.Item2 + distanceToExit;
+                Pair p = new Pair(p1, p2);
+                Tuple<Pair, int> t = new Tuple<Pair, int>(p, i);
+                totalDistance.Add(t);
+            }
+            //Sort by total distance from start to Pair to exit, in descending order
+            totalDistance.Sort((t1, t2) => t2.Item2.CompareTo(t1.Item2));
+            //Get just the lengths
+            List<int> lengths = new List<int>();
+            totalDistance.ForEach(td => lengths.Add((int) Math.Pow(td.Item2, 4)));
+
+            //Remove those that aren't long :)
+            //int max = lengths[0];
+            //for(int i = 0; i < lengths.Count; i++)
+            //{
+            //    if(lengths[i] < max - 5)
+            //    {
+            //        //Remove everything after and including that index
+            //        for(int t = 0; t < lengths.Count - i; t++)
+            //        {
+            //            lengths.RemoveAt(i);
+            //        }
+            //    }
+            //}
+
+            PairList ranges = MakeRanges(lengths);
+            int choice = randKey.ChooseFrom(ranges);
+            Debug.Log(totalDistance[choice].Item1);
+            return totalDistance[choice].Item1;
         }
 
         // **RESOURCES**
@@ -226,7 +325,6 @@ namespace Algorithm
                 int max_length = g.LongestPath(v, dir, 1); //Change from 1?
                 if (dir == 'D')
                 {
-                    //TODO more calculations into max length
                     max_length = Math.Min(max_length, 4);
                 }
                 else
@@ -236,10 +334,8 @@ namespace Algorithm
                 int length = rand.Generate(1, max_length);
                 g.BuildPath(v, dir, length);
                 return true;
-                //TODO we want to try all directions, not just the one we first select
             }
             return false;
-            //TODO we need to try again with different lengths and directions if it fails here
 
         }
 

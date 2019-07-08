@@ -11,6 +11,7 @@ public static class GameVariables
     public static int TotalTimeTaken;
     public static int Health;
     public static GameType GameType;
+    public static bool UsingKey;
 
     public static void Reset()
     {
@@ -24,6 +25,7 @@ public static class GameVariables
         TotalTimeTaken = 0;
         Health = 3;
         GameType = GameType.Standard;
+        UsingKey = false;
     }
 
     public static void Reset(GameType type)
@@ -38,5 +40,6 @@ public static class GameVariables
         TotalTimeTaken = 0;
         Health = 3;
         GameType = type;
+        UsingKey = false;
     }
 }

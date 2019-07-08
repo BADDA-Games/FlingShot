@@ -98,7 +98,17 @@ public class BoardCreator : MonoBehaviour{
         {
             if (maps.Count < Constants.MAX_BOARD_QUEUE_SIZE)
             {
-                int[,] nextMap = a.Generate();
+                int[,] nextMap = null;
+                switch (GameVariables.UsingKey)
+                {
+                    case true:
+                        nextMap = a.GenerateWithKey();
+                        break;
+                    case false:
+                        nextMap = a.Generate();
+                        break;
+
+                }
                 Texture[,] textured = ConnectedTexture(nextMap);
                 mutex.WaitOne();
                 difficulties.Enqueue(a.Difficulty);
