@@ -66,6 +66,7 @@ public class BoardCreator : MonoBehaviour{
     private Algorithm.Algorithm a;
 
     private bool loaded;
+    private bool firstLevel;
 
     private Queue<Texture[,]> maps;
     private Queue<int> difficulties;
@@ -87,7 +88,7 @@ public class BoardCreator : MonoBehaviour{
             mutex.WaitOne();
             puzzleMap = maps.Dequeue();
             GameVariables.CurrentDifficulty = difficulties.Dequeue();
-            if(GameVariables.GameType == GameType.Endless)
+            if(GameVariables.GameType == GameType.Endless && !firstLevel)
             {
                 PlayerGameManager.SetNextSeedEndless(seeds.Dequeue());
                 PlayerGameManager.SetCurrentSeedEndless(PlayerGameManager.GetNextSeedEndless());
@@ -95,6 +96,7 @@ public class BoardCreator : MonoBehaviour{
             mutex.ReleaseMutex();
             PlacePuzzle(puzzleMap);
             timer.ResetLevelTime();
+            firstLevel &= GameVariables.CurrentLevel <= 0;
             loaded = true;
         }
     }
@@ -328,6 +330,7 @@ public class BoardCreator : MonoBehaviour{
         mutex = new Mutex();
         creator = new Thread(AddMazeToQueue);
         loaded = true;
+        firstLevel = true;
         switch (GameVariables.GameType)
         {
             case GameType.Endless:

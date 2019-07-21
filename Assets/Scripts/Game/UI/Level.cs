@@ -23,7 +23,6 @@ public class Level : MonoBehaviour
                     GameVariables.TimeRemaining = PlayerGameManager.GetCurrentLevelTimePlayedEndless();
                     GameVariables.TotalTimeTaken = PlayerGameManager.GetTotalTimePlayedEndless();
                     GameVariables.Seed = PlayerGameManager.SeedValue;
-                    PlayerGameManager.SetInitialSeedEndless(PlayerGameManager.SeedValue);
                 }
                 break;
             default:

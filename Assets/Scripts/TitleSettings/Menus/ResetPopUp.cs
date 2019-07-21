@@ -55,7 +55,7 @@ public class ResetPopUp : MonoBehaviour
         PlayerGameManager.SetTotalTimePlayedEndless(0);
         Screen.transform.position = Screen_StartPOS.transform.position;
         ResetPop.transform.position = Pop_StartPOS.transform.position;
-        DiffDrop.value = 0;
+        DiffDrop.value = 0; //Easy
     }
 
     public void GoBack() {

@@ -103,7 +103,7 @@ public class SettingsUI : MonoBehaviour, INotifyPropertyChanged
             case Difficulty.Endless:
                 HighScoreHeader.text = "Current Level";
                 LastScoreHeader.text = "Seed";
-                TimesPlayedHeader.text = "Time Taken";
+                TimesPlayedHeader.text = "Seconds Played";
                 if (myButton.colors.normalColor != PlayerGameManager.GetColor())
                 {
                     UpdateColors();
