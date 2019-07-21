@@ -139,6 +139,7 @@ public static class PlayerGameManager
             END_TotalTime = 0,
             END_CurrentLevelTime = 0,
             END_CurrentSeed = -1,
+            END_NextSeed = -1,
             END_InitialSeed = -1
         };
         return _p;
@@ -201,6 +202,7 @@ public static class PlayerGameManager
                 END_TotalTime = 0,
                 END_CurrentLevelTime = 0,
                 END_CurrentSeed = -1,
+                END_NextSeed = -1,
                 END_InitialSeed = -1
             };
             return _player;
@@ -510,6 +512,14 @@ public static class PlayerGameManager
     {
         player.END_CurrentSeed = seed;
     }
+    public static int GetNextSeedEndless()
+    {
+        return player.END_NextSeed;
+    }
+    public static void SetNextSeedEndless(int seed)
+    {
+        player.END_NextSeed = seed;
+    }
 
     public static int GetCurrentLevelEndless()
     {
@@ -517,7 +527,7 @@ public static class PlayerGameManager
     }
     public static void IncrementCurrentLevelEndless()
     {
-        SetCurrentSeedEndless(player.END_LevelNumber + 1);
+        SetCurrentLevelEndless(player.END_LevelNumber + 1);
     }
     public static void SetCurrentLevelEndless(int level)
     {

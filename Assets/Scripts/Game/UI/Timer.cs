@@ -41,6 +41,7 @@ public class Timer : MonoBehaviour
                 break;
             case GameType.Endless:
                 GameVariables.TimeRemaining += Time.deltaTime;
+                PlayerGameManager.SetCurrentLevelTimePlayedEndless((int)GameVariables.TimeRemaining);
                 UpdateTimeText();
                 break;
             default:

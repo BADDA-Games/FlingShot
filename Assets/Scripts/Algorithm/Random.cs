@@ -9,23 +9,23 @@ namespace Algorithm
 {
     public class Random
     {
-        private long seed;
+        public long Seed { get; set; }
         public long InitialSeed { get; }
 
         public Random(int seed)
         {
-            this.seed = seed;
+            Seed = seed;
         }
 
         public int Generate(long low, long high)
         {
             long mod = high - low + 1;
-            if(seed < 1)
+            if(Seed < 1)
             {
-                seed = (low + high - seed + 1999) * 1582307 % 55555333;
+                Seed = (low + high - Seed + 1999) * 1582307 % 55555333;
             }
-            seed = (3515366 * seed + 12345) % 99999989;
-            int value = (int)((seed % mod) + low);
+            Seed = (3515366 * Seed + 12345) % 99999989;
+            int value = (int)((Seed % mod) + low);
             return value;
         }
 

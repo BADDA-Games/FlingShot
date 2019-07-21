@@ -61,14 +61,15 @@ public class MainMenuUI : MonoBehaviour
 
     public async void OpenGame_Seed() {
         string input = seedInput.text;
-        //Debug.Log("Seed: " + input);
         int i = -1;
         if(input=="") {
             System.Random rnd = new System.Random();
             int value = rnd.Next(1, 99999989);
+            GameVariables.IsUsingRandomSeed = true;
             PlayerGameManager.SeedValue = value;
         }
         else {
+            GameVariables.IsUsingRandomSeed = false;
             bool isInt = int.TryParse(input, out i);
             if (isInt)
             {

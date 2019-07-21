@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ResetPopUp : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class ResetPopUp : MonoBehaviour
     public GameObject Screen_ActivePOS;
     public GameObject Screen;
     public GameObject ResetPop;
+    public Dropdown DiffDrop;
 
     void Start()
     {
@@ -45,8 +47,15 @@ public class ResetPopUp : MonoBehaviour
         PlayerGameManager.SetPTP(Difficulty.Hard, 0);
         PlayerGameManager.SetPTP(Difficulty.Puzzle, 0);
         PlayerGameManager.UpdateDifficulty(Difficulty.Easy);
+        PlayerGameManager.SetCurrentSeedEndless(-1);
+        PlayerGameManager.SetNextSeedEndless(-1);
+        PlayerGameManager.SetInitialSeedEndless(-1);
+        PlayerGameManager.SetCurrentLevelEndless(0);
+        PlayerGameManager.SetCurrentLevelTimePlayedEndless(0);
+        PlayerGameManager.SetTotalTimePlayedEndless(0);
         Screen.transform.position = Screen_StartPOS.transform.position;
         ResetPop.transform.position = Pop_StartPOS.transform.position;
+        DiffDrop.value = 0;
     }
 
     public void GoBack() {

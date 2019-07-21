@@ -45,6 +45,11 @@ namespace Algorithm
             randKey = new Random((Seed * 2019) % 99999989);
         }
 
+        public int GetCurrentSeed()
+        {
+            return (int)rand.Seed;
+        }
+
         private int[,] ConvertArray()
         {
             int times = Level % 97;

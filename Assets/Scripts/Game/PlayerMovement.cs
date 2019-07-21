@@ -65,6 +65,10 @@ public class PlayerMovement : MonoBehaviour
             if (GameVariables.TotalTimeTaken >= 0)
             {
                 GameVariables.TotalTimeTaken += (int)GameVariables.TimeRemaining;
+                if(GameVariables.GameType == GameType.Endless)
+                {
+                    PlayerGameManager.SetTotalTimePlayedEndless(GameVariables.TotalTimeTaken);
+                }
             }
         }
         level.AdvanceLevel();
@@ -88,6 +92,10 @@ public class PlayerMovement : MonoBehaviour
             }
         }
         board.NextLevel();
+        if(GameVariables.GameType == GameType.Endless)
+        {
+            PlayerGameManager.IncrementCurrentLevelEndless();
+        }
     }
 
     IEnumerator PlayGoalAnimation() {

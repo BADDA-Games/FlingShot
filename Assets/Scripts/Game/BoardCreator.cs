@@ -69,6 +69,7 @@ public class BoardCreator : MonoBehaviour{
 
     private Queue<Texture[,]> maps;
     private Queue<int> difficulties;
+    private Queue<int> seeds;
     private Mutex mutex;
     private Thread creator;
 
@@ -86,6 +87,11 @@ public class BoardCreator : MonoBehaviour{
             mutex.WaitOne();
             puzzleMap = maps.Dequeue();
             GameVariables.CurrentDifficulty = difficulties.Dequeue();
+            if(GameVariables.GameType == GameType.Endless)
+            {
+                PlayerGameManager.SetNextSeedEndless(seeds.Dequeue());
+                PlayerGameManager.SetCurrentSeedEndless(PlayerGameManager.GetNextSeedEndless());
+            }
             mutex.ReleaseMutex();
             PlacePuzzle(puzzleMap);
             timer.ResetLevelTime();
@@ -113,6 +119,7 @@ public class BoardCreator : MonoBehaviour{
                 Texture[,] textured = ConnectedTexture(nextMap);
                 mutex.WaitOne();
                 difficulties.Enqueue(a.Difficulty);
+                seeds.Enqueue(a.GetCurrentSeed());
                 maps.Enqueue(textured);
                 mutex.ReleaseMutex();
             }
@@ -315,13 +322,42 @@ public class BoardCreator : MonoBehaviour{
     void Start()
     {
         GameVariables.Seed = PlayerGameManager.SeedValue;
-        a = new Algorithm.Algorithm(GameVariables.Seed);
         maps = new Queue<Texture[,]>(Constants.MAX_BOARD_QUEUE_SIZE);
         difficulties = new Queue<int>(Constants.MAX_BOARD_QUEUE_SIZE);
+        seeds = new Queue<int>(Constants.MAX_BOARD_QUEUE_SIZE);
         mutex = new Mutex();
         creator = new Thread(AddMazeToQueue);
-        creator.Start();
         loaded = true;
+        switch (GameVariables.GameType)
+        {
+            case GameType.Endless:
+                if(GameVariables.CurrentLevel == 0 || !GameVariables.IsUsingRandomSeed)
+                {
+                    a = new Algorithm.Algorithm(GameVariables.Seed);
+                    creator.Start();
+                    PlayerGameManager.SetInitialSeedEndless(GameVariables.Seed);
+                    PlayerGameManager.SetCurrentSeedEndless(GameVariables.Seed);
+                    PlayerGameManager.SetNextSeedEndless(GameVariables.Seed);
+                    PlayerGameManager.SetCurrentLevelEndless(0);
+                    PlayerGameManager.SetTotalTimePlayedEndless(0);
+                    PlayerGameManager.SetCurrentLevelTimePlayedEndless(0);
+                }
+                else
+                {
+                    a = new Algorithm.Algorithm(PlayerGameManager.GetCurrentSeedEndless())
+                    {
+                        Level = PlayerGameManager.GetCurrentLevelEndless()
+                    };
+                    creator.Start();
+                    ClearMap();
+                    NextLevel();
+                }
+                break;
+            default:
+                a = new Algorithm.Algorithm(GameVariables.Seed);
+                creator.Start();
+                break;
+        }
     }
 
     void Update()

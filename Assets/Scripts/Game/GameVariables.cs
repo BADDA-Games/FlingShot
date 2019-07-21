@@ -12,6 +12,7 @@ public static class GameVariables
     public static int Health;
     public static GameType GameType;
     public static bool UsingKey;
+    public static bool IsUsingRandomSeed;
 
     public static void Reset()
     {

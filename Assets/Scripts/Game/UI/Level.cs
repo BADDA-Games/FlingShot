@@ -17,6 +17,14 @@ public class Level : MonoBehaviour
                 break;
             case Difficulty.Endless:
                 GameVariables.Reset(GameType.Endless);
+                if(GameVariables.IsUsingRandomSeed)
+                {
+                    GameVariables.CurrentLevel = PlayerGameManager.GetCurrentLevelEndless();
+                    GameVariables.TimeRemaining = PlayerGameManager.GetCurrentLevelTimePlayedEndless();
+                    GameVariables.TotalTimeTaken = PlayerGameManager.GetTotalTimePlayedEndless();
+                    GameVariables.Seed = PlayerGameManager.SeedValue;
+                    PlayerGameManager.SetInitialSeedEndless(PlayerGameManager.SeedValue);
+                }
                 break;
             default:
                 GameVariables.Reset(GameType.Standard);
