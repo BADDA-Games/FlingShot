@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Timer : MonoBehaviour
 {
     public Text timeRemainingText;
+    public Text totalTimeText;
     public PlayerMovement playerMovement;
 
     // Start is called before the first frame update
@@ -15,15 +16,19 @@ public class Timer : MonoBehaviour
         {
             case GameType.Standard:
                 GameVariables.TimeRemaining = Constants.INITIAL_LEVEL_TIME;
+                totalTimeText.enabled = false;
                 break;
             case GameType.Puzzle:
                 GameVariables.TimeRemaining = GameVariables.CurrentDifficulty;
+                totalTimeText.enabled = false;
                 break;
             case GameType.Endless:
-                GameVariables.TimeRemaining = 0;
+                GameVariables.TimeRemaining = PlayerGameManager.GetCurrentLevelTimePlayedEndless();
+                totalTimeText.enabled = true;
                 break;
             default:
                 Debug.Log("Invalid GameType detected!");
+                totalTimeText.enabled = false;
                 break;
         }
     }
@@ -59,6 +64,7 @@ public class Timer : MonoBehaviour
             case GameType.Endless:
                 timeRemainingText.text = (0 <= remaining && remaining < 10) ?
                     "0" + remaining.ToString() : remaining.ToString();
+                totalTimeText.text = PlayerGameManager.GetTotalTimePlayedEndless().ToString();
                 break;
             default:
                 if (GameVariables.TimeRemaining < 0)

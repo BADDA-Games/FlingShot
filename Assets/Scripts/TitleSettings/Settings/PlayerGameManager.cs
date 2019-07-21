@@ -556,3 +556,8 @@ public static class PlayerGameManager
         player.END_CurrentLevelTime = time;
     }
 }
+
+//TODO
+//update rules
+//total level time on pause menus
+//low priority, settings endless seed not updating when starting in unity in gamescene

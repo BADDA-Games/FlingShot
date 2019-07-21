@@ -77,9 +77,7 @@ public class SettingsUI : MonoBehaviour, INotifyPropertyChanged
         myTimesPlayed.text = "" + PlayerGameManager.GetTimesPlayed();
         OnPropertyChanged("myDropdown");
         OnPropertyChanged("DiffDrop");
-
     }
-
 
     void UpdateColors()
     {

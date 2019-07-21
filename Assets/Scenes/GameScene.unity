@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 149386729}
   - component: {fileID: 149386728}
   - component: {fileID: 149386727}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -227,7 +227,7 @@ GameObject:
   - component: {fileID: 151827177}
   - component: {fileID: 151827176}
   - component: {fileID: 151827175}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: QuitButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -359,7 +359,7 @@ GameObject:
   - component: {fileID: 164499246}
   - component: {fileID: 164499245}
   - component: {fileID: 164499244}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -679,6 +679,7 @@ RectTransform:
   - {fileID: 276035042}
   - {fileID: 1658327229}
   - {fileID: 1430747645}
+  - {fileID: 999563025}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2682,7 +2683,7 @@ GameObject:
   - component: {fileID: 276035043}
   - component: {fileID: 276035045}
   - component: {fileID: 276035046}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: GameOverMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2871,6 +2872,7 @@ MonoBehaviour:
   trblRound: {fileID: 11400000, guid: 31c0136400a0d4ded8e4e62794e8c62b, type: 2}
   tlbrRound: {fileID: 11400000, guid: 80ae8bcf82b154d28872137e07073af6, type: 2}
   none: {fileID: 11400000, guid: 682d1458753a54e9aab4e5a8928c25e3, type: 2}
+  key: {fileID: 0}
   timer: {fileID: 1072620484}
 --- !u!156049354 &435501543
 Grid:
@@ -3042,7 +3044,7 @@ GameObject:
   - component: {fileID: 713789201}
   - component: {fileID: 713789200}
   - component: {fileID: 713789199}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Menu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3391,7 +3393,7 @@ GameObject:
   - component: {fileID: 899246376}
   - component: {fileID: 899246378}
   - component: {fileID: 899246377}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: ScoreText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3471,7 +3473,7 @@ GameObject:
   - component: {fileID: 916529380}
   - component: {fileID: 916529379}
   - component: {fileID: 916529378}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3555,6 +3557,85 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 916529376}
+  m_CullTransparentMesh: 0
+--- !u!1 &999563024
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 999563025}
+  - component: {fileID: 999563028}
+  - component: {fileID: 999563027}
+  m_Layer: 5
+  m_Name: totalTimeText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &999563025
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 999563024}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 1}
+  m_Children: []
+  m_Father: {fileID: 218632048}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: -30}
+  m_SizeDelta: {x: 120, y: 50}
+  m_Pivot: {x: 1, y: 1}
+--- !u!114 &999563027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 999563024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 53dab294e726e412ea8dceb033dbef92, type: 3}
+    m_FontSize: 24
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 0
+    m_MaxSize: 40
+    m_Alignment: 1
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: totalTimeText
+--- !u!222 &999563028
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 999563024}
   m_CullTransparentMesh: 0
 --- !u!1 &1061393452
 GameObject:
@@ -4925,6 +5006,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeRemainingText: {fileID: 1072620482}
+  totalTimeText: {fileID: 999563027}
   playerMovement: {fileID: 859898658}
 --- !u!1001 &1194300860
 PrefabInstance:
@@ -5011,7 +5093,7 @@ GameObject:
   - component: {fileID: 1207802441}
   - component: {fileID: 1207802443}
   - component: {fileID: 1207802442}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: SeedText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5297,7 +5379,7 @@ GameObject:
   - component: {fileID: 1438334070}
   - component: {fileID: 1438334069}
   - component: {fileID: 1438334068}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: ResumeButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5523,7 +5605,7 @@ GameObject:
   - component: {fileID: 1658327231}
   - component: {fileID: 1658327230}
   - component: {fileID: 1658327232}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: PauseMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5620,7 +5702,7 @@ GameObject:
   - component: {fileID: 1718175122}
   - component: {fileID: 1718175121}
   - component: {fileID: 1718175120}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: RestartButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5752,7 +5834,7 @@ GameObject:
   - component: {fileID: 1752088298}
   - component: {fileID: 1752088297}
   - component: {fileID: 1752088296}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: NewSeedButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5958,7 +6040,7 @@ GameObject:
   - component: {fileID: 1786021475}
   - component: {fileID: 1786021474}
   - component: {fileID: 1786021473}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6147,7 +6229,7 @@ GameObject:
   - component: {fileID: 1871343845}
   - component: {fileID: 1871343844}
   - component: {fileID: 1871343843}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6242,7 +6324,7 @@ GameObject:
   - component: {fileID: 1969509361}
   - component: {fileID: 1969509360}
   - component: {fileID: 1969509359}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6396,7 +6478,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: levelNum
+  m_Text: 'levelText
+
+'
 --- !u!222 &1977250077
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6431,7 +6515,7 @@ GameObject:
   - component: {fileID: 2104390381}
   - component: {fileID: 2104390380}
   - component: {fileID: 2104390379}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: ReplayButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
