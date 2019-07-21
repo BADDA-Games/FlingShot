@@ -49,7 +49,7 @@ public static class PlayerGameManager
         }
         set {
             if (value < 0) {
-                value = value * -1;
+                value *= -1;
             }
             value = value % 100000000;
             _seedValue = value;
@@ -117,8 +117,35 @@ public static class PlayerGameManager
         return _p;
     }
 
-    private static PlayerUD_1_2 _player;
-    public static PlayerUD_1_2 player
+    private static PlayerUD_1_3 Migrate_1_2_To_1_3(PlayerUD_1_2 p)
+    {
+        PlayerUD_1_3 _p = new PlayerUD_1_3
+        {
+            PHS_Easy = p.PHS_Easy,
+            PHS_Medium = p.PHS_Medium,
+            PHS_Hard = p.PHS_Hard,
+            PHS_Puzzle = p.PHS_Puzzle,
+            PLS_Easy = p.PLS_Easy,
+            PLS_Medium = p.PLS_Medium,
+            PLS_Hard = p.PLS_Hard,
+            PLS_Puzzle = p.PLS_Puzzle,
+            PTP_Easy = p.PTP_Easy,
+            PTP_Medium = p.PTP_Medium,
+            PTP_Hard = p.PTP_Hard,
+            PTP_Puzzle = p.PTP_Puzzle,
+            PlayerDifficulty = p.PlayerDifficulty,
+            PlayerColor = p.PlayerColor,
+            END_LevelNumber = 0,
+            END_TotalTime = 0,
+            END_CurrentLevelTime = 0,
+            END_CurrentSeed = -1,
+            END_InitialSeed = -1
+        };
+        return _p;
+    }
+
+    private static PlayerUD_1_3 _player;
+    public static PlayerUD_1_3 player
     {
         get
         {
@@ -127,41 +154,55 @@ public static class PlayerGameManager
                 return _player;
             }
             StorageHandler storageHandler = new StorageHandler();
-            _player = (PlayerUD_1_2)storageHandler.LoadData("playerUDonetwo");
+            _player = (PlayerUD_1_3)storageHandler.LoadData("playerUDonethree");
             if (_player != null)
             {
                 return _player;
             }
 
-            _player = new PlayerUD_1_2();
+            PlayerUD_1_2 _player12 = (PlayerUD_1_2)storageHandler.LoadData("playedUDonetwo");
+            if(_player12 != null)
+            {
+                return Migrate_1_2_To_1_3(_player12);
+            }
 
             PlayerUD_1_1 _player11 = (PlayerUD_1_1)storageHandler.LoadData("playerUDoneone");
             if (_player11 != null)
             {
-                return Migrate_1_1_To_1_2(_player11);
+                _player12 =  Migrate_1_1_To_1_2(_player11);
+                return Migrate_1_2_To_1_3(_player12);
             }
 
             Player _player10 = (Player)storageHandler.LoadData("player");
             if (_player10 != null)
             {
-                //Migrate Player to PlayerUD_1_2
-                return Migrate_1_0_To_1_2(_player10);
+                _player12 = Migrate_1_0_To_1_2(_player10);
+                return Migrate_1_2_To_1_3(_player12);
             }
             // Set all fields to default values
-            _player.PHS_Easy = 0;
-            _player.PLS_Easy = 0;
-            _player.PTP_Easy = 0;
-            _player.PHS_Medium = 0;
-            _player.PLS_Medium = 0;
-            _player.PTP_Medium = 0;
-            _player.PHS_Hard = 0;
-            _player.PLS_Hard = 0;
-            _player.PTP_Hard = 0;
-            _player.PHS_Puzzle = 0;
-            _player.PLS_Puzzle = 0;
-            _player.PTP_Puzzle = 0;
-            _player.PlayerDifficulty = Difficulty.Easy;
-            _player.PlayerColor = "Green";
+            _player = new PlayerUD_1_3
+            {
+                PHS_Easy = 0,
+                PLS_Easy = 0,
+                PTP_Easy = 0,
+                PHS_Medium = 0,
+                PLS_Medium = 0,
+                PTP_Medium = 0,
+                PHS_Hard = 0,
+                PLS_Hard = 0,
+                PTP_Hard = 0,
+                PHS_Puzzle = 0,
+                PLS_Puzzle = 0,
+                PTP_Puzzle = 0,
+                PlayerDifficulty = Difficulty.Easy,
+                PlayerColor = "Green",
+                //
+                END_LevelNumber = 0,
+                END_TotalTime = 0,
+                END_CurrentLevelTime = 0,
+                END_CurrentSeed = -1,
+                END_InitialSeed = -1
+            };
             return _player;
         }
         set { _player = value; }
@@ -169,7 +210,7 @@ public static class PlayerGameManager
 
     private static void Save() {
         StorageHandler storage = new StorageHandler();
-        storage.SaveData(player, "playerUDonetwo");
+        storage.SaveData(player, "playerUDonethree");
     }
 
     /*private static Scene _lastScene = SceneManager.GetSceneByName("MainMenu");
@@ -345,8 +386,7 @@ public static class PlayerGameManager
             case Difficulty.Puzzle:
                 return player.PHS_Puzzle;
             case Difficulty.Endless:
-                //return END_LevelNumber;
-                return -1;
+                return player.END_LevelNumber;
             default:
                 return -1;
         }
@@ -368,7 +408,7 @@ public static class PlayerGameManager
                 player.PHS_Puzzle = hs;
                 break;
             case Difficulty.Endless:
-                //player.END_LevelNumber = hs;
+                player.END_LevelNumber = hs;
                 break;
         }
     }
@@ -385,8 +425,7 @@ public static class PlayerGameManager
             case Difficulty.Puzzle:
                 return player.PLS_Puzzle;
             case Difficulty.Endless:
-                //return player.END_InitialSeed;
-                return -1;
+                return player.END_InitialSeed;
             default:
                 return -1;
         }
@@ -409,7 +448,7 @@ public static class PlayerGameManager
                 player.PLS_Puzzle = ls;
                 break;
             case Difficulty.Endless:
-                //player.END_InitialSeed = ls;
+                player.END_InitialSeed = ls;
                 break;
         }
     }
@@ -426,8 +465,7 @@ public static class PlayerGameManager
             case Difficulty.Puzzle:
                 return player.PTP_Puzzle;
             case Difficulty.Endless:
-                //return player.END_TotalTime;
-                return -1;
+                return player.END_TotalTime;
             default:
                 return -1;
         }
@@ -450,8 +488,61 @@ public static class PlayerGameManager
                 player.PTP_Puzzle = tp;
                 break;
             case Difficulty.Endless:
-                //player.END_TotalTime = tp;
+                player.END_TotalTime = tp;
                 break;
         }
+    }
+
+    public static int GetInitialSeedEndless()
+    {
+        return player.END_InitialSeed;
+    }
+    public static void SetInitialSeedEndless(int seed)
+    {
+        player.END_InitialSeed = seed;
+    }
+
+    public static int GetCurrentSeedEndless()
+    {
+        return player.END_CurrentSeed;
+    }
+    public static void SetCurrentSeedEndless(int seed)
+    {
+        player.END_CurrentSeed = seed;
+    }
+
+    public static int GetCurrentLevelEndless()
+    {
+        return player.END_LevelNumber;
+    }
+    public static void IncrementCurrentLevelEndless()
+    {
+        SetCurrentSeedEndless(player.END_LevelNumber + 1);
+    }
+    public static void SetCurrentLevelEndless(int level)
+    {
+        player.END_LevelNumber = level;
+    }
+
+    public static int GetTotalTimePlayedEndless()
+    {
+        return player.END_TotalTime;
+    }
+    public static void SetTotalTimePlayedEndless(int time)
+    {
+        player.END_TotalTime = time;
+    }
+    public static void AddTotalTimePlayedEndless(int time)
+    {
+        player.END_TotalTime += time;
+    }
+
+    public static int GetCurrentLevelTimePlayedEndless()
+    {
+        return player.END_CurrentLevelTime;
+    }
+    public static void SetCurrentLevelTimePlayedEndless(int time)
+    {
+        player.END_CurrentLevelTime = time;
     }
 }
