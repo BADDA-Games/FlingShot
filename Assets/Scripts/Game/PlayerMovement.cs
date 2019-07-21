@@ -70,20 +70,24 @@ public class PlayerMovement : MonoBehaviour
         level.AdvanceLevel();
         pos = transform.position;
         board.ClearMap();
-
-        if(GameVariables.CurrentLevel % Constants.BOSS_FREQUENCY == 0){
-          SceneManager.LoadSceneAsync("BossSceneThunk", LoadSceneMode.Additive);
-          levelType = LevelType.Boss;
+        if(GameVariables.GameType == GameType.Standard || GameVariables.GameType == GameType.Puzzle)
+        {
+            if (GameVariables.CurrentLevel % Constants.BOSS_FREQUENCY == 0)
+            {
+                SceneManager.LoadSceneAsync("BossSceneThunk", LoadSceneMode.Additive);
+                levelType = LevelType.Boss;
+                return;
+            }
+            if ((GameVariables.CurrentLevel % Constants.BOSS_FREQUENCY == 1) && (GameVariables.CurrentLevel != 1))
+            {
+                SceneManager.UnloadSceneAsync("BossSceneThunk");
+                board.NextLevel();
+                goalObject.transform.position = goalObject.transform.position + Vector3.up;
+                levelType = LevelType.Normal;
+                return;
+            }
         }
-        else if((GameVariables.CurrentLevel % Constants.BOSS_FREQUENCY == 1) && (GameVariables.CurrentLevel != 1)){
-          SceneManager.UnloadSceneAsync("BossSceneThunk");
-          board.NextLevel();
-          goalObject.transform.position = goalObject.transform.position + Vector3.up;
-          levelType = LevelType.Normal;
-        }
-        else{
-          board.NextLevel();
-        }
+        board.NextLevel();
     }
 
     IEnumerator PlayGoalAnimation() {

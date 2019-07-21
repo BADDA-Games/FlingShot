@@ -10,13 +10,17 @@ public class Level : MonoBehaviour
 
     void Awake()
     {
-        if(PlayerGameManager.GetDifficulty() == Difficulty.Puzzle)
+        switch (PlayerGameManager.GetDifficulty())
         {
-            GameVariables.Reset(GameType.Puzzle);
-        }
-        else
-        {
-            GameVariables.Reset(GameType.Standard);
+            case Difficulty.Puzzle:
+                GameVariables.Reset(GameType.Puzzle);
+                break;
+            case Difficulty.Endless:
+                GameVariables.Reset(GameType.Endless);
+                break;
+            default:
+                GameVariables.Reset(GameType.Standard);
+                break;
         }
     }
 

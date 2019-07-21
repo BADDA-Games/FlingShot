@@ -192,6 +192,8 @@ public class SettingsUI : MonoBehaviour, INotifyPropertyChanged
                 return 2;
             case Difficulty.Puzzle:
                 return 3;
+            case Difficulty.Endless:
+                return 4;
             default:
                 return 0;
         }

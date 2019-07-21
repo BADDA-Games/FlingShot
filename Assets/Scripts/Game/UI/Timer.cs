@@ -19,6 +19,9 @@ public class Timer : MonoBehaviour
             case GameType.Puzzle:
                 GameVariables.TimeRemaining = GameVariables.CurrentDifficulty;
                 break;
+            case GameType.Endless:
+                GameVariables.TimeRemaining = 0;
+                break;
             default:
                 Debug.Log("Invalid GameType detected!");
                 break;
@@ -35,6 +38,9 @@ public class Timer : MonoBehaviour
                 UpdateTimeText();
                 break;
             case GameType.Puzzle:
+                break;
+            case GameType.Endless:
+                GameVariables.TimeRemaining += Time.deltaTime;
                 break;
             default:
                 GameVariables.TimeRemaining -= Time.deltaTime;
@@ -91,6 +97,8 @@ public class Timer : MonoBehaviour
                     return Constants.THUNK_PUZZLE_MOVES;
                 }
                 return GameVariables.CurrentDifficulty;
+            case GameType.Endless:
+                return 0;
             default:
                 Debug.Log("Cannot produce a valid Level Time for this game mode!");
                 return -1;
