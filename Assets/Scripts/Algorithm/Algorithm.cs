@@ -223,7 +223,6 @@ namespace Algorithm
 
             PairList ranges = MakeRanges(lengths);
             int choice = randKey.ChooseFrom(ranges);
-            Debug.Log(totalDistance[choice].Item1);
             return totalDistance[choice].Item1;
         }
 

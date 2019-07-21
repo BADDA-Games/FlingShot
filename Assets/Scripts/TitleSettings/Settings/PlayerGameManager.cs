@@ -56,6 +56,67 @@ public static class PlayerGameManager
         }
     }
 
+    private static PlayerUD_1_2 Migrate_1_0_To_1_2(Player p)
+    {
+        PlayerUD_1_2 _p = new PlayerUD_1_2
+        {
+            PHS_Hard = p.PlayerHighScore,
+            PLS_Hard = p.PlayerLastScore,
+            PTP_Hard = p.PlayerNumberTimesPlayed,
+            PlayerColor = p.PlayerColor,
+
+            PHS_Easy = 0,
+            PLS_Easy = 0,
+            PTP_Easy = 0,
+            PHS_Medium = 0,
+            PLS_Medium = 0,
+            PTP_Medium = 0,
+            PHS_Puzzle = 0,
+            PLS_Puzzle = 0,
+            PTP_Puzzle = 0,
+            PlayerDifficulty = Difficulty.Easy
+        };
+        return _p;
+    }
+
+    private static PlayerUD_1_2 Migrate_1_1_To_1_2(PlayerUD_1_1 p)
+    {
+        PlayerUD_1_2 _p = new PlayerUD_1_2
+        {
+            PHS_Easy = p.PHS_Easy,
+            PHS_Medium = p.PHS_Medium,
+            PHS_Hard = p.PHS_Hard,
+            PLS_Easy = p.PLS_Easy,
+            PLS_Medium = p.PLS_Medium,
+            PLS_Hard = p.PLS_Hard,
+            PTP_Easy = p.PTP_Easy,
+            PTP_Medium = p.PTP_Medium,
+            PTP_Hard = p.PTP_Hard,
+            PlayerColor = p.PlayerColor
+        };
+
+        switch (p.PlayerDifficulty)
+        {
+            case "Easy":
+                _p.PlayerDifficulty = Difficulty.Easy;
+                break;
+            case "Medium":
+                _p.PlayerDifficulty = Difficulty.Medium;
+                break;
+            case "Hard":
+                _p.PlayerDifficulty = Difficulty.Hard;
+                break;
+            default:
+                _p.PlayerDifficulty = Difficulty.Easy;
+                break;
+        }
+
+        _p.PHS_Puzzle = 0;
+        _p.PLS_Puzzle = 0;
+        _p.PTP_Puzzle = 0;
+        return _p;
+    }
+
     private static PlayerUD_1_2 _player;
     public static PlayerUD_1_2 player
     {
@@ -77,60 +138,14 @@ public static class PlayerGameManager
             PlayerUD_1_1 _player11 = (PlayerUD_1_1)storageHandler.LoadData("playerUDoneone");
             if (_player11 != null)
             {
-                //Migrate PlayerUD_1_1 to PlayerUD_1_2
-                _player.PHS_Easy = _player11.PHS_Easy;
-                _player.PHS_Medium = _player11.PHS_Medium;
-                _player.PHS_Hard = _player11.PHS_Hard;
-                _player.PLS_Easy = _player11.PLS_Easy;
-                _player.PLS_Medium = _player11.PLS_Medium;
-                _player.PLS_Hard = _player11.PLS_Hard;
-                _player.PTP_Easy = _player11.PTP_Easy;
-                _player.PTP_Medium = _player11.PTP_Medium;
-                _player.PTP_Hard = _player11.PTP_Hard;
-                _player.PlayerColor = _player11.PlayerColor;
-
-                switch (_player11.PlayerDifficulty)
-                {
-                    case "Easy":
-                        _player.PlayerDifficulty = Difficulty.Easy;
-                        break;
-                    case "Medium":
-                        _player.PlayerDifficulty = Difficulty.Medium;
-                        break;
-                    case "Hard":
-                        _player.PlayerDifficulty = Difficulty.Hard;
-                        break;
-                    default:
-                        _player.PlayerDifficulty = Difficulty.Easy;
-                        break;
-                }
-
-                _player.PHS_Puzzle = 0;
-                _player.PLS_Puzzle = 0;
-                _player.PTP_Puzzle = 0;
-                return _player;
+                return Migrate_1_1_To_1_2(_player11);
             }
 
             Player _player10 = (Player)storageHandler.LoadData("player");
             if (_player10 != null)
             {
                 //Migrate Player to PlayerUD_1_2
-                _player.PHS_Hard = _player10.PlayerHighScore;
-                _player.PLS_Hard = _player10.PlayerLastScore;
-                _player.PTP_Hard = _player10.PlayerNumberTimesPlayed;
-                _player.PlayerColor = _player10.PlayerColor;
-
-                _player.PHS_Easy = 0;
-                _player.PLS_Easy = 0;
-                _player.PTP_Easy = 0;
-                _player.PHS_Medium = 0;
-                _player.PLS_Medium = 0;
-                _player.PTP_Medium = 0;
-                _player.PHS_Puzzle = 0;
-                _player.PLS_Puzzle = 0;
-                _player.PTP_Puzzle = 0;
-                _player.PlayerDifficulty = Difficulty.Easy;
-                return _player;
+                return Migrate_1_0_To_1_2(_player10);
             }
             // Set all fields to default values
             _player.PHS_Easy = 0;
@@ -329,6 +344,9 @@ public static class PlayerGameManager
                 return player.PHS_Hard;
             case Difficulty.Puzzle:
                 return player.PHS_Puzzle;
+            case Difficulty.Endless:
+                Debug.Log("Accessing Endless PHS!");
+                return -1;
             default:
                 return -1;
         }
@@ -349,13 +367,16 @@ public static class PlayerGameManager
             case Difficulty.Puzzle:
                 player.PHS_Puzzle = hs;
                 break;
+            case Difficulty.Endless:
+                Debug.Log("Setting Endless PHS!");
+                break;
         }
     }
 
     public static int GetPLS(Difficulty difficulty) {
         switch (difficulty)
         {
-            case Difficulty.Easy:
+            case Difficulty.Easy: 
                 return player.PLS_Easy;
             case Difficulty.Medium:
                 return player.PLS_Medium;
@@ -363,6 +384,9 @@ public static class PlayerGameManager
                 return player.PLS_Hard;
             case Difficulty.Puzzle:
                 return player.PLS_Puzzle;
+            case Difficulty.Endless:
+                Debug.Log("Accessing GetPLS on Endless!");
+                return -1;
             default:
                 return -1;
         }
@@ -384,6 +408,9 @@ public static class PlayerGameManager
             case Difficulty.Puzzle:
                 player.PLS_Puzzle = ls;
                 break;
+            case Difficulty.Endless:
+                Debug.Log("Attempting to set PLS on Endless!");
+                break;
         }
     }
 
@@ -398,6 +425,9 @@ public static class PlayerGameManager
                 return player.PTP_Hard;
             case Difficulty.Puzzle:
                 return player.PTP_Puzzle;
+            case Difficulty.Endless:
+                Debug.Log("Attemping to access Endless PTP!");
+                return -1;
             default:
                 return -1;
         }
@@ -418,6 +448,9 @@ public static class PlayerGameManager
                 break;
             case Difficulty.Puzzle:
                 player.PTP_Puzzle = tp;
+                break;
+            case Difficulty.Endless:
+                Debug.Log("Attempting to change Endless Difficulty PTP!");
                 break;
         }
     }

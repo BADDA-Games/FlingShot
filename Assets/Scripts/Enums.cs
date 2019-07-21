@@ -2,7 +2,8 @@
 public enum GameType
 {
     Standard,
-    Puzzle
+    Puzzle,
+    Endless
 }
 
 public enum LevelType
@@ -25,7 +26,8 @@ public enum Difficulty
     Easy,
     Medium,
     Hard,
-    Puzzle
+    Puzzle,
+    Endless
 }
 
 public enum Texture
@@ -77,5 +79,6 @@ public enum Texture
     trblRound,
     tlbrRound,
     none,
+    key,
     empty
 }

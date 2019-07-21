@@ -59,6 +59,7 @@ public class BoardCreator : MonoBehaviour{
     public Tile tlbrRound;
 
     public Tile none;
+    public Tile key;
 
     public Timer timer;
 
@@ -105,7 +106,7 @@ public class BoardCreator : MonoBehaviour{
                         nextMap = a.GenerateWithKey();
                         break;
                     case false:
-                        nextMap = a.Generate();
+                        nextMap = a.GenerateWithKey();
                         break;
 
                 }
@@ -296,6 +297,9 @@ public class BoardCreator : MonoBehaviour{
                     case Texture.tlbrRound:
                       puzzle.SetTile(coordinate, tlbrRound);
                       break;
+                    case Texture.key:
+                      puzzle.SetTile(coordinate, key);
+                      break;
                     case Texture.none:
                       puzzle.SetTile(coordinate, none);
                       break;
@@ -351,6 +355,10 @@ public class BoardCreator : MonoBehaviour{
                 if(nextMap[j,i] == 0)
                 {
                     textured[j,i] = Texture.empty;
+                }
+                else if(nextMap[j, i] == 2)
+                {
+                    textured[j, i] = Texture.key;
                 }
                 else
                 {

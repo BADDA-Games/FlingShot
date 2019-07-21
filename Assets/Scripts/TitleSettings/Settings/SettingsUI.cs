@@ -209,6 +209,8 @@ public class SettingsUI : MonoBehaviour, INotifyPropertyChanged
                 return "Hard";
             case Difficulty.Puzzle:
                 return "Puzzle";
+            case Difficulty.Endless:
+                return "Endless";
             default:
                 return "Easy";
         }
@@ -226,6 +228,8 @@ public class SettingsUI : MonoBehaviour, INotifyPropertyChanged
                 return Difficulty.Hard;
             case "Puzzle":
                 return Difficulty.Puzzle;
+            case "Endless":
+                return Difficulty.Endless;
             default:
                 return Difficulty.Easy;
         }
