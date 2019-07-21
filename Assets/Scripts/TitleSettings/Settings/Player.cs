@@ -68,6 +68,8 @@ public class PlayerUD_1_3
     public string PlayerColor;
     //
     public int END_LevelNumber;
+    public int END_TotalTime;
+    public int END_CurrentLevelTime;
     public int END_CurrentSeed;
     public int END_InitialSeed;
 

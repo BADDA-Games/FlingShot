@@ -345,7 +345,7 @@ public static class PlayerGameManager
             case Difficulty.Puzzle:
                 return player.PHS_Puzzle;
             case Difficulty.Endless:
-                Debug.Log("Accessing Endless PHS!");
+                //return END_LevelNumber;
                 return -1;
             default:
                 return -1;
@@ -368,7 +368,7 @@ public static class PlayerGameManager
                 player.PHS_Puzzle = hs;
                 break;
             case Difficulty.Endless:
-                Debug.Log("Setting Endless PHS!");
+                //player.END_LevelNumber = hs;
                 break;
         }
     }
@@ -385,7 +385,7 @@ public static class PlayerGameManager
             case Difficulty.Puzzle:
                 return player.PLS_Puzzle;
             case Difficulty.Endless:
-                Debug.Log("Accessing GetPLS on Endless!");
+                //return player.END_InitialSeed;
                 return -1;
             default:
                 return -1;
@@ -409,7 +409,7 @@ public static class PlayerGameManager
                 player.PLS_Puzzle = ls;
                 break;
             case Difficulty.Endless:
-                Debug.Log("Attempting to set PLS on Endless!");
+                //player.END_InitialSeed = ls;
                 break;
         }
     }
@@ -426,7 +426,7 @@ public static class PlayerGameManager
             case Difficulty.Puzzle:
                 return player.PTP_Puzzle;
             case Difficulty.Endless:
-                Debug.Log("Attemping to access Endless PTP!");
+                //return player.END_TotalTime;
                 return -1;
             default:
                 return -1;
@@ -450,7 +450,7 @@ public static class PlayerGameManager
                 player.PTP_Puzzle = tp;
                 break;
             case Difficulty.Endless:
-                Debug.Log("Attempting to change Endless Difficulty PTP!");
+                //player.END_TotalTime = tp;
                 break;
         }
     }

@@ -16,9 +16,17 @@ public class HUD : MonoBehaviour
 
     void Update()
     {
-        if(GameVariables.Health >= 0)
+        switch (GameVariables.GameType)
         {
-            HeartUI.sprite = HeartSprites[GameVariables.Health];
+            case GameType.Endless:
+                HeartUI.enabled = false;
+                break;
+            default:
+                if (GameVariables.Health >= 0)
+                {
+                    HeartUI.sprite = HeartSprites[GameVariables.Health];
+                }
+                break;
         }
     }
 }

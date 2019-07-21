@@ -41,6 +41,7 @@ public class Timer : MonoBehaviour
                 break;
             case GameType.Endless:
                 GameVariables.TimeRemaining += Time.deltaTime;
+                UpdateTimeText();
                 break;
             default:
                 GameVariables.TimeRemaining -= Time.deltaTime;
@@ -52,12 +53,22 @@ public class Timer : MonoBehaviour
     public void UpdateTimeText()
     {
         int remaining = (int)GameVariables.TimeRemaining;
-        if(GameVariables.TimeRemaining < 0)
+        switch (GameVariables.GameType)
         {
-            return;
+            case GameType.Endless:
+                timeRemainingText.text = (0 <= remaining && remaining < 10) ?
+                    "0" + remaining.ToString() : remaining.ToString();
+                break;
+            default:
+                if (GameVariables.TimeRemaining < 0)
+                {
+                    return;
+                }
+                timeRemainingText.text = (0 <= remaining && remaining < 10) ?
+                    "0" + remaining.ToString() : remaining.ToString();
+                break;
+
         }
-        timeRemainingText.text = (0 <= remaining && remaining < 10) ?
-            "0" + remaining.ToString() : remaining.ToString();
     }
 
     public void ResetLevelTime()

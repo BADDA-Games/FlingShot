@@ -4,14 +4,13 @@ using Pair = System.Tuple<int, int>;
 using PairList = System.Collections.Generic.List<System.Tuple<int, int>>;
 using Directions = System.Collections.Generic.List<System.Collections.Generic.List<System.Collections.Generic.List<char>>>;
 using Bools = System.Collections.Generic.List<System.Collections.Generic.List<bool>>;
-using UnityEngine;
 
 namespace Algorithm
 {
     public class Algorithm
     {
         // Initial seed, not current seed!
-        public int Seed { get; }
+        public int Seed { get; set; }
         public int Level { get; set; }
         public int Difficulty { get; private set; }
 

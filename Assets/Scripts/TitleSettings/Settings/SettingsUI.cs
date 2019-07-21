@@ -19,6 +19,9 @@ public class SettingsUI : MonoBehaviour, INotifyPropertyChanged
     public Text myTimesPlayed;
     public Text myTitle;
     public Text myDifficulty;
+    public Text HighScoreHeader;
+    public Text LastScoreHeader;
+    public Text TimesPlayedHeader;
     private Color _UIColor = new Color(0.9294f, 0.5921f, 0.3176f, 1.0f);
     private Color _myColor = new Color(0.4117f, 0.8784f, 0.3882f, 1.0f);
     private string colorName = "Green";
@@ -80,6 +83,19 @@ public class SettingsUI : MonoBehaviour, INotifyPropertyChanged
     // Update is called once per frame
     void Update()
     {
+        switch (PlayerGameManager.GetDifficulty())
+        {
+            case Difficulty.Endless:
+                HighScoreHeader.text = "Current Level";
+                LastScoreHeader.text = "Seed";
+                TimesPlayedHeader.text = "Time Taken";
+                break;
+            default:
+                HighScoreHeader.text = "High Score";
+                LastScoreHeader.text = "Last Score";
+                TimesPlayedHeader.text = "Times Played";
+                break;
+        }
         if(myButton.colors.normalColor != PlayerGameManager.GetColor()) {
             myColor = PlayerGameManager.GetColor();
             colorName = PlayerGameManager.GetColorName();
