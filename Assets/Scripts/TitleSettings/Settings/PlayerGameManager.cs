@@ -558,6 +558,6 @@ public static class PlayerGameManager
 }
 
 //TODO
-//update rules
 //total level time on pause menus
 //low priority, settings endless seed not updating when starting in unity in gamescene
+//endless data not updating when saving a game already in progress?
