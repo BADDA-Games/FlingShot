@@ -502,6 +502,7 @@ public static class PlayerGameManager
     public static void SetInitialSeedEndless(int seed)
     {
         player.END_InitialSeed = seed;
+        Save();
     }
 
     public static int GetCurrentSeedEndless()
@@ -511,6 +512,7 @@ public static class PlayerGameManager
     public static void SetCurrentSeedEndless(int seed)
     {
         player.END_CurrentSeed = seed;
+        Save();
     }
     public static int GetNextSeedEndless()
     {
@@ -519,6 +521,7 @@ public static class PlayerGameManager
     public static void SetNextSeedEndless(int seed)
     {
         player.END_NextSeed = seed;
+        Save();
     }
 
     public static int GetCurrentLevelEndless()
@@ -532,6 +535,7 @@ public static class PlayerGameManager
     public static void SetCurrentLevelEndless(int level)
     {
         player.END_LevelNumber = level;
+        Save();
     }
 
     public static int GetTotalTimePlayedEndless()
@@ -541,10 +545,12 @@ public static class PlayerGameManager
     public static void SetTotalTimePlayedEndless(int time)
     {
         player.END_TotalTime = time;
+        Save();
     }
     public static void AddTotalTimePlayedEndless(int time)
     {
         player.END_TotalTime += time;
+        Save();
     }
 
     public static int GetCurrentLevelTimePlayedEndless()
@@ -554,10 +560,6 @@ public static class PlayerGameManager
     public static void SetCurrentLevelTimePlayedEndless(int time)
     {
         player.END_CurrentLevelTime = time;
+        Save();
     }
 }
-
-//TODO
-//total level time on pause menus
-//low priority, settings endless seed not updating when starting in unity in gamescene
-//endless data not updating when saving a game already in progress?
