@@ -118,7 +118,7 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: 1.2.2
+  bundleVersion: 1.3
   preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
@@ -164,8 +164,8 @@ PlayerSettings:
     iPhone: com.BADDA-Games.FlingShot
   buildNumber:
     Standalone: 1
-    iPhone: 6
-  AndroidBundleVersionCode: 6
+    iPhone: 7
+  AndroidBundleVersionCode: 7
   AndroidMinSdkVersion: 16
   AndroidTargetSdkVersion: 0
   AndroidPreferredInstallLocation: 1
